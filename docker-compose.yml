@@ -1,0 +1,82 @@
+services:
+  ctfd:
+    image: ctfd/ctfd:3.7.0
+    container_name: ctfd_app
+    user: ctfd
+    restart: unless-stopped
+    environment:
+      - UPLOAD_FOLDER=/var/uploads
+      - DATABASE_URL=mysql+pymysql://${MYSQL_USER:-ctfd}:${MYSQL_PASSWORD:-ctfd_secure_pass}@db/${MYSQL_DATABASE:-ctfd}
+      - REDIS_URL=redis://cache:6379
+      - SECRET_KEY=${SECRET_KEY:-change_me_to_a_random_secret_key_32_bytes}
+      - LOG_FOLDER=/var/log/CTFd
+      - ACCESS_LOG=/var/log/CTFd/access.log
+      - ERROR_LOG=/var/log/CTFd/error.log
+      - REVERSE_PROXY=true
+      - WORKERS=${CTFD_WORKERS:-4}
+    volumes:
+      - ctfd_data:/var/uploads
+      - ctfd_logs:/var/log/CTFd
+    networks:
+      - internal_net
+      - proxy_net
+    depends_on:
+      db:
+        condition: service_healthy
+      cache:
+        condition: service_started
+
+  nginx:
+    image: nginx:alpine
+    container_name: ctfd_proxy
+    restart: unless-stopped
+    ports:
+      - "${HOST_PORT:-80}:80"
+    volumes:
+      - ./conf/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ctfd_data:/var/uploads:ro
+    networks:
+      - proxy_net
+    depends_on:
+      - ctfd
+
+  db:
+    image: mariadb:10.11
+    container_name: ctfd_db
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-root_super_secret_db_pass}
+      - MYSQL_USER=${MYSQL_USER:-ctfd}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-ctfd_secure_pass}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-ctfd}
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./conf/mysql/my.cnf:/etc/mysql/conf.d/custom.cnf:ro
+    networks:
+      - internal_net
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  cache:
+    image: redis:7-alpine
+    container_name: ctfd_cache
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+    networks:
+      - internal_net
+
+networks:
+  internal_net:
+    internal: true
+  proxy_net:
+    driver: bridge
+
+volumes:
+  ctfd_data:
+  ctfd_logs:
+  db_data:
+  redis_data:
