@@ -18,18 +18,24 @@ The entire system is designed to run locally on a lab PC / primary host laptop o
 sudo ./install_docker.sh
 ```
 
-### 2. Launch the Stack
-```bash
-./start.sh
-```
-The startup script detects your container engine, validates environment variables, configures the reverse proxy, and outputs your LAN IP:
-- **Local Access:** `http://localhost`
-- **Participant LAN URL:** `http://192.168.x.x` (Port 80)
+### 2. Multiplatform Launch (Linux / macOS / Windows)
 
-### 3. Stop the Stack
+You can manage the entire event using the modern **`uv`** CLI runner across all platforms:
+
 ```bash
-./stop.sh
+# Start CTFd Stack and detect LAN IP
+uv run ctf start
+
+# Check container health and status
+uv run ctf status
+
+# Stop containers
+uv run ctf stop
 ```
+
+Alternatively, use the native scripts for your shell:
+- **Linux / macOS:** `./start.sh` and `./stop.sh`
+- **Windows PowerShell:** `.\start.ps1` and `.\stop.ps1`
 
 ---
 
