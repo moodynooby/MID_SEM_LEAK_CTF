@@ -1,0 +1,90 @@
+# =================================================================
+# Git Ignore Configuration for CTFd & Multiplatform Environments
+# IEEE AUSB: Case File: The Mid-Sem Leak
+# =================================================================
+
+# --- Environment & Security Secrets ---
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
+*.cert
+*.crt
+# Allow example environment file
+!.env.example
+
+# --- Python & uv Environments ---
+.venv/
+venv/
+ENV/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+# uv build artifacts
+dist/
+build/
+*.egg-info/
+
+# --- Backups, Snapshots & Large Artifacts ---
+backups/
+*.tar.gz
+*.tgz
+*.zip
+*.sql
+*.sql.gz
+*.dump
+*.raw
+*.pcap
+*.pcapng
+*.vmdk
+
+# --- Container Volumes & Runtime Logs ---
+logs/
+*.log
+ctfd_data/
+db_data/
+redis_data/
+
+# --- Operating System Files ---
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+
+# --- IDEs & Code Editors ---
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.settings/
+*.sublime-project
+*.sublime-workspace

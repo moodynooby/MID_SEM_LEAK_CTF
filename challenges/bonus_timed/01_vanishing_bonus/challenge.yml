@@ -1,0 +1,32 @@
+name: "Vanishing Docket: Volatile Memory Dump (4:35-4:50 PM)"
+author: "Content Team"
+category: "Forensics (Timed Bonus)"
+description: |
+  **⏳ TIME-SENSITIVE BONUS CASE FILE:**
+  *This challenge appears at 4:35 PM and permanently vanishes at 4:50 PM!*
+
+  A volatile system swap file was recovered before the machine rebooted.
+  Find the uncommitted command history to extract the temporary access token!
+
+  **Flag Format:** `case{...}`
+
+value: 250
+type: standard
+
+flags:
+  - case{volatile_cache_grabbed_before_deletion}
+
+tags:
+  - timed_bonus
+  - vanishing_challenge
+  - forensics
+
+hints:
+  - content: "Use strings with grep or hexdump on the volatile dump."
+    cost: 20
+
+files:
+  - files/volatile_swap_fragment.raw
+
+state: hidden
+version: "0.1"

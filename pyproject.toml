@@ -1,0 +1,22 @@
+[project]
+name = "mid-sem-leak-ctf"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Manas Doshi", email = "98732831+moodynooby@users.noreply.github.com" }
+]
+requires-python = ">=3.10"
+dependencies = [
+    "python-dotenv>=1.0.0",
+    "requests>=2.28.0",
+    "rich>=13.0.0",
+]
+
+[project.scripts]
+ctf = "mid_sem_leak_ctf:main"
+mid-sem-leak-ctf = "mid_sem_leak_ctf:main"
+
+[build-system]
+requires = ["uv_build>=0.12.16,<0.13.0"]
+build-backend = "uv_build"

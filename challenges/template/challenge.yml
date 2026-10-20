@@ -1,0 +1,35 @@
+name: "Challenge Title Here"
+author: "Author Name"
+category: "Forensics | Web | Cryptography | Reverse Engineering | Misc"
+description: |
+  **Case File Briefing:**
+  Provide the fictional investigation briefing here. Connect the puzzle to the campus mid-sem leak story.
+  
+  *Example:*
+  "Campus IT found this damaged file on the instructor workstation in Lab 207. Can your team recover the original timestamp to see when the exam folder was accessed?"
+
+  **Flag Format:** `case{...}`
+
+value: 500
+type: dynamic
+extra:
+  initial: 500
+  decay: 15
+  minimum: 100
+
+flags:
+  - case{sample_flag_value_here}
+
+tags:
+  - story_act_1
+  - easy
+
+hints:
+  - content: "Check the EXIF metadata using exiftool or inspect the hex header."
+    cost: 25
+
+files:
+  - files/evidence_artifact.bin
+
+state: visible
+version: "0.1"

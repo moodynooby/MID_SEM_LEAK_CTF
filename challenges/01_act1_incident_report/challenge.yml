@@ -1,0 +1,37 @@
+name: "Docket #101: The Corrupted Snapshot"
+author: "Content Team"
+category: "Forensics"
+description: |
+  **Case File Briefing:**
+  On the evening of 27 October, campus security logged an unauthorized login at the faculty workstation in Lab 207. 
+  When the forensics team pulled the security camera snapshot `frame_207_incident.png`, the image refused to render!
+  
+  Our forensics expert indicated the header bytes may have been tampered with to hide the evidence.
+  Can your team repair the file header and extract the camera's embedded security timestamp?
+
+  **Flag Format:** `case{...}`
+
+value: 500
+type: dynamic
+extra:
+  initial: 500
+  decay: 15
+  minimum: 100
+
+flags:
+  - case{cctv_frame_corrupted_header_restored}
+
+tags:
+  - act_1
+  - forensics
+  - easy
+
+hints:
+  - content: "Use a hex editor like hexedit, bless, or CyberChef. What are the standard magic bytes for a PNG file?"
+    cost: 25
+
+files:
+  - files/corrupted_evidence_note.txt
+
+state: visible
+version: "0.1"
