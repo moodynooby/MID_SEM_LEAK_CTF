@@ -45,6 +45,8 @@ backups/
 *.pcap
 *.pcapng
 *.vmdk
+# Allow challenge artifacts in challenges/
+!challenges/**
 
 # --- Container Volumes & Runtime Logs ---
 logs/

@@ -42,7 +42,7 @@ Complete this dry run inside Lab 207/208 on the day before the event:
 ### Step 2: Start CTFd Stack
 ```bash
 cd ~/Desktop/MID_SEM_LEAK_CTF
-./start.sh
+uv run ctf start
 ```
 
 ### Step 3: Test from a Secondary Device
@@ -58,9 +58,9 @@ cd ~/Desktop/MID_SEM_LEAK_CTF
 5. Paste this token into `.env` under `CTFD_ADMIN_TOKEN`.
 
 ### Step 5: Test Backup & Standby Laptop
-1. Run `./ops/backup.sh` on the primary PC.
-2. Run `./ops/sync_to_backup_laptop.sh <BACKUP_IP>` or copy the `.tar.gz` to the backup laptop via USB.
-3. Run `./ops/restore.sh` on the backup laptop and confirm CTFd loads with all data intact.
+1. Run `uv run ctf backup` on the primary PC.
+2. Run `uv run ctf sync <BACKUP_IP>` or copy the `.tar.gz` to the backup laptop via USB.
+3. Run `uv run ctf restore` on the backup laptop and confirm CTFd loads with all data intact.
 
 ---
 
@@ -69,21 +69,21 @@ cd ~/Desktop/MID_SEM_LEAK_CTF
 | Time | Stage | Action / Commands | Responsible |
 | :--- | :--- | :--- | :--- |
 | **2:00 PM** | Lab Arrival | Power on Primary PC & Backup Laptop. Connect both to LAN. | Tech Team |
-| **2:15 PM** | Server Startup | `./start.sh`. Verify containers: `docker ps`. Note LAN IP. | Manas / Krish |
+| **2:15 PM** | Server Startup | `uv run ctf start`. Note LAN IP. | Manas / Krish |
 | **2:30 PM** | Teams Arrive | Hand LAN URL (`http://<IP>`) to Host & Floor Volunteers. | Vansh |
-| **2:45 PM** | Projector Setup | Connect Primary/Secondary display to Projector. Open `/scoreboard`. Fullscreen (`F11`). | Krish |
-| **3:00 - 4:00 PM** | Expert Talk | Monitor server load. Run `./ops/backup.sh` once teams finish creating accounts. | Tech Team |
+| **2:45 PM** | Projector Setup | Connect display to Projector. Open `/scoreboard`. Fullscreen (`F11`). | Krish |
+| **3:00 - 4:00 PM** | Expert Talk | Monitor server load. Run `uv run ctf backup` once teams finish creating accounts. | Tech Team |
 | **4:00 - 4:30 PM** | Briefing & Rules | Verify all 20 teams can log in and see Act I challenges. | Volunteers / Tech |
 | **4:30 PM** | **COMPETITION START** | Announce competition live! Verify live solves stream on scoreboard. | Host & Tech Team |
-| **4:35 PM** | **Vanishing Clue** | Run `python3 ops/manage_timed_events.py --event vanishing_start` | Vansh |
-| **4:45 PM** | **Clue Drop #1** | Run `python3 ops/manage_timed_events.py --event clue_drop_1` | Manas |
-| **4:50 PM** | **Vanishing Clue Closes**| Run `python3 ops/manage_timed_events.py --event vanishing_end` | Vansh |
-| **5:00 PM** | **Lightning Round** | Run `python3 ops/manage_timed_events.py --event lightning_start` | Krish |
-| **5:10 PM** | **Lightning Ends & Clue #2**| Run `python3 ops/manage_timed_events.py --event lightning_end` then `--event clue_drop_2` | Krish |
-| **5:15 PM** | **Scoreboard Blackout** | Run `python3 ops/manage_timed_events.py --event blackout`. Scoreboard freezes! | Manas |
-| **5:15 - 5:30 PM**| Final 15 Mins | Watch backend solves for First Blood on the Final Culprit flag. Run `./ops/backup.sh`. | Tech Team |
+| **4:35 PM** | **Vanishing Clue** | Run `uv run ctf events --event vanishing_start` | Vansh |
+| **4:45 PM** | **Clue Drop #1** | Run `uv run ctf events --event clue_drop_1` | Manas |
+| **4:50 PM** | **Vanishing Clue Closes**| Run `uv run ctf events --event vanishing_end` | Vansh |
+| **5:00 PM** | **Lightning Round** | Run `uv run ctf events --event lightning_start` | Krish |
+| **5:10 PM** | **Lightning Ends & Clue #2**| Run `uv run ctf events --event lightning_end` then `--event clue_drop_2` | Krish |
+| **5:15 PM** | **Scoreboard Blackout** | Run `uv run ctf blackout`. Scoreboard freezes on projector! | Manas |
+| **5:15 - 5:30 PM**| Final 15 Mins | Watch backend solves for First Blood on the Final Culprit flag. Run `uv run ctf backup`. | Tech Team |
 | **5:30 PM** | **COMPETITION END** | Competition closes. Prepare final rankings. | Tech Team |
-| **5:35 PM** | **Scoreboard Reveal** | Run `python3 ops/manage_timed_events.py --event reveal`. Final scores displayed! | Host & Tech Team |
+| **5:35 PM** | **Scoreboard Reveal** | Run `uv run ctf reveal`. Final scores displayed! | Host & Tech Team |
 | **5:40 - 6:00 PM**| Awards Ceremony | Export CTFd CSV data for official event records. | Krish & Manas |
 
 ---
@@ -96,7 +96,7 @@ If the Primary PC experiences hardware failure, power loss, or OS freeze:
 flowchart LR
     A[Primary PC Fails] --> B[Unplug Primary LAN Cable]
     B --> C[Set Backup Laptop to Same LAN IP or announce new IP]
-    C --> D[Run ./ops/restore.sh]
+    C --> D[Run uv run ctf restore]
     D --> E[Reconnect Projector to Backup Laptop]
     E --> F[Resume in < 2 Minutes]
 ```
@@ -105,7 +105,7 @@ flowchart LR
 2. **Step 2:** On the Backup Laptop:
    ```bash
    cd ~/Desktop/MID_SEM_LEAK_CTF
-   ./ops/restore.sh
+   uv run ctf restore
    ```
 3. **Step 3:** If the backup laptop has a different IP, tell the Host to announce the new IP or point the projector to the new scoreboard URL.
 4. **Step 4:** Less than 2 minutes of downtime, zero data lost!

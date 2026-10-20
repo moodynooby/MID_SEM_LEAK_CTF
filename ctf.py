@@ -5,23 +5,28 @@ Powered by uv and Docker Compose
 IEEE AUSB: Case File: The Mid-Sem Leak — 28/10/2026
 
 Usage:
-  uv run ctf.py start      - Launch CTFd stack & detect LAN IP
-  uv run ctf.py stop       - Gracefully stop containers
-  uv run ctf.py status     - Show container health & connection info
-  uv run ctf.py backup     - Create timestamped DB + file snapshot
-  uv run ctf.py restore    - Restore latest backup (for standby laptop)
-  uv run ctf.py events     - Interactive live-event timeline console
-  uv run ctf.py blackout   - 5:15 PM Scoreboard Freeze (Suspense mode)
-  uv run ctf.py reveal     - 5:30 PM Scoreboard Reveal (Awards ceremony)
+  uv run ctf start             - Launch CTFd stack & detect LAN IP
+  uv run ctf stop              - Gracefully stop containers
+  uv run ctf status            - Show container health & connection info
+  uv run ctf backup            - Create timestamped DB + file snapshot (Cross-platform)
+  uv run ctf restore [archive] - Restore database & uploads (for standby laptop)
+  uv run ctf sync <ip> [user]  - Push snapshot to standby laptop over LAN
+  uv run ctf events            - Interactive live-event timeline console
+  uv run ctf blackout          - 5:15 PM Scoreboard Freeze (Suspense mode)
+  uv run ctf reveal            - 5:30 PM Scoreboard Reveal (Awards ceremony)
 """
 
 import os
 import sys
+import time
 import shutil
+import tarfile
 import socket
 import argparse
+import tempfile
 import subprocess
 from pathlib import Path
+from datetime import datetime
 from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
@@ -31,7 +36,6 @@ ROOT_DIR = Path(__file__).resolve().parent
 
 def detect_compose_cmd():
     """Detect docker compose, docker-compose, or podman compose across platforms."""
-    # Check docker compose
     if shutil.which("docker"):
         res = subprocess.run(["docker", "compose", "version"], capture_output=True)
         if res.returncode == 0:
@@ -46,11 +50,18 @@ def detect_compose_cmd():
             return ["podman", "compose"]
     return None
 
+def detect_container_cli():
+    """Detect docker or podman CLI binary name."""
+    if shutil.which("docker"):
+        return "docker"
+    if shutil.which("podman"):
+        return "podman"
+    return "docker"
+
 def detect_lan_ip():
     """Cross-platform LAN IP detection."""
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        # Doesn't need to be reachable, just triggers local interface selection
         s.connect(("8.8.8.8", 80))
         ip = s.getsockname()[0]
         s.close()
@@ -79,7 +90,9 @@ def cmd_start():
     compose = detect_compose_cmd()
     if not compose:
         console.print("[bold red][ERROR] No container engine found![/bold red]")
-        console.print("Please install Docker Desktop (Windows/macOS) or run [bold green]sudo ./install_docker.sh[/bold green] on Linux.")
+        console.print("Please install Docker:")
+        console.print("  • Official Docker Website: [bold cyan]https://docs.docker.com/get-started/get-docker/[/bold cyan]")
+        console.print("  • Ubuntu / Debian Linux:  [bold cyan]https://docs.docker.com/engine/install/ubuntu/[/bold cyan]")
         sys.exit(1)
 
     load_env()
@@ -119,13 +132,143 @@ def cmd_status():
     subprocess.run(compose + ["ps"], cwd=str(ROOT_DIR))
 
 def cmd_backup():
-    backup_sh = ROOT_DIR / "ops" / "backup.sh"
-    if os.name != "nt" and backup_sh.exists():
-        subprocess.run(["bash", str(backup_sh)], cwd=str(ROOT_DIR))
+    """Cross-platform backup of MariaDB and CTFd uploads into a compressed tarball."""
+    cli = detect_container_cli()
+    env = load_env()
+    user = env.get("MYSQL_USER", "ctfd")
+    password = env.get("MYSQL_PASSWORD", "ctfd_secure_pass")
+    db_name = env.get("MYSQL_DATABASE", "ctfd")
+
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    backups_dir = ROOT_DIR / "backups"
+    backups_dir.mkdir(exist_ok=True)
+    archive_path = backups_dir / f"ctfd_backup_{timestamp}.tar.gz"
+
+    console.print(f"[bold cyan][*] Creating CTFd backup snapshot: {timestamp}[/bold cyan]")
+
+    with tempfile.TemporaryDirectory() as tmp_dir:
+        tmp_path = Path(tmp_dir)
+        sql_file = tmp_path / "database.sql"
+        uploads_dir = tmp_path / "uploads"
+        uploads_dir.mkdir(exist_ok=True)
+
+        # 1. Export MariaDB dump
+        console.print(f"[*] Dumping database '{db_name}'...")
+        dump_cmd = [
+            cli, "exec", "ctfd_db", "mariadb-dump",
+            f"-u{user}", f"-p{password}",
+            "--single-transaction", "--quick", db_name
+        ]
+        with open(sql_file, "w") as f:
+            res = subprocess.run(dump_cmd, stdout=f, stderr=subprocess.PIPE, text=True)
+            if res.returncode != 0:
+                console.print(f"[bold red][!] Dump failed: {res.stderr}[/bold red]")
+                return None
+
+        # 2. Copy uploads from container
+        console.print("[*] Copying uploaded challenge attachments...")
+        subprocess.run([cli, "cp", "ctfd_app:/var/uploads/.", str(uploads_dir)], capture_output=True)
+
+        # 3. Create compressed tarball
+        console.print(f"[*] Compressing into archive: [bold white]{archive_path.name}[/bold white]...")
+        with tarfile.open(archive_path, "w:gz") as tar:
+            tar.add(sql_file, arcname="database.sql")
+            tar.add(uploads_dir, arcname="uploads")
+
+    size_mb = archive_path.stat().st_size / (1024 * 1024)
+    console.print(Panel.fit(
+        f"[bold green]✓ Backup successfully created![/bold green]\n"
+        f"File: [bold white]{archive_path.name}[/bold white] ({size_mb:.2f} MB)\n"
+        f"Path: {archive_path}",
+        title="Backup Complete"
+    ))
+    return archive_path
+
+def cmd_restore(archive_file=None):
+    """Cross-platform restore of MariaDB and uploads onto primary or standby backup laptop."""
+    backups_dir = ROOT_DIR / "backups"
+    if not archive_file:
+        archives = sorted(backups_dir.glob("ctfd_backup_*.tar.gz"), key=os.path.getmtime, reverse=True)
+        if not archives:
+            console.print("[bold red][!] No backup archives found in 'backups/' directory.[/bold red]")
+            return
+        archive_file = archives[0]
     else:
-        # Cross-platform backup via python
-        console.print("[yellow]Running cross-platform snapshot...[/yellow]")
-        subprocess.run([sys.executable, str(ROOT_DIR / "ops" / "backup_runner.py")], cwd=str(ROOT_DIR))
+        archive_file = Path(archive_file)
+
+    if not archive_file.exists():
+        console.print(f"[bold red][!] Archive not found: {archive_file}[/bold red]")
+        return
+
+    cli = detect_container_cli()
+    compose = detect_compose_cmd()
+    env = load_env()
+    user = env.get("MYSQL_USER", "ctfd")
+    password = env.get("MYSQL_PASSWORD", "ctfd_secure_pass")
+    db_name = env.get("MYSQL_DATABASE", "ctfd")
+
+    console.print(f"[bold yellow][*] Restoring from archive: {archive_file.name}[/bold yellow]")
+
+    with tempfile.TemporaryDirectory() as tmp_dir:
+        tmp_path = Path(tmp_dir)
+        console.print("[*] Extracting snapshot archive...")
+        with tarfile.open(archive_file, "r:gz") as tar:
+            tar.extractall(path=tmp_path)
+
+        # Ensure db container is up
+        console.print("[*] Ensuring MariaDB and Redis are running...")
+        subprocess.run(compose + ["up", "-d", "db", "cache"], cwd=str(ROOT_DIR))
+        time.sleep(4)
+
+        # Import database
+        sql_file = tmp_path / "database.sql"
+        if sql_file.exists():
+            console.print(f"[*] Importing database dump into MariaDB ({db_name})...")
+            with open(sql_file, "r") as f:
+                res = subprocess.run(
+                    [cli, "exec", "-i", "ctfd_db", "mariadb", f"-u{user}", f"-p{password}", db_name],
+                    stdin=f, capture_output=True, text=True
+                )
+                if res.returncode != 0:
+                    console.print(f"[bold red][!] Database restore error: {res.stderr}[/bold red]")
+                else:
+                    console.print("[bold green][+] Database restored successfully.[/bold green]")
+
+        # Launch entire stack
+        subprocess.run(compose + ["up", "-d"], cwd=str(ROOT_DIR))
+
+        # Restore uploads
+        uploads_dir = tmp_path / "uploads"
+        if uploads_dir.exists():
+            console.print("[*] Restoring uploaded challenge files...")
+            subprocess.run([cli, "cp", f"{uploads_dir}/.", "ctfd_app:/var/uploads/"], capture_output=True)
+            subprocess.run([cli, "exec", "ctfd_app", "chown", "-R", "1001:1001", "/var/uploads"], capture_output=True)
+
+        # Restart CTFd app container to flush cache
+        subprocess.run([cli, "restart", "ctfd_app"], capture_output=True)
+
+    console.print(Panel.fit(
+        "[bold green]✓ Restoration Complete![/bold green]\n"
+        "CTFd is fully live with all scores, teams, and challenges restored.",
+        title="Standby Restore Successful"
+    ))
+
+def cmd_sync(target_ip, user="manas", remote_path=None):
+    """Sync latest snapshot to the standby laptop over LAN."""
+    archive = cmd_backup()
+    if not archive:
+        return
+    if not remote_path:
+        remote_path = f"/home/{user}/Desktop/MID_SEM_LEAK_CTF"
+
+    console.print(f"[bold cyan][*] Transferring {archive.name} to {user}@{target_ip}:{remote_path}/backups/...[/bold cyan]")
+    # Ensure remote directory exists
+    subprocess.run(["ssh", "-o", "ConnectTimeout=5", f"{user}@{target_ip}", f"mkdir -p '{remote_path}/backups'"])
+    res = subprocess.run(["scp", str(archive), f"{user}@{target_ip}:{remote_path}/backups/"])
+    if res.returncode == 0:
+        console.print("[bold green][+] Sync complete! Standby laptop is ready for instant recovery.[/bold green]")
+    else:
+        console.print("[bold red][!] Sync failed. Check IP and SSH connectivity.[/bold red]")
 
 def cmd_events(event_name=None):
     events_script = ROOT_DIR / "ops" / "manage_timed_events.py"
@@ -152,9 +295,16 @@ def main():
     subparsers.add_parser("start", help="Start CTFd containers & show LAN URL")
     subparsers.add_parser("stop", help="Stop CTFd containers")
     subparsers.add_parser("status", help="Show container status")
-    subparsers.add_parser("backup", help="Create DB & upload snapshot")
-    subparsers.add_parser("restore", help="Restore latest backup")
+    subparsers.add_parser("backup", help="Create DB & upload snapshot (cross-platform)")
     
+    restore_p = subparsers.add_parser("restore", help="Restore latest backup")
+    restore_p.add_argument("archive", nargs="?", help="Specific backup archive path (optional)")
+
+    sync_p = subparsers.add_parser("sync", help="Sync snapshot to standby laptop over LAN")
+    sync_p.add_argument("ip", help="Standby laptop LAN IP")
+    sync_p.add_argument("user", nargs="?", default="manas", help="SSH username (default: manas)")
+    sync_p.add_argument("path", nargs="?", default=None, help="Remote project path")
+
     events_p = subparsers.add_parser("events", help="Manage timed events")
     events_p.add_argument("--event", choices=[
         "vanishing_start", "vanishing_end", "clue_drop_1",
@@ -176,7 +326,9 @@ def main():
     elif args.command == "backup":
         cmd_backup()
     elif args.command == "restore":
-        subprocess.run(["bash", str(ROOT_DIR / "ops" / "restore.sh")], cwd=str(ROOT_DIR))
+        cmd_restore(getattr(args, "archive", None))
+    elif args.command == "sync":
+        cmd_sync(args.ip, args.user, args.path)
     elif args.command == "events":
         cmd_events(getattr(args, "event", None))
     elif args.command == "blackout":

@@ -11,31 +11,42 @@ The entire system is designed to run locally on a lab PC / primary host laptop o
 
 ---
 
+## 🐳 Docker Installation Guide
+
+Before running the CTF stack, ensure Docker and Docker Compose are installed:
+
+| Operating System | Recommended Installation | Official Guide / Download Link |
+| :--- | :--- | :--- |
+| **Windows 10 / 11** | Docker Desktop (with WSL2 backend) | [Download Docker Desktop for Windows](https://docs.docker.com/desktop/setup/install/windows-install/) |
+| **macOS (Intel / Apple Silicon)** | Docker Desktop | [Download Docker Desktop for Mac](https://docs.docker.com/desktop/setup/install/mac-install/) |
+| **Ubuntu / Debian Linux** | Docker Engine & Compose plugin | [Install Docker Engine on Ubuntu](https://docs.docker.com/engine/install/ubuntu/) |
+| **All Other Platforms** | Official Docker Hub Downloads | [Docker Get Started Guide](https://docs.docker.com/get-started/get-docker/) |
+
+> **Linux Post-Install Tip:** To run Docker commands without `sudo`:
+> ```bash
+> sudo usermod -aG docker $USER && newgrp docker
+> ```
+
+---
+
 ## 🚀 Quick Start (Running CTFd)
 
-### 1. Install Docker & Compose (If not installed)
-```bash
-sudo ./install_docker.sh
-```
-
-### 2. Multiplatform Launch (Linux / macOS / Windows)
-
-You can manage the entire event using the modern **`uv`** CLI runner across all platforms:
+Manage the entire event across Windows, macOS, and Linux using the unified **`uv`** runner:
 
 ```bash
-# Start CTFd Stack and detect LAN IP
+# 1. Start CTFd Stack and detect your LAN IP
 uv run ctf start
 
-# Check container health and status
+# 2. Check container status & health
 uv run ctf status
 
-# Stop containers
+# 3. Stop containers gracefully
 uv run ctf stop
 ```
 
-Alternatively, use the native scripts for your shell:
-- **Linux / macOS:** `./start.sh` and `./stop.sh`
-- **Windows PowerShell:** `.\start.ps1` and `.\stop.ps1`
+When started, CTFd will be accessible at:
+- **Local Host:** `http://localhost`
+- **Participant LAN URL:** `http://<YOUR_LAN_IP>` (Port 80)
 
 ---
 
@@ -45,15 +56,15 @@ Alternatively, use the native scripts for your shell:
 ├── docker-compose.yml              # Production CTFd 3.7.0, MariaDB 10.11, Redis 7, Nginx
 ├── .env.example                    # Environment variable template with security keys
 ├── .env                            # Active configuration (pre-seeded with secure passwords)
-├── install_docker.sh               # 1-command installer for Docker & Compose on Ubuntu
-├── start.sh                        # Engine-agnostic startup & LAN IP detection
-├── stop.sh                         # Graceful stack shutdown
+├── .gitignore                      # Multiplatform ignore (uv, env secrets, backups, OS junk)
+├── pyproject.toml / uv.lock        # Modern uv project setup (Python >= 3.10)
+├── ctf.py                          # Unified cross-platform CLI runner (Linux / macOS / Windows)
 │
 ├── conf/
 │   ├── nginx/default.conf          # Nginx proxy (Port 80, SSE websocket streaming, 100MB body)
 │   └── mysql/my.cnf                # MariaDB tuning (250 connections, UTF-8 MB4, buffer pools)
 │
-├── challenges/                     # The 5 Story Acts & Timed Challenges
+├── challenges/                     # The 5 Story Acts & Timed Challenges (Private Repo)
 │   ├── README.md                   # Challenge authoring and solve-testing standard
 │   ├── template/                   # ctfcli-compatible challenge template
 │   ├── 01_act1_incident_report/    # Act I: CCTV Header Corruption (Forensics - Easy)
@@ -66,13 +77,10 @@ Alternatively, use the native scripts for your shell:
 │       └── 02_lightning_round/     # 10-Min Speed Round (5:00–5:10 PM, Double Points)
 │
 ├── ops/                            # Automation & Tech Lead Tooling (Krish, Manas, Vansh)
-│   ├── backup.sh                   # Snapshot database dump + uploaded attachments
-│   ├── restore.sh                  # One-command restoration for backup laptop
-│   ├── sync_to_backup_laptop.sh    # Direct LAN rsync/scp to secondary laptop
 │   ├── freeze_scoreboard.py        # 5:15 PM suspense scoreboard blackout
 │   ├── unfreeze_scoreboard.py      # 5:30 PM closing ceremony scoreboard reveal
 │   ├── manage_timed_events.py      # Interactive console for clue drops and timed rounds
-│   └── requirements.txt            # Python dependencies (requests, python-dotenv)
+│   └── requirements.txt            # Python dependencies (requests, python-dotenv, rich)
 │
 └── docs/                           # Documentation, Runbook & Participant Materials
     ├── TECH_LEAD_RUNBOOK.md        # Playbook for setup, dry-run, and event execution
@@ -85,34 +93,58 @@ Alternatively, use the native scripts for your shell:
 
 ---
 
-## ⏱️ Live Event Management (4:30 – 5:30 PM)
+## ⏱️ Live Event Timeline Management (4:30 – 5:30 PM)
 
-Run the interactive event console during the competition:
+Run the live interactive event console during the competition:
 ```bash
-python3 ops/manage_timed_events.py
+uv run ctf events
 ```
-This lets the tech lead trigger:
-- **4:35 PM:** Release 15-Min Vanishing Challenge.
-- **4:45 PM:** Broadcast Clue Drop #1.
-- **4:50 PM:** Hide Vanishing Challenge.
-- **5:00 PM:** Activate 10-Min Lightning Round (Double Points).
-- **5:10 PM:** Close Lightning Round & Broadcast Clue Drop #2.
-- **5:15 PM:** Trigger Scoreboard Blackout (Suspense Mode).
-- **5:30 PM:** Reveal Scoreboard for the Closing Ceremony.
+
+Or trigger specific moments directly:
+- **4:35 PM:** Release 15-Min Vanishing Challenge:
+  ```bash
+  uv run ctf events --event vanishing_start
+  ```
+- **4:45 PM:** Broadcast Clue Drop #1:
+  ```bash
+  uv run ctf events --event clue_drop_1
+  ```
+- **4:50 PM:** Hide Vanishing Challenge:
+  ```bash
+  uv run ctf events --event vanishing_end
+  ```
+- **5:00 PM:** Activate 10-Min Lightning Round (Double Points):
+  ```bash
+  uv run ctf events --event lightning_start
+  ```
+- **5:10 PM:** Close Lightning Round & Broadcast Clue Drop #2:
+  ```bash
+  uv run ctf events --event lightning_end
+  uv run ctf events --event clue_drop_2
+  ```
+- **5:15 PM:** Trigger Scoreboard Blackout (Suspense Mode):
+  ```bash
+  uv run ctf blackout
+  ```
+- **5:30 PM:** Reveal Scoreboard for the Closing Ceremony:
+  ```bash
+  uv run ctf reveal
+  ```
 
 ---
 
 ## 🛡️ Backup & Contingency (Standby Laptop)
-1. **Periodic Snapshot on Primary:**
+
+1. **Create Snapshot on Primary Server:**
    ```bash
-   ./ops/backup.sh
+   uv run ctf backup
    ```
-2. **Mirror to Backup Laptop over LAN:**
+2. **Push Snapshot to Standby Laptop over LAN:**
    ```bash
-   ./ops/sync_to_backup_laptop.sh <BACKUP_LAPTOP_IP> manas
+   uv run ctf sync <BACKUP_LAPTOP_IP> [ssh_user]
    ```
-3. **Emergency Recovery on Standby Laptop:**
+3. **Emergency Restore on Standby Laptop:**
    ```bash
-   ./ops/restore.sh
+   uv run ctf restore
    ```
    *Total recovery time: < 2 minutes.*
