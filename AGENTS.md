@@ -65,11 +65,13 @@
 | `uv run ctf events` | Timeline console| Triggers clue drops, vanishing challenges, and lightning rounds |
 | `uv run ctf blackout`| 5:15 PM freeze | Freezes live scoreboard into suspense mode |
 | `uv run ctf reveal` | 5:30 PM unfreeze| Reveals final scoreboard for closing ceremony |
+| `uv run ctf theme` | Apply projector theme | Pushes `ctfd-theme/` CSS/JS into CTFd's `theme_header`/`theme_footer` configs |
 
 ---
 
 ## 5. Key Subsystem References & Pre-Flight Checklist
 - **Live Event Timeline & Ops (4:30–5:30 PM):** See [docs/TECH_LEAD_RUNBOOK.md](file:///home/manas/Desktop/MID_SEM_LEAK_CTF/docs/TECH_LEAD_RUNBOOK.md) and [ops/](file:///home/manas/Desktop/MID_SEM_LEAK_CTF/ops).
+- **Big-Screen AV Experience:** See [ctfd-theme/](file:///home/manas/Desktop/MID_SEM_LEAK_CTF/ctfd-theme) (scoreboard projector styling, applied via `uv run ctf theme`) and [av-console/](file:///home/manas/Desktop/MID_SEM_LEAK_CTF/av-console) (countdown clock + sound cue board, served at `/av-console/`).
 - **Challenge Authoring & 5-Step Verification:** See [challenges/README.md](file:///home/manas/Desktop/MID_SEM_LEAK_CTF/challenges/README.md) and blueprint in [challenges/template/](file:///home/manas/Desktop/MID_SEM_LEAK_CTF/challenges/template/).
 - **Proxy & MariaDB Engine Tuning:** See [conf/nginx/default.conf](file:///home/manas/Desktop/MID_SEM_LEAK_CTF/conf/nginx/default.conf) and [conf/mysql/my.cnf](file:///home/manas/Desktop/MID_SEM_LEAK_CTF/conf/mysql/my.cnf).
 

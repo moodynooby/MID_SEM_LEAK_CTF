@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mid-Sem Leak — Sound Cue Board</title>
+  <link rel="stylesheet" href="shared/theme.css" />
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+
+    h1 {
+      font-size: 1.4rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .subtitle {
+      opacity: 0.6;
+      margin-bottom: 2rem;
+      font-size: 0.95rem;
+    }
+
+    .cue-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      width: min(90vw, 900px);
+    }
+
+    .cue {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 1.5rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--bg-raised);
+      color: var(--fg);
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.08s ease, border-color 0.15s ease;
+    }
+
+    .cue:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .cue:active {
+      transform: translateY(0);
+    }
+
+    .cue .key {
+      font-size: 0.75rem;
+      opacity: 0.5;
+    }
+
+    .cue.start { border-left: 4px solid var(--accent-good); }
+    .cue.vanishing { border-left: 4px solid var(--accent); }
+    .cue.lightning { border-left: 4px solid var(--accent-warn); }
+    .cue.blackout { border-left: 4px solid var(--accent-danger); }
+    .cue.reveal { border-left: 4px solid var(--accent-good); }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    #stop-all {
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      border: 1px solid var(--accent-danger);
+      background: transparent;
+      color: var(--accent-danger);
+      cursor: pointer;
+    }
+
+    #last-fired {
+      margin-top: 1.5rem;
+      font-size: 0.9rem;
+      opacity: 0.7;
+      min-height: 1.2em;
+    }
+  </style>
+</head>
+<body>
+  <nav class="console-nav">
+    <a href="countdown.html">Countdown</a>
+  </nav>
+
+  <h1>Live Event Sound Cue Board</h1>
+  <div class="subtitle">Case File: The Mid-Sem Leak — Tech Lead Console</div>
+
+  <div class="cue-grid">
+    <button class="cue start" data-cue="start" data-label="Competition Start">
+      <span>🎉 Competition Start</span>
+      <span class="key">[1] · 4:30 PM</span>
+    </button>
+    <button class="cue vanishing" data-cue="vanishing" data-label="Vanishing Challenge Radar Ping">
+      <span>📡 Vanishing Challenge</span>
+      <span class="key">[2] · 4:35 PM</span>
+    </button>
+    <button class="cue lightning" data-cue="lightning" data-label="Lightning Round">
+      <span>⚡ Lightning Round</span>
+      <span class="key">[3] · 5:00 PM</span>
+    </button>
+    <button class="cue blackout" data-cue="blackout" data-label="Scoreboard Blackout">
+      <span>🌑 Scoreboard Blackout</span>
+      <span class="key">[4] · 5:15 PM</span>
+    </button>
+    <button class="cue reveal" data-cue="reveal" data-label="Scoreboard Reveal">
+      <span>🏆 Scoreboard Reveal</span>
+      <span class="key">[5] · 5:30 PM</span>
+    </button>
+  </div>
+
+  <div class="controls">
+    <label for="volume">Volume</label>
+    <input type="range" id="volume" min="0" max="1" step="0.05" value="0.6" />
+    <button id="stop-all">Stop All</button>
+  </div>
+
+  <div id="last-fired"></div>
+
+  <div class="hint">Keys 1-5 fire cues · all sounds are synthesized, no audio files needed</div>
+
+  <script src="soundboard.js"></script>
+</body>
+</html>

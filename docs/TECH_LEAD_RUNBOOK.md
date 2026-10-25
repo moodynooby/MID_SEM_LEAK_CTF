@@ -56,6 +56,7 @@ uv run ctf start
 3. Create Admin account (Keep credentials in your private password manager).
 4. Go to **Profile -> Access Tokens -> Generate Token**.
 5. Paste this token into `.env` under `CTFD_ADMIN_TOKEN`.
+6. Apply the big-screen scoreboard styling: `uv run ctf theme` (see `ctfd-theme/README.md`).
 
 ### Step 5: Test Backup & Standby Laptop
 1. Run `uv run ctf backup` on the primary PC.
@@ -71,7 +72,7 @@ uv run ctf start
 | **2:00 PM** | Lab Arrival | Power on Primary PC & Backup Laptop. Connect both to LAN. | Tech Team |
 | **2:15 PM** | Server Startup | `uv run ctf start`. Note LAN IP. | Manas / Krish |
 | **2:30 PM** | Teams Arrive | Hand LAN URL (`http://<IP>`) to Host & Floor Volunteers. | Vansh |
-| **2:45 PM** | Projector Setup | Connect display to Projector. Open `/scoreboard`. Fullscreen (`F11`). | Krish |
+| **2:45 PM** | Projector Setup | Connect display to Projector. Open `/scoreboard` (projector theme via `uv run ctf theme`) and `/av-console/countdown.html`. Fullscreen (`F11`). | Krish |
 | **3:00 - 4:00 PM** | Expert Talk | Monitor server load. Run `uv run ctf backup` once teams finish creating accounts. | Tech Team |
 | **4:00 - 4:30 PM** | Briefing & Rules | Verify all 20 teams can log in and see Act I challenges. | Volunteers / Tech |
 | **4:30 PM** | **COMPETITION START** | Announce competition live! Verify live solves stream on scoreboard. | Host & Tech Team |

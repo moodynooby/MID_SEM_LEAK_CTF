@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mid-Sem Leak — Countdown</title>
+  <link rel="stylesheet" href="shared/theme.css" />
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    #wall-clock {
+      position: fixed;
+      top: 1.5rem;
+      left: 1.5rem;
+      font-size: 1.25rem;
+      opacity: 0.6;
+      font-variant-numeric: tabular-nums;
+    }
+
+    #next-label {
+      font-size: clamp(1.2rem, 2.5vw, 2rem);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    #big-timer {
+      font-size: clamp(5rem, 18vw, 14rem);
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+      text-shadow: 0 0 40px rgba(125, 211, 252, 0.3);
+    }
+
+    #progress-track {
+      width: min(80vw, 900px);
+      height: 10px;
+      background: var(--bg-raised);
+      border-radius: 999px;
+      margin: 2rem 0 2.5rem;
+      overflow: hidden;
+    }
+
+    #progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-good));
+      transition: width 1s linear;
+    }
+
+    #timeline {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem 1.25rem;
+      max-width: min(90vw, 1100px);
+      padding: 0;
+      margin: 0;
+      font-size: 0.95rem;
+    }
+
+    #timeline li {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      opacity: 0.45;
+    }
+
+    #timeline li.done {
+      opacity: 1;
+    }
+
+    #timeline .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--border);
+    }
+
+    #timeline li.done .dot {
+      background: var(--accent-good);
+    }
+
+    #timeline .time {
+      font-variant-numeric: tabular-nums;
+      color: var(--accent);
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+  <nav class="console-nav">
+    <a href="soundboard.html">Soundboard</a>
+  </nav>
+
+  <div id="wall-clock">--:--:--</div>
+
+  <div id="next-label">Loading…</div>
+  <div id="big-timer">00:00:00</div>
+
+  <div id="progress-track">
+    <div id="progress-fill"></div>
+  </div>
+
+  <ul id="timeline"></ul>
+
+  <div class="hint">Press F11 for fullscreen · ?date=YYYY-MM-DD / ?offset=&lt;minutes&gt; to rehearse</div>
+
+  <script src="countdown.js"></script>
+</body>
+</html>
