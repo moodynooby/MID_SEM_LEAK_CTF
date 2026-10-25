@@ -59,6 +59,10 @@ When started, CTFd will be accessible at:
 ├── .gitignore                      # Multiplatform ignore (uv, env secrets, backups, OS junk)
 ├── pyproject.toml / uv.lock        # Modern uv project setup (Python >= 3.10)
 ├── ctf.py                          # Unified cross-platform CLI runner (Linux / macOS / Windows)
+├── AGENTS.md                       # Operational constitution & AI agent guidelines
+├── EVENT.md                        # Master event timeline, venue specs & live operations plan
+├── HANDOFF.md                      # Engineering handoff, track matrix & disaster recovery
+├── NOTES.md                        # Narrative lore, 6 anti-AI defenses & technical deep-dive
 │
 ├── conf/
 │   ├── nginx/default.conf          # Nginx proxy (Port 80, SSE websocket streaming, 100MB body)
