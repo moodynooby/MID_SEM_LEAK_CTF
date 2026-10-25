@@ -12,29 +12,31 @@
 ---
 
 ## 1. Incident Overview
-On the evening of 27 October 2026 at approximately 21:14 IST, an automated alert triggered on the faculty internal file server. The upcoming *Data Structures & Algorithms Mid-Semester Examination Paper* was illicitly downloaded.
+On the evening of 27 October 2026 at approximately 21:14 IST, an automated alert triggered on the faculty internal file server in GICT. The upcoming **OOP 99 (Object Oriented Programming Systems)** Mid-Semester Examination Paper, authored by **Prof. Hasmukh Chelaiya**, was illicitly downloaded and circulated.
 
-Within minutes, anonymous whispers began circulating on local group chats claiming that the paper was out. Campus administration called in your team of forensic investigators to trace the digital breadcrumbs, reconstruct the attack chain, and identify the culprit before the exam goes live.
+Forensics triage revealed anomalous network scanning traffic (`nmap`), suspicious mail server activity, and tampering with the Safe Exam Browser (SEB) distribution share. Department records also noted tense disputes regarding grading in **OS 101 (Operating Systems)**.
+
+Campus administration has assembled your team of digital forensic investigators to trace the network breadcrumbs, analyze the evidence dockets, and unmask the culprit before the paper spreads further.
 
 ```
-       [Faculty Internal Portal]
+       [Prof. Hasmukh Chelaiya's Share]
                    |
-       (SQLi Bypass / Auth Breach)
+       (Nmap Recon & Auth Bypass)
                    |
        [workstation-lab-207.local]
                    |
-     (Exfiltration Script Execution)
+     (Exfiltrated Mails & OOPS Logs)
                    |
-   [Encrypted Group Chat Coordination]
+   [Planted Fake Clues / Decoy Red Herrings]
                    |
     [??? WHO IS THE MASTERMIND ???]
 ```
 
 ---
 
-## 2. Roster of Fictional Suspects
+## 2. Roster of Persons of Interest & Suspect Profiles
 
-Cross-reference these fictional student profiles with your evidence in Act V:
+Cross-reference these profiles with your evidence. Forensic triage suggests several digital footprints may be decoy accounts planted to mislead investigators:
 
 | Suspect Code | Name (Fictional) | Major & Year | Known Alias / Handle | Lab Presence Note |
 | :--- | :--- | :--- | :--- | :--- |

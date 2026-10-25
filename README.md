@@ -59,6 +59,10 @@ When started, CTFd will be accessible at:
 ├── .gitignore                      # Multiplatform ignore (uv, env secrets, backups, OS junk)
 ├── pyproject.toml / uv.lock        # Modern uv project setup (Python >= 3.10)
 ├── ctf.py                          # Unified cross-platform CLI runner (Linux / macOS / Windows)
+├── AGENTS.md                       # Operational constitution & AI agent guidelines
+├── EVENT.md                        # Master event timeline, venue specs & live operations plan
+├── HANDOFF.md                      # Engineering handoff, track matrix & disaster recovery
+├── NOTES.md                        # Narrative lore, 6 anti-AI defenses & technical deep-dive
 │
 ├── conf/
 │   ├── nginx/default.conf          # Nginx proxy (Port 80, SSE websocket streaming, 100MB body)
@@ -67,19 +71,11 @@ When started, CTFd will be accessible at:
 ├── ctfd-theme/                     # Big-screen /scoreboard styling (applied via `uv run ctf theme`)
 ├── av-console/                     # Projector countdown clock & Tech Lead sound cue board
 │
-├── challenges/                     # The 5 Story Acts & Timed Challenges (Private Repo)
+├── challenges/                     # Challenge Scaffolding & Active Tracks (Private)
 │   ├── README.md                   # Challenge authoring and solve-testing standard
-│   ├── template/                   # ctfcli-compatible challenge template
-│   ├── 01_act1_incident_report/    # Act I: CCTV Header Corruption (Forensics - Easy)
-│   ├── 02_act2_portal_breach/      # Act II: Portal Breach (Log Analysis / Web - Easy/Med)
-│   ├── 03_act3_encrypted_chat/     # Act III: Intercepted Ciphertext (Crypto - Medium)
-│   ├── 04_act4_malicious_script/   # Act IV: Exfiltration Payload (Reverse Eng. - Med/Hard)
-│   ├── 05_act5_final_culprit/      # Act V: Boss Mystery / Unmasking the Culprit (Hard)
-│   └── bonus_timed/
-│       ├── 01_vanishing_bonus/     # 15-Min Vanishing Challenge (4:35–4:50 PM)
-│       └── 02_lightning_round/     # 10-Min Speed Round (5:00–5:10 PM, Double Points)
+│   └── template/                   # ctfcli-compatible challenge template
 │
-├── ops/                            # Automation & Tech Lead Tooling (Krish, Manas, Vansh)
+├── ops/                            # Automation & Tech Lead Tooling (Manas, Krish)
 │   ├── freeze_scoreboard.py        # 5:15 PM suspense scoreboard blackout
 │   ├── unfreeze_scoreboard.py      # 5:30 PM closing ceremony scoreboard reveal
 │   ├── manage_timed_events.py      # Interactive console for clue drops and timed rounds
