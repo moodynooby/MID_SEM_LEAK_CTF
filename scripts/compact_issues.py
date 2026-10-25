@@ -291,34 +291,9 @@ run_cmd(["gh", "issue", "edit", "25",
          "--body", body_25])
 
 
-# 6. Close redundant micro-issues (#9 to #24) with redirection comments
-closures = [
-    # Forensics (Yesha) -> Issue #8
-    (9, 8, "[Track: Forensics & Physical]"),
-    (10, 8, "[Track: Forensics & Physical]"),
-    (11, 8, "[Track: Forensics & Physical]"),
-    (12, 8, "[Track: Forensics & Physical]"),
-    # Web & AI (Tanish) -> Issue #6
-    (13, 6, "[Track: Web & AI]"),
-    (14, 6, "[Track: Web & AI]"),
-    (15, 6, "[Track: Web & AI]"),
-    # Intrusion Event -> Issue #25
-    (16, 25, "[Live Ops & Gamification]"),
-    # Binary & Crypto (Vidit) -> Issue #7
-    (17, 7, "[Track: Binary & Crypto]"),
-    (18, 7, "[Track: Binary & Crypto]"),
-    (19, 7, "[Track: Binary & Crypto]"),
-    # Network & Forensics (Vatsal) -> Issue #5
-    (20, 5, "[Track: Network & Forensics]"),
-    (21, 5, "[Track: Network & Forensics]"),
-    (22, 5, "[Track: Network & Forensics]"),
-    (23, 5, "[Track: Network & Forensics]"),
-    (24, 5, "[Track: Network & Forensics]"),
-]
-
-for micro_id, parent_id, parent_name in closures:
-    comment = f"Consolidated into master {parent_name} issue #{parent_id}. Closing this individual ticket to keep the tracker compact and organized."
-    run_cmd(["gh", "issue", "comment", str(micro_id), "--body", comment])
+# 6. Close redundant micro-issues (#9 to #24) silently
+micro_issues = list(range(9, 25))
+for micro_id in micro_issues:
     run_cmd(["gh", "issue", "close", str(micro_id)])
 
 print("\n--- Compaction Finished Successfully ---")
