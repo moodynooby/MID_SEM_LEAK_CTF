@@ -165,6 +165,7 @@ flowchart TD
 ---
 
 ## 8. Governance & Contribution Rules
+- **Mandatory Context Reading & Updates:** Every contributor and agent MUST read all operational context docs ([AGENTS.md](AGENTS.md), [EVENT.md](EVENT.md), [HANDOFF.md](HANDOFF.md), [NOTES.md](NOTES.md), [README.md](README.md), [challenges/README.md](challenges/README.md), and [docs/TECH_LEAD_RUNBOOK.md](docs/TECH_LEAD_RUNBOOK.md)) before taking action, and synchronously update all corresponding context docs whenever modifications are made.
 - Always refer to [AGENTS.md](AGENTS.md) for strict rules regarding AI contributions (`Assisted-by` attribution), secret hygiene, dynamic scoring formulas, and DCO restrictions (no `Signed-off-by`).
 - Keep `.env.example` strictly synchronized with `.env`.
 - Link all PRs and commits to relevant issue IDs (`Fixes: #<id>`).

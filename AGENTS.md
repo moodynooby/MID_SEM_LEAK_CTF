@@ -22,7 +22,7 @@
 2. **Reproducibility:** A fresh clone on any computer must spin up identically via `uv run ctf start`. Pinned container tags only (`ctfd:3.7.0`, `mariadb:10.11`, `redis:7-alpine`, `nginx:alpine`).
 3. **Immutability & Atomic Updates:** Updates progress in generational steps. Recreate containers cleanly via Compose; never live-patch the database without an automated snapshot generation.
 4. **Risk-Free Rollbacks:** Pre-mutation snapshot via `uv run ctf backup` bundles `database.sql` and `/var/uploads` into `backups/ctfd_backup_<timestamp>.tar.gz`. The standby laptop restores instantly with `uv run ctf restore`.
-5. **Zero Configuration Drift:** Any deleted feature or obsolete challenge track must be pruned entirely from code, issues, and state. Keep [.env.example](.env.example) in strict lockstep with `.env`.
+5. **Zero Configuration & Documentation Drift:** Any deleted feature, modified challenge, adjusted timeline, or updated operational script must be immediately and synchronously updated across all context documents ([EVENT.md](EVENT.md), [HANDOFF.md](HANDOFF.md), [NOTES.md](NOTES.md), [README.md](README.md), [challenges/README.md](challenges/README.md)). Keep [.env.example](.env.example) in strict lockstep with `.env`.
 6. **Infrastructure as Code (IaC):** Proxy routing, database engine tuning, challenge metadata, event automations, and live timeline schedules are version-controlled code.
 
 ---
@@ -30,6 +30,17 @@
 ## 3. Autonomous Actions (Three-Tier Rule)
 
 ### Always do:
+- **Mandatory Context Ingestion (Read All Context Docs First):**
+  Before proposing plans, executing code, creating challenges, or modifying configurations, agents MUST read and internalize the complete operational context:
+  1. [AGENTS.md](AGENTS.md) — Operational constitution, governance, and autonomous rules.
+  2. [EVENT.md](EVENT.md) — Master event timeline, venue specs, gamification rules, and schedules.
+  3. [HANDOFF.md](HANDOFF.md) — Engineering handoff, live container status, track matrix, and failover runbook.
+  4. [NOTES.md](NOTES.md) — Narrative canon lore, 6 anti-AI defenses, and technical infrastructure deep dive.
+  5. [README.md](README.md) — Repository structure, quickstart, and environment setup.
+  6. [challenges/README.md](challenges/README.md) — 5-step challenge authoring and verification standard.
+  7. [docs/TECH_LEAD_RUNBOOK.md](docs/TECH_LEAD_RUNBOOK.md) — Live ops minute-by-minute playbook.
+- **Synchronously Update Context Docs on Any Modification:**
+  Whenever modifying the codebase—adding or editing challenges, tweaking infrastructure configs, updating canon storylines, adjusting event dynamics, or creating CLI commands—agents MUST immediately update all affected context documents ([EVENT.md](EVENT.md), [HANDOFF.md](HANDOFF.md), [NOTES.md](NOTES.md), [README.md](README.md)) within the same commit or pull request. No orphan or lagging documentation is permitted.
 - Run all administrative and lifecycle operations via the unified CLI: `uv run ctf <command>` ([ctf.py](ctf.py)).
 - Run `uv run ctf backup` before modifying database schemas, mass-importing challenges, or updating container versions.
 - Verify any non-trivial bug by creating an isolated reproducer before attempting fixes.
@@ -103,4 +114,13 @@ All 14 challenges must adhere to the 5-step authoring standard defined in [chall
 - **Handoff Documentation:** See [HANDOFF.md](HANDOFF.md).
 - **Technical & Lore Notebook:** See [NOTES.md](NOTES.md).
 
-**Pre-Flight Verification:** [ ] Declarative? [ ] Reproducible? [ ] Backup created if stateful? [ ] Zero drift? [ ] Reproducer verified? [ ] Anti-AI layer validated? [ ] No `Signed-off-by`?
+**Pre-Flight Verification Checklist:**
+`[ ] All context docs read?`  
+`[ ] Context docs updated alongside changes?`  
+`[ ] Declarative?`  
+`[ ] Reproducible?`  
+`[ ] Backup created if stateful?`  
+`[ ] Zero drift?`  
+`[ ] Reproducer verified?`  
+`[ ] Anti-AI layer validated?`  
+`[ ] No Signed-off-by?`

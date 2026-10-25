@@ -1,197 +1,329 @@
-# EVENT.md — Event Master Dossier & Operations Plan
+# EVENT.md — Master Event Dossier & Comprehensive Operations Plan
 > **Case File: The Mid-Sem Leak** | IEEE AUSB Annual Cybersecurity CTF  
 > **Date:** Wednesday, 28 October 2026 | **Time:** 2:00 PM – 6:00 PM IST  
 > **Venues:** Computer Labs 207 & 208, GICT Building, Ahmedabad University  
-> **Live Server:** Standalone Campus LAN (Port 80) | Hot-Standby Failover Target: `< 2 min`  
+> **Deployment Architecture:** 100% Offline Campus LAN (Port 80) | Standby Failover Target: `< 2 min`  
+> **Target Audience:** 20 Teams (40–80 Undergraduate Engineering & Computing Students)  
 
 ---
 
-## 1. Executive Summary & Event Overview
-**Case File: The Mid-Sem Leak** is an immersive, forensics-driven cybersecurity Capture The Flag (CTF) competition organized by the **IEEE Ahmedabad University Student Branch (IEEE AUSB)**. Designed for 20 teams (40–80 undergraduate engineering and computing students), the event drops participants into a realistic digital forensics mystery: tracing the illicit leak of the **OOP 99 (Object Oriented Programming Systems)** mid-semester examination paper drafted by **Prof. Hasmukh Chelaiya**.
+## 1. Executive Summary & Event Premise
+**Case File: The Mid-Sem Leak** is an immersive digital forensics Capture The Flag (CTF) competition organized by the **IEEE Ahmedabad University Student Branch (IEEE AUSB)**. Designed as a real-time murder-mystery-style incident triage, the competition challenges 20 undergraduate teams to investigate the illicit exfiltration and circulation of the confidential **OOP 99 (Object Oriented Programming Systems)** mid-semester exam paper authored by **Prof. Hasmukh Chelaiya**.
 
-Unlike conventional text-heavy or generic online CTFs, this competition is:
-- **100% Offline & Campus LAN Hosted:** Operates locally on Lab port 80 with zero reliance on cloud services or external internet for the core CTFd engine and scoreboards.
-- **Narrative-Driven:** 14 challenges formatted as classified digital evidence dockets (network logs, memory dumps, intercepted emails, reverse-engineered binaries, and audio wiretaps).
-- **Gamified & Anti-AI Hardened:** Features an interactive live projector dashboard, sound cue board, intrusion siren alerts, a spinning prize/punishment wheel, hot-sauce lifelines, a 15-minute vanishing bonus challenge, a 10-minute double-points lightning round, and a climactic 15-minute scoreboard blackout.
+### Distinctive Pillars:
+- **100% Offline LAN Architecture:** The entire CTFd platform, reverse proxy, database, challenge assets, and scoreboards run locally on Gigabit Lab switches on Port 80, completely immune to external internet disruptions.
+- **Narrative-Driven Forensic Evidence:** 14 challenges structured across 4 specialized forensic tracks simulating real-world digital triage (network packet streams, Wi-Fi AP association logs, deleted filesystem inodes, stripped Safe Exam Browser binaries, and audio wiretaps).
+- **Anti-AI Hardened Puzzles:** Every challenge incorporates multimodal, sensory, volatile, or custom corpus defenses that cannot be solved by generic online Large Language Models.
+- **High-Voltage Gamification:** A live big-screen projector dashboard, synchronized audio soundboard, rate-limit intrusion sirens, an interactive 8-segment Spin Wheel, physical Hot Sauce lifelines, a 15-minute vanishing bonus challenge, a 10-minute lightning round, and a climactic 15-minute scoreboard blackout.
 
 ---
 
-## 2. Key Personnel & Operational Roster
+## 2. Venues, Physical Staging & Network Topology
 
-| Role | Name | GitHub / Contact | Primary Responsibility |
+### A. Laboratory Room Allocations (GICT Building)
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    GICT LAB 207 (COMMAND WING)              │
+│                                                             │
+│   [Ceiling Projector 1] ─── Fullscreen Live Scoreboard      │
+│   [Audio/Visual Console] ── 12-Track Live Soundboard + PA   │
+│   [Primary Server Desk] ─── Host PC (CTFd Stack Port 80)    │
+│   [Hot Sauce Station] ───── Sanitary Lifeline Table         │
+│   [Crime Scene Station] ─── Lab 207 Physical Forensics PC   │
+│                                                             │
+│   Stations 01 – 10: Teams 01 through 10 (2–4 players/team)  │
+└──────────────────────────────┬──────────────────────────────┘
+                               │ Gigabit Trunk Cable
+┌──────────────────────────────┴──────────────────────────────┐
+│                  GICT LAB 208 (INVESTIGATION WING)          │
+│                                                             │
+│   [Ceiling Projector 2] ─── Synchronized Scoreboard Feed    │
+│   [Standby Server Desk] ─── Hot-Standby Laptop (Live Sync)  │
+│   [Floor Mentor Desk] ───── Secondary Volunteer Hub         │
+│                                                             │
+│   Stations 11 – 20: Teams 11 through 20 (2–4 players/team)  │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### B. Network Architecture & IP Allocation
+- **Physical Network:** Dedicated campus gigabit switches connecting Lab 207 and Lab 208.
+- **Subnet Configuration:** `192.168.1.0/24` (or lab designated private subnet).
+- **Static IP Reservations:**
+  - **Primary Server (CTFd Stack):** `192.168.1.100` (Port 80 HTTP).
+  - **Hot-Standby Host:** `192.168.1.101` (Pre-configured to adopt `.100` on failover).
+  - **AV Console Station:** `192.168.1.102`.
+  - **Crime Scene Workstation:** `192.168.1.105` (Physical Lab 207 PC).
+  - **Participant DHCP Pool:** `192.168.1.110` – `192.168.1.190`.
+- **Local DNS & Host Aliasing:**
+  - Primary URL: `http://192.168.1.100`
+  - Fallback local DNS / hosts entry: `http://ctf.local` mapped via local dnsmasq on primary host.
+- **Firewall Policy:**
+  - Incoming TCP Port 80 allowed from lab subnet.
+  - External WAN routing disabled or isolated to ensure pure offline reliability.
+
+---
+
+## 3. Key Personnel & Operational Roster
+
+| Role | Name | Handle / Desk | Operational Domain |
 | :--- | :--- | :--- | :--- |
-| **Core Organizer & Lead** | **Vansh Shah** | Event Coordination | Overall event logistics, faculty liaison, room bookings, and participant management. |
-| **Co-Tech Lead** | **Manas Doshi** | `@moodynooby` | Server infrastructure, MariaDB/Nginx configuration, CLI tooling, blackout/reveal execution. |
-| **Co-Tech Lead** | **Krish** | `@Krish-452` | Hot-standby sync, timed event automations, scoreboard projector management, hint releases. |
-| **Track Lead: Forensics & Stego**| **Yesha** | Reserved | Evidence split parts, audio spectrogram wiretap, redacted PDF, physical RAM dump. |
-| **Track Lead: Web & AI** | **Tanish Shah** | `@tanishshahh` | Cookie/API challenges, proctor bot jailbreak, PHP web shell, intrusion siren alerts. |
-| **Track Lead: Crypto & Reversing**| **Vidit** | `@viditd1-eng` | CTFd UI theme, Android APK reversing, password hash cracking, Safe Exam Browser reversing. |
-| **Track Lead: Network & Logs** | **Vatsal Pandya** | `@VP1107` | Wi-Fi/DNS auto-sync logs, ransomware PCAP, deleted file recovery, angry TA emails, spin wheel app. |
-| **Floor Mentors & Volunteers** | **IEEE Student Volunteers**| Labs 207 & 208 | Participant verification, LAN cable checks, dossier handouts, hot sauce administration. |
+| **Core Event Lead & Emcee** | **Vansh Shah** | Event Stage / Lab 207 | Opening remarks, participant welcome, speaker session coordination, prize distribution. |
+| **Co-Tech Lead (Infrastructure)** | **Manas Doshi** | `@moodynooby` (Lab 207) | MariaDB engine, Nginx tuning, CLI operations, blackout trigger, scoreboard reveal. |
+| **Co-Tech Lead (Ops & Standby)** | **Krish** | `@Krish-452` (Lab 208) | Hot-standby sync, timed event triggers, scoreboard projector feed, volunteer hints liaison. |
+| **Track Lead: Forensics & Stego** | **Yesha** | Reserved (Lab 207) | Audio spectrogram challenge, PDF hidden text, fragmented Base64, physical RAM dump. |
+| **Track Lead: Web & AI** | **Tanish Shah** | `@tanishshahh` (Lab 207) | Proctor bot prompt jailbreak, cookie tampering, PHP webshell, AV soundboard operator. |
+| **Track Lead: Binary & Crypto** | **Vidit** | `@viditd1-eng` (Lab 208) | Android APK reversing, password hash cracking, Safe Exam Browser reversing, UI theme. |
+| **Track Lead: Network & Logs** | **Vatsal Pandya** | `@VP1107` (Lab 208) | Wi-Fi logs auto-sync twist, ransomware PCAP, angry TA emails, Spin Wheel web app operator. |
+| **Floor Mentors & Marshals** | **8 IEEE Volunteers** | Labs 207 & 208 (4 per lab)| Check-in verification, network troubleshooting, Hot Sauce safety, flag submission rate-limit alerts. |
 
 ---
 
-## 3. Minute-by-Minute Master Schedule (28 October 2026)
+## 4. Participant Ingress, Kit Distribution & Software Toolkit
+
+### A. Team Onboarding Workflow (2:30 PM – 3:00 PM)
+1. **Welcome Desk (Entrance of Lab 207):**
+   - Verification of student ID cards and event registration confirmation.
+   - Assignment of physical Team Number (Team 01 to Team 20) and Lab Station.
+2. **Physical Investigation Kit Distribution:**
+   - **Classified Incident Briefing Dossier:** Multi-page printed booklet with suspect dossiers, timeline diagram, floor plans, and notes from Prof. Chelaiya.
+   - **Station Credential Card:** Pre-printed badge containing:
+     - Team Name & Number.
+     - Assigned Station (e.g. `Lab 207 - Station 04`).
+     - Pre-seeded CTFd credentials (Username: `team04`, Temporary Password: `ctf_investigator_2026`).
+     - Access URL: `http://192.168.1.100`.
+   - **Investigator Scratchpad & Pen:** For manual cipher calculations and timeline correlation.
+
+### B. Recommended Participant Software Toolkit
+Participants are advised during pre-event communications to have the following tools installed on their laptops:
+- **Network Analysis:** Wireshark / TShark.
+- **Audio & Signal Analysis:** Audacity or Sonic Visualiser.
+- **Reverse Engineering & Disassembly:** Ghidra, IDA Free, or GDB; JADX-GUI (for APK reversing).
+- **Forensic Utilities:** The Sleuth Kit (`fls`, `icat`), `foremost`, `binwalk`, `pdftotext`, `strings`.
+- **Cryptography & Hash Cracking:** John the Ripper, Hashcat, `zip2john`.
+- **Scripting:** Python 3 (with `requests`, `scipy`, `pypdf`, `cryptography` libraries).
+- **Offline Utilities:** Standalone offline CyberChef (hosted on CTFd static downloads).
+
+---
+
+## 5. Master Minute-by-Minute Schedule (28 October 2026)
 
 ```
-2:00 PM  ─── Setup & Hardware Staging (Tech Leads & Volunteers)
-2:30 PM  ─── Participant Check-in & Team Seating (Labs 207 & 208)
-3:00 PM  ─── Expert Talk & Pre-Event Technical Session
-4:00 PM  ─── Case Briefing & Rules Announcement
-4:30 PM  ─── 🚀 COMPETITION COMMENCES (1-Hour Active Window)
-4:35 PM  ─── ⏳ 15-Min Vanishing Bonus Challenge Appears
-4:45 PM  ─── 📂 Intel Clue Drop #1 & Spin Wheel Lifeline #1
-4:50 PM  ─── 🔒 Vanishing Bonus Challenge Expires
-5:00 PM  ─── ⚡ 10-Min Double-Points Lightning Round & Lifeline #2
-5:10 PM  ─── ⚡ Lightning Round Closes & Intel Clue Drop #2
-5:15 PM  ─── 🌑 SCOREBOARD BLACKOUT (Suspense Mode Triggered)
-5:30 PM  ─── 🏁 COMPETITION CLOSES (Submissions Locked)
-5:35 PM  ─── 🏆 Scoreboard Reveal & Fictional Culprit Unmasked
-5:45 PM  ─── 🎁 Awards Ceremony, Certificates & Closing Remarks
+02:00 PM ─── Staff Arrival, Server Boot & Network Dry Run
+02:30 PM ─── Participant Check-in & Station Seating (Labs 207 & 208)
+03:00 PM ─── 🎙️ Expert Talk: Modern Cyber Forensics & Incident Response
+04:00 PM ─── 📋 Case Briefing, Canon Lore Presentation & Rules Q&A
+04:30 PM ─── 🚀 ACTIVE COMPETITION WINDOW BEGINS (1 Hour)
+04:35 PM ─── ⏳ Milestone 1: 15-Minute Vanishing Bonus Challenge Unlocked
+04:45 PM ─── 📂 Milestone 2: Intel Clue Drop #1 & Spin Wheel Round 1
+04:50 PM ─── 🔒 Milestone 3: Vanishing Bonus Challenge Expires
+05:00 PM ─── ⚡ Milestone 4: 10-Minute Lightning Round (2x Points) & Spin Wheel Round 2
+05:10 PM ─── ⚡ Milestone 5: Lightning Round Closes & Intel Clue Drop #2
+05:15 PM ─── 🌑 Milestone 6: Scoreboard Blackout (Suspense Mode on Projectors)
+05:30 PM ─── 🏁 COMPETITION TERMINATION (Submissions Locked)
+05:35 PM ─── 🏆 Master Scoreboard Reveal & Fictional Culprit Unmasked
+05:45 PM ─── 🎁 Awards Ceremony, Trophies & Closing Vote of Thanks
 ```
 
-### Detailed Timeline Breakdown
+---
 
-#### Phase I: Pre-Event Staging & Arrival (2:00 PM – 3:00 PM)
-- **2:00 PM – Lab Access & Infrastructure Boot:**
-  - Power up the **Primary Server Host** in Lab 207 and the **Standby Host** in Lab 208.
-  - Connect hosts to Gigabit Lab Switches. Verify LAN IP binding (`ip -4 addr show` / `Get-NetIPAddress`).
-  - Execute `uv run ctf start` and verify container health via `uv run ctf status`.
-  - Connect HDMI feeds to Lab 207 and Lab 208 ceiling projectors; open `http://localhost/scoreboard` in Fullscreen (`F11`).
-- **2:30 PM – Participant Ingress & Team Check-in:**
-  - Floor volunteers check team tickets at Lab entrances.
-  - Teams are directed to assigned lab terminals (2–4 members per team, 20 total teams).
-  - Distribute physical **Classified Incident Briefing Dossiers** and printed scratchpads.
+## 6. Detailed Phase Breakdown & Spoken Emcee Scripts
 
-#### Phase II: Speaker Session & Briefing (3:00 PM – 4:30 PM)
-- **3:00 PM – 4:00 PM – Expert Talk / Pre-Event Session:**
-  - Guest speaker / faculty session on modern cyber forensics, network incident response, and ethical hacking.
-  - While participants listen, Tech Leads verify all 20 team accounts in CTFd and test snapshot synchronization:
-    ```bash
-    uv run ctf backup
-    uv run ctf sync <STANDBY_LAPTOP_IP>
-    ```
-- **4:00 PM – 4:30 PM – Briefing, Lore Reveal & Rules Review:**
-  - Organizer Vansh Shah introduces the case premise: The OOP 99 exam paper has leaked, and the investigation begins now.
-  - Review rules: flag format (`case{...}`), dynamic scoring formula, strict prohibition of network attacks against CTFd.
-  - Floor volunteers verify all teams can successfully log in at `http://<LAN_IP>`.
+### Phase I: Setup, Ingress & Speaker Session (2:00 PM – 4:30 PM)
 
-#### Phase III: Active Competition Window (4:30 PM – 5:30 PM)
-- **4:30 PM – Competition Commences:**
-  - Tech Leads trigger the opening fanfare audio cue; CTFd scoreboard activates.
-  - First Blood alerts active for all 14 challenges.
-- **4:35 PM – Vanishing Bonus Challenge Unlocked (15-Min Window):**
-  - CLI: `uv run ctf events --event vanishing_start`.
-  - Temporary volatile evidence docket appears in CTFd.
-- **4:45 PM – Clue Drop #1 & Spin Wheel Round 1:**
-  - CLI: `uv run ctf events --event clue_drop_1`.
-  - The live Projector Spin Wheel activates! Teams that have not scored may spin the wheel or take a Hot Sauce shot for a free unpenalized hint.
-- **4:50 PM – Vanishing Challenge Expiration:**
-  - CLI: `uv run ctf events --event vanishing_end`.
-  - Unsolved vanishing evidence disappears from CTFd.
-- **5:00 PM – 10-Minute Lightning Round (Double Points) & Clue Drop #2:**
-  - CLI: `uv run ctf events --event lightning_start`.
-  - High-intensity speed puzzle unlocked; solves within the next 10 minutes earn 2x points!
-- **5:10 PM – Lightning Round Closes:**
-  - CLI: `uv run ctf events --event lightning_end` then `uv run ctf events --event clue_drop_2`.
-- **5:15 PM – Scoreboard Blackout (The Final 15 Minutes):**
-  - CLI: `uv run ctf blackout`.
-  - MariaDB freezes public score calculations. Projectors switch to a high-tension glitch graphic: **"LOCKDOWN ACTIVE — SCOREBOARD FROZEN"**.
-  - All solves continue to be logged silently on the backend.
-- **5:30 PM – Competition Concludes:**
-  - Siren sounds; all flag submissions locked in CTFd.
+#### 2:00 PM – 2:30 PM: Infrastructure Boot & Sanity Check
+- Manas and Krish power up Primary and Standby hosts.
+- Execute `uv run ctf start` and confirm all 4 containers healthy via `uv run ctf status`.
+- Connect HDMI feeds to Lab 207 and Lab 208 ceiling projectors; open `http://localhost/scoreboard` in fullscreen (`F11`).
+- Run `uv run ctf backup` and test sync to standby laptop: `uv run ctf sync 192.168.1.101`.
 
-#### Phase IV: Closing Ceremony & Awards (5:30 PM – 6:00 PM)
-- **5:35 PM – Live Scoreboard Reveal:**
-  - CLI: `uv run ctf reveal`.
-  - Unfreeze the public scoreboard; reveal the final rankings from 20th place down to 1st place!
-  - Unmask the fictional culprit (TA Piyush Pelaiya) and present the narrative resolution.
-- **5:45 PM – Prize Distribution & Certificates:**
-  - Trophies, cash vouchers/prizes, and certificates awarded to Top 3 teams + First Blood Champion.
-  - Group photo and closing vote of thanks by IEEE AUSB.
+#### 2:30 PM – 3:00 PM: Team Ingress & Seating
+- Volunteers welcome teams, distribute dossiers and station cards, guide them to assigned stations.
+- Verify laptops connect to local Wi-Fi / Ethernet and load `http://192.168.1.100`.
+
+#### 3:00 PM – 4:00 PM: Expert Talk / Technical Guest Session
+- **Title:** *"Deconstructing Modern Cyber Forensics: From Incident Triage to Attribution"*.
+- **Focus:** Practical digital forensics, inspecting packet flows, memory analysis, steganography principles, and ethical hacking standards.
+- While session is underway, Tech Leads verify all 20 team accounts in CTFd and test snapshot synchronization.
+
+#### 4:00 PM – 4:30 PM: Case Briefing & Rules Review
+- Organizer Vansh Shah takes the podium in Lab 207 (projected to Lab 208):
+  > *"Investigators, welcome to GICT. Last night at 21:14 IST, a confidential draft of Prof. Hasmukh Chelaiya's upcoming OOP 99 mid-sem examination was illicitly downloaded and leaked from the faculty share. Department records show high tension and grievances surrounding harsh grading in OS 101. Administration has convened your teams to trace the digital breadcrumbs, analyze the evidence dockets, and unmask the mastermind before the exam paper circulates campus. You have exactly one hour. Good luck!"*
+- Rules explained: `case{...}` flag syntax, dynamic scoring formula, 5-fail rate limit policy, Spin Wheel and Hot Sauce lifeline rules.
 
 ---
 
-## 4. Live Gamification & Projector Mechanics
+### Phase II: Active Competition Window (4:30 PM – 5:30 PM)
 
-### A. The Big-Screen Projector Experience
-- **Scoreboard Auto-Refresh:** Dedicated fullscreen `/scoreboard` view displaying real-time team ranking, points, solve counts, and dynamic flag badges.
-- **First-Blood Ticker:** When a team secures the first solve on any challenge, a neon banner and sound chime trigger across both labs.
-- **Visual Countdown Clock:** A synchronized digital clock on the secondary display counting down to 5:30 PM.
+#### 4:30 PM: Competition Commences
+- **Action:** Tech Leads unlock challenge visibility in CTFd.
+- **Sound Cue:** `01_start_fanfare.mp3` triggers across lab audio.
+- **Emcee Script:**
+  > *"The investigation is officially live! Your terminals are active. Review your dossiers, access the evidence files at 192.168.1.100, and claim First Blood!"*
 
-### B. Projector Spin Wheel & Hot Sauce Lifelines (Issue #25)
-To prevent teams from getting discouraged during the 1-hour active window, an interactive HTML5 Spin Wheel is projected on the presentation screen during designated windows (4:45 PM and 5:00 PM):
-1. **The 8 Wheel Segments:**
-   - 🌶️ **Hot Sauce Shot:** Teammate eats a spoonful of spicy hot sauce $\rightarrow$ earns 1 free, unpenalized investigative hint from the Tech Leads!
-   - 💡 **Public Intel Drop:** Organizers broadcast a 1-sentence clue on the screen for the entire room.
-   - ⚡ **5-Min Speed Window:** Next challenge solved by the team within 5 minutes earns +50 bonus points.
-   - 🛑 **2-Min Keyboard Freeze:** The spinning team must step away from their keyboards for 2 minutes.
-   - 🎭 **Eliminate a Decoy:** The host officially crosses off one innocent student suspect from the dossier.
-   - 🔄 **Teammate Role Swap:** Teammates must swap computers and roles.
-   - 🍬 **Sweet Relief:** Candy / chocolate snack delivered to the team.
-   - 🚨 **Sound the Alarm:** Blaring alarm siren sounds across the lab speakers for 5 seconds.
+#### 4:35 PM: Milestone 1 — 15-Minute Vanishing Bonus Challenge Unlocked
+- **CLI Command:** `uv run ctf events --event vanishing_start`
+- **Sound Cue:** `02_radar_ping.mp3`
+- **System Action:** CTFd notification broadcasts: *"⏳ TIME-SENSITIVE EVIDENCE DETECTED! Temporary cache trace discovered on lab share. Self-destructs at 4:50 PM!"*
+- **Emcee Script:**
+  > *"Attention investigators! A volatile evidence docket has appeared in CTFd. You have exactly 15 minutes before the memory trace is purged permanently at 4:50 PM!"*
 
-### C. Intrusion Punishments & Siren Alerts (Issue #16)
-- **Automated Anti-Bruteforce Strobe:** If a team submits **5 incorrect flags consecutively**, CTFd enforces a 60-second submission lockout.
-- **Visual Strobe:** A red warning strobe and audio alert flash on the projector screen targeting their terminal station to simulate an incident response intrusion detection system!
+#### 4:45 PM: Milestone 2 — Intel Clue Drop #1 & Spin Wheel Round 1
+- **CLI Command:** `uv run ctf events --event clue_drop_1`
+- **Sound Cue:** `03_wheel_spin.mp3`
+- **System Action:** Clue broadcast: *"Forensics recovered deleted syslog timestamps. Check Act II portal traces."*
+- **Gamification:** The live Projector Spin Wheel activates! Teams currently with zero solves or stuck on a challenge can volunteer a teammate to spin the wheel or take a Hot Sauce shot for an unpenalized hint.
 
----
+#### 4:50 PM: Milestone 3 — Vanishing Bonus Challenge Purged
+- **CLI Command:** `uv run ctf events --event vanishing_end`
+- **Sound Cue:** `04_evidence_purge.mp3`
+- **System Action:** Unsolved vanishing challenge hidden from CTFd view.
+- **Emcee Script:**
+  > *"The vanishing cache trace has been overwritten. The investigation moves forward!"*
 
-## 5. Scoring Rules & Flag Format
+#### 5:00 PM: Milestone 4 — 10-Minute Lightning Round (2x Points) & Spin Wheel Round 2
+- **CLI Command:** `uv run ctf events --event lightning_start`
+- **Sound Cue:** `05_lightning_alert.mp3`
+- **System Action:** CTFd notification: *"⚡ 10-MINUTE LIGHTNING ROUND ACTIVE! Double points awarded for solving within the next 10 minutes!"*
+- **Emcee Script:**
+  > *"Investigators! The 10-minute Lightning Round has officially started! Double points on the table until 5:10 PM! High-intensity speed run!"*
+- Spin Wheel activates for the final round of lifelines.
 
-1. **Flag Format:**
-   - Every flag follows the strict canonical syntax: `case{...}`
-   - All lowercase prefix, ASCII characters, numbers, and underscores (e.g., `case{ta_piyush_angry_leaked_oop99_mail}`).
-   - Case-insensitive trimming applied on submit.
-2. **Dynamic Scoring Engine:**
-   - **Initial Score:** 500 points.
-   - **Decay Solves:** 15 teams (points decrease smoothly with each solve).
-   - **Minimum Floor:** 100 points.
-   - **Formula:** 
-     $$\text{Points} = \max\left(\text{Min}, \text{Round}\left(\left(\frac{\text{Min} - \text{Initial}}{(\text{Decay})^2}\right) \times (\text{Solves} - 1)^2 + \text{Initial}\right)\right)$$
-3. **Tie-Breaker Rule:**
-   - If two teams tie on total points, ranking is determined by the timestamp of their last accepted flag submission (earliest timestamp wins).
-4. **Hint Penalties:**
-   - In-platform hints incur a nominal point deduction (-20 to -50 points).
-   - Hot Sauce lifelines grant hints **without** point deductions.
+#### 5:10 PM: Milestone 5 — Lightning Round Closes & Intel Clue Drop #2
+- **CLI Command:** `uv run ctf events --event lightning_end` followed by `uv run ctf events --event clue_drop_2`
+- **System Action:** Clue broadcast: *"Key derivation function identified. Cross-reference campus dossier names!"*
 
----
+#### 5:15 PM: Milestone 6 — Scoreboard Blackout (Suspense Mode)
+- **CLI Command:** `uv run ctf blackout`
+- **Sound Cue:** `06_blackout_glitch.mp3` (heavy power down / electrical glitch sound)
+- **System Action:** MariaDB updates config `freeze=true`. Projectors switch to full-screen **'LOCKDOWN ACTIVE — SCOREBOARD FROZEN'** graphic.
+- **Emcee Script:**
+  > *"The scoreboard is now dark! Public scores are frozen. All solves are registering silently on the backend. You have 15 minutes to crack the final culprit and secure the championship!"*
+- Tech Leads monitor backend solves privately; run intermediate backup: `uv run ctf backup`.
 
-## 6. Code of Conduct & Fair Play Rules
-
-1. **No Infrastructure Tampering:**
-   - Participants must not run automated denial-of-service, mass fuzzing (`dirbuster`, `gobuster`, `sqlmap`), or brute-force scripts against the CTFd port 80 host or lab switches.
-2. **No Inter-Team Collusion or Tampering:**
-   - Sharing flags, ARP spoofing, Wi-Fi jamming, shoulder surfing, or modifying other teams' workstations is grounds for immediate disqualification.
-3. **Decisions Are Final:**
-   - The IEEE AUSB organizing committee and faculty mentors hold final discretion on all rule interpretations and scoring validations.
-
----
-
-## 7. Technical Infrastructure & Venue Requirements
-
-### Hardware & Network Setup
-- **Primary Server:** High-performance laptop/desktop running CTFd stack on Docker Desktop WSL2 / Linux.
-- **Secondary Server:** Hot-standby laptop with identical cloned repository and Docker daemon ready.
-- **Network:** Campus LAN Gigabit Switch connecting Labs 207 & 208. Primary host bound to static LAN IP.
-- **Displays:** Dual 1080p ceiling projectors in Labs 207 & 208 connected via HDMI.
-- **Audio:** PA system / lab speakers connected to Tech Lead AV console for fanfares, timers, and siren cues.
-
-### Disaster Contingency (Failover in `< 2 Minutes`)
-1. If the Primary Host experiences power failure, hardware freeze, or kernel panic:
-2. Unplug the Primary LAN cable.
-3. Set the Secondary Laptop to the Primary LAN IP (or broadcast new IP to room).
-4. Run `uv run ctf restore` on the Secondary Laptop.
-5. Swap HDMI projector cable to the Secondary Laptop.
-6. Resume competition immediately. Total recovery target: **< 120 seconds**.
+#### 5:30 PM: Competition Termination
+- **Sound Cue:** `07_times_up_siren.mp3`
+- **Action:** Flag submissions locked in CTFd.
+- **Emcee Script:**
+  > *"Step back from your keyboards! The investigation is officially closed. All submissions are locked!"*
 
 ---
 
-## 8. Emergency Contacts & Communication Tree
+### Phase III: Reveal, Awards & Closing Ceremony (5:30 PM – 6:00 PM)
 
-| Contact | Phone / Discord | Role |
-| :--- | :--- | :--- |
-| **Vansh Shah** | Event Desk / Lab 207 | Core Organizer & Logistics Escalations |
-| **Manas Doshi** | Tech Desk Lab 207 | Server, MariaDB, Docker & Network Infrastructure |
-| **Krish** | Tech Desk Lab 208 | Standby Server, Projector AV & Timeline Triggers |
-| **Lab Administrator**| GICT Facilities Office | Power, Lab Switches & Air Conditioning |
+#### 5:35 PM: Live Scoreboard Reveal & Narrative Resolution
+- **CLI Command:** `uv run ctf reveal`
+- **Sound Cue:** `08_reveal_victory.mp3`
+- **Emcee Script:**
+  > *"Investigators, the case is solved. At 02:13 AM, Prof. Chelaiya's ThinkPad auto-synced the draft exam over the faculty AP. But it wasn't a student hack—it was TA Piyush Pelaiya, seeking revenge for his failing grade in OS 101! And now, let us reveal the final standings!"*
+- Public scoreboard unfreezes; displays 20th place through 1st place in reverse order on the lab projectors.
+
+#### 5:45 PM – 6:00 PM: Prize Distribution & Awards Ceremony
+- Awarding of trophies, medals, vouchers, and certificates.
+- Closing remarks by Faculty Mentor and IEEE AUSB Chairperson.
+- Group photograph of all 20 teams in Lab 207.
+
+---
+
+## 7. Interactive Gamification Mechanics & Protocols
+
+### A. The Big-Screen Projector Spin Wheel
+- **Software Architecture:** Standalone offline HTML5 Canvas + TailwindCSS app running on `192.168.1.102` (`tools/spin_wheel/index.html`).
+- **Display Mode:** Fullscreen on 1080p projectors with high-contrast glowing segment borders and neon ticker needle.
+- **Controls:** `Space` = Trigger Spin; `R` = Reset to initial state; `M` = Toggle Mute.
+
+#### Segment Probability & Distribution Table
+
+| Segment Name | Probability Weight | Visual Icon | In-Game Effect | Risk / Reward Level |
+| :--- | :---: | :---: | :--- | :--- |
+| **Hot Sauce Shot** | 20% | 🌶️ | Teammate eats 1 spoonful of hot sauce $\rightarrow$ 1 free hint awarded without point penalty. | High Physical / High Reward |
+| **Public Intel Drop** | 15% | 💡 | Host announces a global 1-sentence clue on the projector screen for all teams. | Neutral / Cooperative |
+| **5-Min Speed Window** | 15% | ⚡ | If the spinning team solves any challenge in the next 5 mins, they receive +50 bonus points. | High Urgency Reward |
+| **2-Min Keyboard Freeze** | 10% | 🛑 | The entire spinning team must step back from computers for 120 seconds. | Mild Penalty |
+| **Eliminate a Decoy** | 15% | 🎭 | Host publicly eliminates one innocent suspect profile from the case board. | Pure Benefit |
+| **Teammate Role Swap** | 10% | 🔄 | Teammates must swap seats and workstations for the next 10 minutes. | Chaotic Fun |
+| **Sweet Relief** | 10% | 🍬 | A bowl of chocolates/candy delivered to the team's workstation. | Morale Booster |
+| **Sound the Alarm** | 5% | 🚨 | Lab PA system sounds an intrusion alarm for 5 seconds. | Atmospheric Chaos |
+
+### B. Hot Sauce Lifelines Protocol & Safety Standards
+1. **Sanitary Station:** Set up at the front of Lab 207. Equipped with nitrile gloves, disposable single-use wooden spoons, napkins, water cups, and whole milk / yogurt for immediate cooling.
+2. **Sauce Specification:** Certified commercial mild-to-medium hot sauce (approx. 5,000–10,000 Scoville Heat Units, e.g. Sriracha or mild Tabasco). Completely food-safe.
+3. **Allergy & Medical Screening:** Purely voluntary opt-in. Participants with gastric sensitivity, spice intolerance, or allergies are provided with ultra-sour candy or spicy wasabi peas as safe alternatives.
+4. **Hint Delivery:** Upon verified consumption by an IEEE volunteer marshal, the Tech Lead enters the team's number into CTFd admin and unlocks their requested hint docket with zero score deduction.
+
+### C. Intrusion Punishments & Siren Alerts (Anti-Bruteforce)
+- **Automatic Trigger:** If any team submits **5 consecutive incorrect flags**, CTFd enforces an automatic 60-second submission lockout.
+- **AV Reaction:** The projector flashes an intrusion warning banner (`INTRUSION DETECTED: STATION COOLDOWN ACTIVE`) accompanied by a short 3-second audio buzzer.
+
+---
+
+## 8. Scoring System, Tie-Breakers & Prize Structure
+
+### A. Dynamic Scoring Engine
+- **Initial Challenge Value:** 500 Points.
+- **Decay Parameter:** 15 Solves (points decrease smoothly with each solve).
+- **Minimum Value Floor:** 100 Points.
+- **Decay Formula:**
+  $$\text{Points} = \max\left(100, \text{Round}\left(\left(\frac{100 - 500}{(15)^2}\right) \times (\text{Solves} - 1)^2 + 500\right)\right)$$
+
+### B. Tie-Breaking Hierarchy
+1. **Primary:** Total Accumulated Points.
+2. **Secondary (Timestamp):** Earliest submission timestamp of the team's final scoring flag.
+3. **Tertiary (Accuracy):** Fewest total incorrect flag submissions.
+
+### C. Official Prize Categories
+1. **🏆 The Grand Forensic Champion (1st Place):**
+   - Official IEEE AUSB CTF Championship Trophy
+   - Winner Vouchers / Cash Prize
+   - Certificates of Distinction
+   - Exclusive IEEE Cyber Swag Kits
+2. **🥈 Lead Forensic Specialist (2nd Place):**
+   - Silver Runner-Up Trophy & Medals
+   - Runner-up Vouchers & Swag
+   - Certificates of Distinction
+3. **🥉 Incident Response Finalist (3rd Place):**
+   - Bronze 2nd Runner-Up Trophy & Medals
+   - Finalist Vouchers & Swag
+   - Certificates of Distinction
+4. **🩸 First Blood Slayer Award:**
+   - Special custom certificate + prize for the team securing the highest count of first-blood solves across all 14 challenges.
+5. **📜 Certificate of Investigation:**
+   - Issued to every participating student verifying completion of the IEEE AUSB Forensic Triage challenge.
+
+---
+
+## 9. Comprehensive Disaster Recovery & Emergency Failover
+
+### Emergency Failover Playbook (RTO `< 120 Seconds`)
+
+```mermaid
+flowchart TD
+    A[CRITICAL: Primary Server Host Fails] -->|0:00| B[Unplug Primary LAN Trunk Cable]
+    B -->|0:30| C[Assign Primary IP 192.168.1.100 to Standby Laptop]
+    C -->|0:45| D[Execute: uv run ctf restore on Standby Laptop]
+    D -->|1:15| E[Verify 4 Containers Healthy: uv run ctf status]
+    E -->|1:30| F[Switch Lab 207 HDMI Cable to Standby Laptop]
+    F -->|1:45| G[Verify Scoreboard Live: Submissions Resumed]
+```
+
+### Risk & Failure Matrix
+
+| Failure Mode | Impact | Immediate Mitigation Action | Responsible Lead |
+| :--- | :--- | :--- | :--- |
+| **Primary Host Power Loss** | Total server drop | Hot-switch to Standby Laptop via `uv run ctf restore`. | Manas & Krish |
+| **Gigabit Switch Failure** | Disconnects Lab 208 | Swap to pre-staged spare 16-port Gigabit switch in Lab 207. | Vansh Shah |
+| **Projector HDMI Disconnect**| Big-screen display loss | Switch projector source to secondary AV laptop; reload scoreboard URL. | Tanish Shah |
+| **MariaDB Lock / Crash** | 500 errors on CTFd | Run `uv run ctf stop && uv run ctf start`; named volumes preserve DB. | Manas Doshi |
+| **Participant LAN IP Conflict**| Network unreachable | Assign static IP from reserved pool `192.168.1.191–199`. | Floor Volunteers |
+| **Team Submits 50+ Spam Flags**| Server load spike | Floor volunteer warns team; temporary 5-min IP block in Nginx if malicious. | Co-Tech Leads |
+
+---
+
+## 10. Emergency Contacts & Escalation Tree
+
+| Contact | Primary Station | Role & Escalation Authority | Phone / Radio |
+| :--- | :--- | :--- | :--- |
+| **Vansh Shah** | Lab 207 Podium | Core Organizer (Logistics, Venue & Faculty Disputes) | Desk Phone / Ch 1 |
+| **Manas Doshi** | Lab 207 Server Desk | Co-Tech Lead (Primary Infrastructure & Database) | Desk Phone / Ch 1 |
+| **Krish** | Lab 208 Standby Desk| Co-Tech Lead (Standby Host & Live Automation) | Desk Phone / Ch 2 |
+| **GICT Lab In-charge** | GICT Facilities 1st Fl| Electrical Power, Air Conditioning & Hardware Switches| Ext. 2071 |

@@ -141,3 +141,32 @@ At 5:15 PM (15 minutes before the competition ends), the live scoreboard is plac
   1. `docker exec ctfd_db mariadb-dump -u ctfd -p... ctfd > database.sql`
   2. `tar -czf backups/ctfd_backup_<timestamp>.tar.gz database.sql /var/uploads`
 - The resulting `.tar.gz` bundle contains 100% of the live contest state. Restoring on the standby laptop reconstructs MariaDB tables and static upload assets identically in `< 90 seconds`.
+
+---
+
+## 5. Audio-Visual Soundboard Design & Cue Timing ([ops/soundboard/](ops/soundboard/))
+
+The competition room experience relies on synchronized acoustic triggers delivered over the GICT Lab PA / HDMI audio system:
+- **4:30 PM (Kickoff):** `01_start_fanfare.mp3` — Heavy sub-bass drop and cyber fanfare to establish urgency.
+- **4:35 PM (Vanishing Challenge):** `02_radar_ping.mp3` — Sonar sweep and ticking clock to emphasize time sensitivity.
+- **4:45 PM & 5:00 PM (Spin Wheel Lifeline):** `03_wheel_spin.mp3` — Mechanical clicking wheel followed by celebratory chime or buzzer.
+- **4:50 PM (Vanishing Challenge Purge):** `04_evidence_purge.mp3` — High-frequency digital vaporize sweep.
+- **5:00 PM (Lightning Round):** `05_lightning_alert.mp3` — Industrial klaxon signaling double point multipliers.
+- **5:15 PM (Scoreboard Blackout):** `06_blackout_glitch.mp3` — Substation transformer power-down glitch.
+- **5:30 PM (Competition Over):** `07_times_up_siren.mp3` — Sustained emergency incident siren.
+- **5:35 PM (Scoreboard Reveal):** `08_reveal_victory.mp3` — Triumphant orchestral resolution.
+- **Dynamic Solves:** `fx_first_blood.mp3` — Sharp metallic chime alerting the lab to first blood.
+- **Dynamic Lockouts:** `fx_intrusion_alarm.mp3` — Red strobe buzzer indicating a 60-second brute-force cooldown.
+
+---
+
+## 6. Documentation Governance & Synchronization Standard
+
+To prevent documentation drift, all contributors and AI agents must maintain strict synchronization across all 7 core documents:
+1. [AGENTS.md](AGENTS.md) — Operational constitution and 3-tier rules.
+2. [EVENT.md](EVENT.md) — Master event dossier, minute-by-minute schedule, and live gamification plan.
+3. [HANDOFF.md](HANDOFF.md) — Engineering status, track matrix, and failover runbook.
+4. [NOTES.md](NOTES.md) — Technical encyclopedia, anti-AI engineering handbook, and lore details.
+5. [README.md](README.md) — Quickstart, environment instructions, and repo tree.
+6. [challenges/README.md](challenges/README.md) — Challenge authoring and 5-step verification protocol.
+7. [docs/TECH_LEAD_RUNBOOK.md](docs/TECH_LEAD_RUNBOOK.md) — Minute-by-minute technical execution playbook.
