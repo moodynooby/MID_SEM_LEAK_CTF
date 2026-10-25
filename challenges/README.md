@@ -5,18 +5,24 @@ Welcome challenge authors and testers! Every challenge in this CTF is an evidenc
 
 ---
 
-### 1. The Story Arc & Acts
+### 1. Active Challenge Tracks (14 Challenges)
 
-| Act / Stage | Challenge Name | Category | Difficulty | Target Solves | Story Relevance |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| **Act I** | Evidence Docket #101 (The Incident) | Forensics / Misc | Easy (100-200 pts) | ~80% of teams | Discovery of the security camera artifact or corrupted report. |
-| **Act II (Route A)** | Portal Breach (Access Logs) | Forensics / Logs | Easy/Med (200-300 pts) | ~60% of teams | Syslog / Apache log analysis tracing the intruder's IP. |
-| **Act II (Route B)** | Portal Breach (Web Vulnerability) | Web Security | Easy/Med (200-300 pts) | ~60% of teams | Analyzing the flawed faculty upload endpoint (dual-path to clue). |
-| **Act III** | Encrypted Transmission | Cryptography | Medium (300-400 pts) | ~40% of teams | Intercepted communications between suspicious student accounts. |
-| **Act IV** | The Exfiltration Payload | Reverse Eng. | Med/Hard (400-450 pts)| ~25% of teams | Dissecting the script that pulled the exam PDF from the faculty share. |
-| **Act V** | Unmasking the Culprit (Final Flag)| Forensics / Web | Hard (500 pts) | ~15% of teams | The final flag naming the fictional mastermind behind the leak. |
-| **Bonus 1** | The Vanishing Trace (4:35-4:50 PM)| Forensics | Bonus (250 pts) | Speed solve | Volatile memory / ephemeral cache clue available for 15 mins. |
-| **Bonus 2** | Lightning Decryption (5:00-5:10 PM) | Crypto / Speed | Double Pts (300 pts) | Speed solve | Rapid cipher crack in a 10-minute speed window. |
+| Track | Challenge Name | Category | Difficulty | Target Description |
+| :--- | :--- | :--- | :--- | :--- |
+| **Forensics** | Liam's Idea: Fragmented Exfiltration | Forensics | Easy (100-200) | Exfiltrated video split into Base64 parts (`part*.txt`). |
+| **Forensics** | PDF Hidden Text: Redacted Exam | Forensics | Easy (100-200) | Leaked OOP 99 paper with white text / hidden stream. |
+| **Forensics** | Audio Spectrogram: Lab Wiretap | Stego | Medium (300-400) | Ambient audio with visual flag synthesized into frequencies. |
+| **Forensics** | Physical Forensics: Lab 207 Terminal | Forensics | Medium (300-400) | Physical crime scene PC memory dump in Lab 207. |
+| **Web & AI** | Cookie / API: Faculty Exam Vault | Web | Easy (100-200) | Client-side cookie tampering / hidden REST endpoint. |
+| **Web & AI** | AI Model Prompt: Proctor Bot Jailbreak | AI | Easy/Med (200-300) | Adversarial prompt injection against TA proctor bot. |
+| **Web & AI** | PHP2SHELL: Insecure Faculty Upload | Web | Hard (500) | File upload filter bypass to web shell execution. |
+| **Reversing** | APK Reverse Engineer: Companion App | Mobile / Rev | Medium (300-400) | Decompiling campus Android app in JADX. |
+| **Crypto** | Password Cracking: Faculty Vault | Crypto | Hard (500) | Cracking encrypted archive using custom campus wordlist. |
+| **Reversing** | Safe Exam Browser (SEB) Reversing | Reverse Eng | Hard (500) | Reversing stripped C/C++ lockdown binary in Ghidra. |
+| **Network** | DNS / Wi-Fi Logs: 2:13 AM Auto-Sync | Network | Medium (300-400) | Aruba Wi-Fi log revealing professor midnight cloud sync. |
+| **Network** | Ransomware Infected: Backdoor PCAP | Network | Medium (300-400) | Isolate malicious HTTP POST traffic & extract webshell key. |
+| **Forensics** | Deleted but Not Gone: Erased Draft | Forensics | Easy (100-200) | Inode / commit recovery of erased exam paper draft. |
+| **Forensics** | Email Forensics: Angry TA's Mails | Forensics | Medium (300-400) | Mail spool of TA Piyush's angry emails to Prof. Chelaiya. |
 
 ---
 
