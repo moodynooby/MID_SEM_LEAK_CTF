@@ -14,6 +14,7 @@ Usage:
   uv run ctf events            - Interactive live-event timeline console
   uv run ctf blackout          - 5:15 PM Scoreboard Freeze (Suspense mode)
   uv run ctf reveal            - 5:30 PM Scoreboard Reveal (Awards ceremony)
+  uv run ctf theme             - Apply big-screen scoreboard projector theme
 """
 
 import os
@@ -285,6 +286,10 @@ def cmd_reveal():
     script = ROOT_DIR / "ops" / "unfreeze_scoreboard.py"
     subprocess.run([sys.executable, str(script)], cwd=str(ROOT_DIR))
 
+def cmd_theme():
+    script = ROOT_DIR / "ops" / "apply_scoreboard_theme.py"
+    subprocess.run([sys.executable, str(script)], cwd=str(ROOT_DIR))
+
 def main():
     parser = argparse.ArgumentParser(
         description="IEEE AUSB Multiplatform CTF Manager",
@@ -314,6 +319,7 @@ def main():
 
     subparsers.add_parser("blackout", help="Trigger 5:15 PM scoreboard blackout")
     subparsers.add_parser("reveal", help="Trigger 5:30 PM closing reveal")
+    subparsers.add_parser("theme", help="Apply big-screen scoreboard projector theme")
 
     args = parser.parse_args()
 
@@ -335,6 +341,8 @@ def main():
         cmd_blackout()
     elif args.command == "reveal":
         cmd_reveal()
+    elif args.command == "theme":
+        cmd_theme()
     else:
         parser.print_help()
 

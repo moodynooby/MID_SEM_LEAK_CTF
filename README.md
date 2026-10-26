@@ -68,6 +68,9 @@ When started, CTFd will be accessible at:
 │   ├── nginx/default.conf          # Nginx proxy (Port 80, SSE websocket streaming, 100MB body)
 │   └── mysql/my.cnf                # MariaDB tuning (250 connections, UTF-8 MB4, buffer pools)
 │
+├── ctfd-theme/                     # Big-screen /scoreboard styling (applied via `uv run ctf theme`)
+├── av-console/                     # Projector countdown clock & Tech Lead sound cue board
+│
 ├── challenges/                     # Challenge Scaffolding & Active Tracks (Private)
 │   ├── README.md                   # Challenge authoring and solve-testing standard
 │   └── template/                   # ctfcli-compatible challenge template

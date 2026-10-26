@@ -103,12 +103,14 @@ All 14 challenges must adhere to the 5-step authoring standard defined in [chall
 | `uv run ctf events` | Timeline console| Interactive menu for clue drops, vanishing challenges, and lightning rounds |
 | `uv run ctf blackout`| 5:15 PM freeze | Freezes live scoreboard into suspense mode |
 | `uv run ctf reveal` | 5:30 PM unfreeze| Reveals final scoreboard for closing ceremony |
+| `uv run ctf theme` | Apply projector theme | Pushes `ctfd-theme/` CSS/JS into CTFd's `theme_header`/`theme_footer` configs |
 
 ---
 
 ## 6. Subsystem References & Pre-Flight Checklist
 - **Live Event Master Dossier & Operations Plan:** See [EVENT.md](EVENT.md).
 - **Live Event Timeline & Ops Playbook (4:30–5:30 PM):** See [docs/TECH_LEAD_RUNBOOK.md](docs/TECH_LEAD_RUNBOOK.md) and [ops/](ops/).
+- **Big-Screen AV Experience:** See [ctfd-theme/](ctfd-theme/) (scoreboard projector styling, applied via `uv run ctf theme`) and [av-console/](av-console/) (countdown clock + sound cue board, served at `/av-console/`).
 - **Challenge Authoring & Scaffolding:** See [challenges/README.md](challenges/README.md) and template in [challenges/template/](challenges/template/).
 - **Proxy & MariaDB Engine Tuning:** See [conf/nginx/default.conf](conf/nginx/default.conf) and [conf/mysql/my.cnf](conf/mysql/my.cnf).
 - **Handoff Documentation:** See [HANDOFF.md](HANDOFF.md).
