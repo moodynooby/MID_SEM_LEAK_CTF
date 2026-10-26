@@ -1,0 +1,39 @@
+name: "Ransomware Infected: Backdoor Web Shell in PCAP"
+author: "Vatsal Pandya (@VP1107)"
+category: "Network"
+description: |
+  **Case File Briefing:**
+  During network incident response, campus security isolated packet capture `infected.pcap` from the switch port connected to the faculty internal share (`10.20.0.12`).
+
+  Suspicious network activity reveals repeated HTTP POST interactions with an obfuscated backdoor webshell planted at `/assets/vendor.php`. The attacker appears to have exfiltrated draft examination data using an encrypted communication stream.
+
+  Analyze the packet capture, isolate the backdoor conversation, extract the session decryption key from the HTTP request headers, and decrypt the exfiltrated confirmation payload to reveal the flag.
+
+  **Flag Format:** `case{...}`
+
+value: 500
+type: dynamic
+extra:
+  initial: 500
+  decay: 15
+  minimum: 100
+
+flags:
+  - case{pcap_webshell_exfil_key_found}
+
+tags:
+  - network
+  - pcap
+  - medium
+  - story_act_1
+  - wireshark
+
+hints:
+  - content: "Inspect custom HTTP headers in the repeated POST requests to /assets/vendor.php. Look for custom session authentication tokens."
+    cost: 50
+
+files:
+  - files/infected.pcap
+
+state: visible
+version: "0.1"
