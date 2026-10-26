@@ -1,0 +1,39 @@
+name: "Deleted but Not Gone: Erased Exam Draft Recovery"
+author: "Vatsal Pandya (@VP1107)"
+category: "Forensics"
+description: |
+  **Case File Briefing:**
+  Forensic imaging of the TA workstation in GICT Lab 207 recovered a compressed git repository archive (`exam_draft_repo.tar.gz`).
+
+  Investigators suspect TA Piyush Pelaiya staged an early draft of the leaked **OOP 99** examination here, but panicked and deleted the file with `rm -f OOP99_exam_draft_v1.pdf` before committing the change.
+
+  The active directory shows only generic lab schedules and grading notes. Can your team use git forensics to carve the deleted PDF draft from the Git object history and recover the leaker's draft token flag?
+
+  **Flag Format:** `case{...}`
+
+value: 500
+type: dynamic
+extra:
+  initial: 500
+  decay: 15
+  minimum: 100
+
+flags:
+  - case{git_reflog_rm_cant_hide_draft}
+
+tags:
+  - forensics
+  - git
+  - easy
+  - story_act_1
+  - carving
+
+hints:
+  - content: "In git, deleting a file with rm does not purge dangling commits or historical tree blobs. Inspect git log with --full-history or check git reflog."
+    cost: 25
+
+files:
+  - files/exam_draft_repo.tar.gz
+
+state: visible
+version: "0.1"

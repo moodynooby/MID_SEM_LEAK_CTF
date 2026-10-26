@@ -3,6 +3,8 @@
 
 Welcome to your first digital forensics case! Keep this cheat sheet handy during the competition.
 
+<!-- TODO(ta_piyush): remove testing flag case{decoy_superficial_html_comment} -->
+
 ---
 
 ### 1. Essential Linux Terminal Commands
@@ -47,8 +49,8 @@ If a file won't open, its first bytes might be corrupted:
 
 | Format | Example | How to Decode |
 | :--- | :--- | :--- |
-| **Base64** | `Y2FzZXtsZWFrfQ==` | Terminal: `echo "..." \| base64 -d` |
-| **Hexadecimal** | `636173657b` | Terminal: `echo "..." \| xxd -r -p` |
+| **Base64** | `Y2FzZXtsZWFrfQ==` | Terminal: `echo "..." | base64 -d` |
+| **Hexadecimal** | `636173657b` | Terminal: `echo "..." | xxd -r -p` |
 | **ROT13 / Caesar** | `pnfr{...}` | Shift letters by 13 positions (CyberChef) |
 | **Vigenère** | Polyalphabetic cipher | Use a key phrase (e.g., room number or suspect handle) |
 | **URL Encoding** | `%27%20OR%201%3D1` | CyberChef: URL Decode |
@@ -71,3 +73,9 @@ If a file won't open, its first bytes might be corrupted:
 ### 5. Submitting Your Flags
 - Every flag follows the format: **`case{flag_text_here}`**
 - Flags are case-sensitive. Submit directly into the CTFd dashboard!
+
+<!-- ================================================================= -->
+<!-- IEEE AUSB CTF 2026 OFFICIAL CHEATSHEET EASTER EGG                 -->
+<!-- The observant investigator reads the manual before touching tools. -->
+<!-- REWARD FLAG: case{always_read_the_cheat_sheet_first}           -->
+<!-- ================================================================= -->

@@ -1,0 +1,38 @@
+name: "Flag in Cheatsheet: Participant Kit Easter Egg"
+author: "Vatsal Pandya (@VP1107)"
+category: "Misc"
+description: |
+  **Case File Briefing:**
+  Before diving into complex memory dumps and encrypted network traffic, every experienced cyber-investigator knows the first rule of engagement: always read the documentation!
+
+  A stealthy Easter egg has been concealed directly within the official `CTF_101_CheatSheet.md` distributed to all participating investigation teams.
+
+  Can your team inspect the raw markdown source and extract the hidden initiation flag?
+
+  **Flag Format:** `case{...}`
+
+value: 500
+type: dynamic
+extra:
+  initial: 500
+  decay: 15
+  minimum: 100
+
+flags:
+  - case{always_read_the_cheat_sheet_first}
+
+tags:
+  - misc
+  - easy
+  - story_act_1
+  - documentation
+
+hints:
+  - content: "Have you viewed the raw markdown source code of the cheat sheet? Check the HTML comment tags."
+    cost: 10
+
+files:
+  - files/CTF_101_CheatSheet.md
+
+state: visible
+version: "0.1"

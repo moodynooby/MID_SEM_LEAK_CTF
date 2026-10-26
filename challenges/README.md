@@ -19,10 +19,11 @@ Welcome challenge authors and testers! Every challenge in this CTF is an evidenc
 | **Reversing** | APK Reverse Engineer: Companion App | Mobile / Rev | Medium (300-400) | Decompiling campus Android app in JADX. |
 | **Crypto** | Password Cracking: Faculty Vault | Crypto | Hard (500) | Cracking encrypted archive using custom campus wordlist. |
 | **Reversing** | Safe Exam Browser (SEB) Reversing | Reverse Eng | Hard (500) | Reversing stripped C/C++ lockdown binary in Ghidra. |
-| **Network** | DNS / Wi-Fi Logs: 2:13 AM Auto-Sync | Network | Medium (300-400) | Aruba Wi-Fi log revealing professor midnight cloud sync. |
-| **Network** | Ransomware Infected: Backdoor PCAP | Network | Medium (300-400) | Isolate malicious HTTP POST traffic & extract webshell key. |
-| **Forensics** | Deleted but Not Gone: Erased Draft | Forensics | Easy (100-200) | Inode / commit recovery of erased exam paper draft. |
-| **Forensics** | Email Forensics: Angry TA's Mails | Forensics | Medium (300-400) | Mail spool of TA Piyush's angry emails to Prof. Chelaiya. |
+| **Network** | [DNS / Wi-Fi Logs: 2:13 AM Auto-Sync](wifi_dns_logs/) | Network | Medium (300-400) | Aruba Wi-Fi log revealing professor midnight cloud sync. |
+| **Network** | [Ransomware Infected: Backdoor PCAP](ransomware_pcap/) | Network | Medium (300-400) | Isolate malicious HTTP POST traffic & extract webshell key. |
+| **Forensics** | [Deleted but Not Gone: Erased Draft](deleted_evidence/) | Forensics | Easy (100-200) | Inode / commit recovery of erased exam paper draft. |
+| **Forensics** | [Email Forensics: Angry TA's Mails](email_forensics/) | Forensics | Medium (300-400) | Mail spool of TA Piyush's angry emails to Prof. Chelaiya. |
+| **Misc** | [Flag in Cheatsheet: Participant Kit Egg](cheatsheet_egg/) | Misc | Easy (100) | Stealthy Easter egg concealed in investigator cheatsheet. |
 
 ---
 

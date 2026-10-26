@@ -1,0 +1,42 @@
+name: "DNS / Wi-Fi Logs: The 2:13 AM Auto-Sync"
+author: "Vatsal Pandya (@VP1107)"
+category: "Network"
+description: |
+  **Case File Briefing:**
+  Investigators auditing the GICT wireless infrastructure captured overnight connection spools (`campus_wifi_access.log` and `dhcp_leases.log`) from the central Aruba mobility controller and DHCP server.
+
+  Initial forensic theories assumed an outside intruder compromised the lab workstations. However, network telemetry reveals a critical plot twist: at **02:13:42 IST**, an authorized device connected to the faculty wireless access point (`AP-GICT-FACULTY-L2`) and synchronized confidential course materials to internal storage, which TA Piyush subsequently hijacked.
+
+  Analyze the wireless access syslog and DHCP lease mappings. Correlate timestamps, MAC addresses, and DNS queries to identify the device and extract the auto-sync verification token flag.
+
+  **Flag Format:** `case{...}`
+
+value: 500
+type: dynamic
+extra:
+  initial: 500
+  decay: 15
+  minimum: 100
+
+flags:
+  - case{chelaiya_thinkpad_auto_sync_0213}
+
+tags:
+  - network
+  - logs
+  - medium
+  - story_act_1
+  - wifi
+
+hints:
+  - content: "Focus on the traffic spikes between 02:00 and 02:30 AM on the Faculty AP (BSSID 00:1a:1e:f0:20:70)."
+    cost: 25
+  - content: "Correlate the client MAC address connecting at 02:13:42 with the DHCP lease table to resolve the hostname and session sync token."
+    cost: 50
+
+files:
+  - files/campus_wifi_access.log
+  - files/dhcp_leases.log
+
+state: visible
+version: "0.1"

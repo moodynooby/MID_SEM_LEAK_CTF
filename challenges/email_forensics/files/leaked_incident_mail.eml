@@ -1,0 +1,325 @@
+Content-Type: multipart/mixed; boundary="===============0199931774095973632=="
+MIME-Version: 1.0
+From: Campus Security Operations <soc@ahduni.edu.in>
+To: Prof. Hasmukh Chelaiya <hasmukh.chelaiya@gict.ac.in>
+Cc: Dean of Academic Affairs <dean.academic@ahduni.edu.in>
+Date: Tue, 28 Oct 2026 01:15:30 +0530
+Subject: FW: [INCIDENT TICKET #7042] Re: URGENT: Leak Investigation -
+ Unofficial Circulation of OOP 99 Exam Paper
+Message-ID: <20261028011530.soc.cirt.7042@ahduni.edu.in>
+X-Incident-Ticket: INCIDENT-2026-7042-MIDSEM-LEAK
+X-Priority: 1 (Highest)
+
+--===============0199931774095973632==
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: base64
+
+RGVhciBQcm9mLiBDaGVsYWl5YSwKCkF0IDAwOjE1IElTVCwgb3VyIGNhbXB1cyBtYWlsIGZpbHRl
+ciBnYXRld2F5IChtYWlsZ3cuZ2ljdC5hYy5pbikgdHJpZ2dlcmVkIGFuCmF1dG9tYXRlZCBhbGVy
+dCBvbiBhIGhpZ2gtdm9sdW1lIG91dGJvdW5kIG1haWwgYmxhc3QgdGFyZ2V0aW5nIHRoZSBzdHVk
+ZW50IGJvZHkuCgpUaGUgaW50ZXJjZXB0ZWQgZXhwb3J0IGNvbGxhdGVzIG11bHRpcGxlIHRocmVh
+ZHMgY2FwdHVyZWQgYmV0d2VlbiAxNzowMCBhbmQgMjM6NTAgSVNUCm9uIDI3IE9jdG9iZXIgMjAy
+Ni4gVGhlIGV4ZmlsdHJhdGlvbiBtZXNzYWdlIHV0aWxpemVkIHNwb29mZWQgZXh0ZXJuYWwgJ0Zy
+b20nIGhlYWRlcnMKY2xhaW1pbmcgdG8gYmUgYW4gJ0Fub255bW91cyBTdHVkZW50IENvdW5jaWwn
+LiBIb3dldmVyLCBpbnRlcm5hbCBnYXRld2F5IGF1dGhlbnRpY2F0aW9uCnJlY29yZHMgYW5kIFgt
+T3JpZ2luYXRpbmctSVAgdHJhY2VzIHBvaW50IHRvIGEgd29ya3N0YXRpb24gaW5zaWRlIEdJQ1Qg
+TGFiIDIwNy4KClBsZWFzZSByZXZpZXcgdGhlIGF0dGFjaGVkIHRocmVhZCBjb21wb25lbnRzLCBh
+bmFseXplIHRoZSBSRkMgODIyIHJvdXRpbmcgaGVhZGVycywKYW5kIHZlcmlmeSB0aGUgYXV0aGVu
+dGljaXR5IG9mIHRoZSBhdHRhY2hlZCBPT1AgOTkgZHJhZnQgcGFwZXIuCgpGb3JlbnNpYyBFdmlk
+ZW5jZSBBdHRhY2hlZDoKICAxLiBEZWNveSBUaHJlYWQgIzE6IHJvaGFuX3NoYXJtYV9vczEwMV9y
+dWJyaWMuZW1sIChTdHVkZW50IGdyYWRlIGlucXVpcnkpCiAgMi4gRGVjb3kgVGhyZWFkICMyOiBh
+bm9ueW1vdXNfbGFiMjA3X3RpcC5lbWwgKFNwb29mZWQgYmxhbWUgcmVkaXJlY3QpCiAgMy4gRGVj
+b3kgVGhyZWFkICMzOiBkZWFuX3NlY3VyaXR5X2NpcmN1bGFyLmVtbCAoQXJjaGl2YWwgYWRtaW5p
+c3RyYXRpdmUgbWVtbykKICA0LiBFdmlkZW5jZSBJdGVtICM0OiBpbnRlcmNlcHRlZF9leGZpbHRy
+YXRpb25fYmxhc3QuZW1sIChBdXRoZW50aWMgZXhmaWx0cmF0aW9uIGJsYXN0KQoKLSBBaG1lZGFi
+YWQgVW5pdmVyc2l0eSBDeWJlciBJbmNpZGVudCBSZXNwb25zZSBUZWFtIChBVS1DSVJUKQpHSUNU
+IFNlY3VyaXR5IE9wZXJhdGlvbnMgQ2VudGVyCg==
+
+--===============0199931774095973632==
+Content-Type: message/rfc822
+MIME-Version: 1.0
+Content-Disposition: attachment; filename="rohan_sharma_os101_rubric.eml"
+
+Content-Type: multipart/mixed; boundary="===============3026074552839259529=="
+MIME-Version: 1.0
+From: Rohan Sharma <rohan.s@gict.ac.in>
+To: Prof. Hasmukh Chelaiya <hasmukh.chelaiya@gict.ac.in>
+Subject: Re: OS 101 Assignment 2 - Evaluation Inquiry (Lab 208)
+Date: Mon, 27 Oct 2026 17:15:22 +0530
+Message-ID: <20261027171522.rohan.os101@gict.ac.in>
+X-Originating-IP: [10.208.15.44]
+X-Campus-Auth-User: rohan.s
+
+--===============3026074552839259529==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+
+Respected Prof. Chelaiya,
+
+I was reviewing my grade on Assignment 2 (Process Synchronization). TA Piyush Pelaiya
+deducted marks citing lock ordering issues. Could you please verify if the attached
+grading rubric was applied uniformly across all batches?
+
+Sincerely,
+Rohan Sharma (Roll: AU24BTECH042)
+Lab 208 Workstation
+
+--===============3026074552839259529==
+Content-Type: application/pdf
+MIME-Version: 1.0
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="OS101_Assignment2_Rubric_Decoy.pdf"
+
+JVBERi0xLjQKJeLjz9MKMSAwIG9iago8PCAvVHlwZSAvQ2F0YWxvZyAvUGFnZXMgMiAwIFIgPj4K
+ZW5kb2JqCjIgMCBvYmoKPDwgL1R5cGUgL1BhZ2VzIC9LaWRzIFszIDAgUl0gL0NvdW50IDEgPj4K
+ZW5kb2JqCjMgMCBvYmoKPDwgL1R5cGUgL1BhZ2UgL1BhcmVudCAyIDAgUiAvTWVkaWFCb3ggWzAg
+MCA2MTIgNzkyXSAvQ29udGVudHMgNCAwIFIgL1Jlc291cmNlcyA8PCAvRm9udCA8PCAvRjEgNSAw
+IFIgPj4gPj4gPj4KZW5kb2JqCjQgMCBvYmoKPDwgL0xlbmd0aCA2NzQgPj4Kc3RyZWFtCkJUCi9G
+MSAxMSBUZgo1MCA3NDAgVGQKMTUgVEwKL0YxIDE0IFRmCihBSE1FREFCQUQgVU5JVkVSU0lUWSAt
+IEdJQ1QgLSBPUyAxMDEgR1JBRElORyBSVUJSSUMpICcKL0YxIDEwIFRmCigpICcKKENvdXJzZTog
+T1MgMTAxIE9wZXJhdGluZyBTeXN0ZW1zIFByaW5jaXBsZXMpICcKKEluc3RydWN0b3I6IFByb2Yu
+IEhhc211a2ggQ2hlbGFpeWEpICcKKEJhdGNoOiBBdXR1bW4gMjAyNiB8IEFzc2lnbm1lbnQgMiBS
+dWJyaWMpICcKKC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0pICcKKENyaXRlcmlvbiAxOiBDb3JyZWN0IFB0aHJlYWQgTXV0ZXgg
+TG9ja2luZzogMjAgTWFya3MpICcKKENyaXRlcmlvbiAyOiBEZWFkbG9jayBGcmVlZG9tICYgQmFu
+a2VyIENoZWNrOiAxNSBNYXJrcykgJwooQ3JpdGVyaW9uIDM6IENsZWFuIFByb2Nlc3MgVGVybWlu
+YXRpb246IDE1IE1hcmtzKSAnCigpICcKKE5PVElDRTogVGhpcyBpcyBhbiBhcmNoaXZhbCBncmFk
+aW5nIHJ1YnJpYyBkb2N1bWVudC4pICcKKEZMQUcgREVDT1kgQ0hFQ0s6IGNhc2V7ZGVjb3lfb3Mx
+MDFfcnVicmljX25vdF90aGVfbGVha30pICcKKC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0pICcKRVQKCmVuZHN0cmVhbQplbmRv
+YmoKNSAwIG9iago8PCAvVHlwZSAvRm9udCAvU3VidHlwZSAvVHlwZTEgL0Jhc2VGb250IC9Db3Vy
+aWVyID4+CmVuZG9iagp4cmVmCjAgNgowMDAwMDAwMDAwIDY1NTM1IGYgCjAwMDAwMDAwMTUgMDAw
+MDAgbiAKMDAwMDAwMDA2NCAwMDAwMCBuIAowMDAwMDAwMTIxIDAwMDAwIG4gCjAwMDAwMDAyNDcg
+MDAwMDAgbiAKMDAwMDAwMDk3MiAwMDAwMCBuIAp0cmFpbGVyCjw8IC9TaXplIDYgL1Jvb3QgMSAw
+IFIgPj4Kc3RhcnR4cmVmCjEwNDAKJSVFT0YK
+
+--===============3026074552839259529==--
+
+--===============0199931774095973632==
+Content-Type: message/rfc822
+MIME-Version: 1.0
+Content-Disposition: attachment; filename="anonymous_lab207_tip.eml"
+
+Content-Type: multipart/mixed; boundary="===============7899468025055072670=="
+MIME-Version: 1.0
+From: Vikram Patel <vikram.p@gict.ac.in>
+To: Academic Grievance Cell <grievance@ahduni.edu.in>
+Subject: ANONYMOUS TIP: Someone accessed exam drafts in Lab 207
+Date: Mon, 27 Oct 2026 21:35:10 +0530
+Message-ID: <20261027213510.spoofed.tip@ahduni.edu.in>
+X-Originating-IP: [10.207.99.101]
+X-Campus-Auth-User: unknown_guest
+
+--===============7899468025055072670==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+
+To Whom It May Concern,
+
+I noticed unusual activity near the instructor console in Lab 207 around 21:00.
+A student was browsing the network share. Attached is a terminal log capture.
+
+Decoy Flag Verification: case{decoy_spoofed_student_submission_flag}
+
+--===============7899468025055072670==
+Content-Type: application/pdf
+MIME-Version: 1.0
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="Lab207_Incident_Decoy.pdf"
+
+JVBERi0xLjQKJeLjz9MKMSAwIG9iago8PCAvVHlwZSAvQ2F0YWxvZyAvUGFnZXMgMiAwIFIgPj4K
+ZW5kb2JqCjIgMCBvYmoKPDwgL1R5cGUgL1BhZ2VzIC9LaWRzIFszIDAgUl0gL0NvdW50IDEgPj4K
+ZW5kb2JqCjMgMCBvYmoKPDwgL1R5cGUgL1BhZ2UgL1BhcmVudCAyIDAgUiAvTWVkaWFCb3ggWzAg
+MCA2MTIgNzkyXSAvQ29udGVudHMgNCAwIFIgL1Jlc291cmNlcyA8PCAvRm9udCA8PCAvRjEgNSAw
+IFIgPj4gPj4gPj4KZW5kb2JqCjQgMCBvYmoKPDwgL0xlbmd0aCAzNTEgPj4Kc3RyZWFtCkJUCi9G
+MSAxMSBUZgo1MCA3NDAgVGQKMTUgVEwKL0YxIDE0IFRmCihHSUNUIExBQiAyMDcgLSBBTk9OWU1P
+VVMgSU5DSURFTlQgUkVQT1JUIFwoREVDT1lcKSkgJwovRjEgMTAgVGYKKCkgJwooVGltZXN0YW1w
+OiAyNy1PY3QtMjAyNiAyMTozMCBJU1QpICcKKExvY2F0aW9uOiBUZXJtaW5hbCAxNCwgR0lDVCBM
+YWIgMjA3KSAnCihPYnNlcnZlZCBhY3Rpdml0eTogU1NIIHNlc3Npb24gdG8gaW50ZXJuYWwgcmVw
+b3NpdG9yeS4pICcKKERFQ09ZIEFSVElGQUNUIC0gTk9UIFRIRSBMRUFLRUQgTUlEU0VNIFBBUEVS
+KSAnCihGTEFHOiBjYXNle2RlY295X3Nwb29mZWRfc3R1ZGVudF9zdWJtaXNzaW9uX2ZsYWd9KSAn
+CkVUCgplbmRzdHJlYW0KZW5kb2JqCjUgMCBvYmoKPDwgL1R5cGUgL0ZvbnQgL1N1YnR5cGUgL1R5
+cGUxIC9CYXNlRm9udCAvQ291cmllciA+PgplbmRvYmoKeHJlZgowIDYKMDAwMDAwMDAwMCA2NTUz
+NSBmIAowMDAwMDAwMDE1IDAwMDAwIG4gCjAwMDAwMDAwNjQgMDAwMDAgbiAKMDAwMDAwMDEyMSAw
+MDAwMCBuIAowMDAwMDAwMjQ3IDAwMDAwIG4gCjAwMDAwMDA2NDkgMDAwMDAgbiAKdHJhaWxlcgo8
+PCAvU2l6ZSA2IC9Sb290IDEgMCBSID4+CnN0YXJ0eHJlZgo3MTcKJSVFT0YK
+
+--===============7899468025055072670==--
+
+--===============0199931774095973632==
+Content-Type: message/rfc822
+MIME-Version: 1.0
+Content-Disposition: attachment; filename="dean_security_circular.eml"
+
+Content-Type: multipart/mixed; boundary="===============5377568205530014229=="
+MIME-Version: 1.0
+From: Dean of Academic Affairs <dean.academic@ahduni.edu.in>
+To: All Faculty & TAs <cse-faculty-ta@ahduni.edu.in>
+Subject: CIRCULAR: Protocol for Mid-Semester Exam Security & Confidentiality
+Date: Sun, 26 Oct 2026 11:00:00 +0530
+Message-ID: <20261026110000.dean.circular@ahduni.edu.in>
+X-Originating-IP: [10.200.1.5]
+X-Campus-Auth-User: dean.academic
+
+--===============5377568205530014229==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+
+Dear Faculty Colleagues and Teaching Assistants,
+
+Please strictly adhere to the academic conduct guidelines for all upcoming
+examinations, including OS 101 and OOP 99.
+
+All drafts must be stored exclusively on encrypted faculty drives.
+
+Regards,
+Office of Academic Affairs
+
+--===============5377568205530014229==
+Content-Type: application/pdf
+MIME-Version: 1.0
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="Dean_Exam_Security_Protocol.pdf"
+
+JVBERi0xLjQKJeLjz9MKMSAwIG9iago8PCAvVHlwZSAvQ2F0YWxvZyAvUGFnZXMgMiAwIFIgPj4K
+ZW5kb2JqCjIgMCBvYmoKPDwgL1R5cGUgL1BhZ2VzIC9LaWRzIFszIDAgUl0gL0NvdW50IDEgPj4K
+ZW5kb2JqCjMgMCBvYmoKPDwgL1R5cGUgL1BhZ2UgL1BhcmVudCAyIDAgUiAvTWVkaWFCb3ggWzAg
+MCA2MTIgNzkyXSAvQ29udGVudHMgNCAwIFIgL1Jlc291cmNlcyA8PCAvRm9udCA8PCAvRjEgNSAw
+IFIgPj4gPj4gPj4KZW5kb2JqCjQgMCBvYmoKPDwgL0xlbmd0aCA1ODQgPj4Kc3RyZWFtCkJUCi9G
+MSAxMSBUZgo1MCA3NDAgVGQKMTUgVEwKL0YxIDE0IFRmCihPRkZJQ0UgT0YgQUNBREVNSUMgQUZG
+QUlSUyAtIEVYQU0gU0VDVVJJVFkgUFJPVE9DT0wpICcKL0YxIDEwIFRmCigpICcKKFJlZjogQVUv
+QUNBRC8yMDI2L09DVC1NSURTRU0tMDk5KSAnCihJc3N1ZWQ6IDI2IE9jdG9iZXIgMjAyNikgJwoo
+VGFyZ2V0OiBBbGwgQ291cnNlIEluc3RydWN0b3JzICYgVGVhY2hpbmcgQXNzaXN0YW50cykgJwoo
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLSkgJwooR3VpZGVsaW5lIDE6IE5vIHVuZW5jcnlwdGVkIG5ldHdvcmsgdHJhbnNmZXJz
+IG9mIGV4YW0gcGFwZXJzLikgJwooR3VpZGVsaW5lIDI6IFRBcyBtdXN0IHN1Ym1pdCB2ZXJpZmll
+ZCBncmFkaW5nIGxvZ3Mgd2l0aGluIDcyIGhvdXJzLikgJwooKSAnCihEZWNveSBWZXJpZmljYXRp
+b24gRmxhZzogY2FzZXtuaWNlX3RyeV9ibGluZF9haV9kZWNveV9zeWxsYWJ1c30pICcKKC0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0pICcKRVQKCmVuZHN0cmVhbQplbmRvYmoKNSAwIG9iago8PCAvVHlwZSAvRm9udCAvU3VidHlw
+ZSAvVHlwZTEgL0Jhc2VGb250IC9Db3VyaWVyID4+CmVuZG9iagp4cmVmCjAgNgowMDAwMDAwMDAw
+IDY1NTM1IGYgCjAwMDAwMDAwMTUgMDAwMDAgbiAKMDAwMDAwMDA2NCAwMDAwMCBuIAowMDAwMDAw
+MTIxIDAwMDAwIG4gCjAwMDAwMDAyNDcgMDAwMDAgbiAKMDAwMDAwMDg4MiAwMDAwMCBuIAp0cmFp
+bGVyCjw8IC9TaXplIDYgL1Jvb3QgMSAwIFIgPj4Kc3RhcnR4cmVmCjk1MAolJUVPRgo=
+
+--===============5377568205530014229==--
+
+--===============0199931774095973632==
+Content-Type: message/rfc822
+MIME-Version: 1.0
+Content-Disposition: attachment; filename="intercepted_exfiltration_blast.eml"
+
+Content-Type: multipart/mixed; boundary="===============0258388903785625625=="
+MIME-Version: 1.0
+Received: from mailgw.gict.ac.in (mailgw.gict.ac.in [172.16.0.25])
+    by campus-mail.ahduni.edu.in (Postfix) with ESMTP id 4X98bL207v
+    for <all-students-cse@ahduni.edu.in>;
+ Mon, 27 Oct 2026 23:48:14 +0530 (IST)
+Received: from dhcp-10-207-42-19.campus.internal
+ (piyush-laptop.dyn.campus.internal [10.207.42.19])
+    (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+    by mailgw.gict.ac.in (Postfix) with ESMTPSA id 3K91aB411z
+    for <all-students-cse@ahduni.edu.in>;
+ Mon, 27 Oct 2026 23:48:12 +0530 (IST)
+X-Originating-IP: [10.207.42.19]
+X-Campus-Auth-User: piyush.pelaiya
+X-Authenticated-Sender: piyush.pelaiya@gict.ac.in
+X-Mailer: Thunderbird/115.3.1 (Linux; Ubuntu 24.04 LTS)
+From: "Anonymous Student Council" <student_council_leaks@protonmail.com>
+Reply-To: piyush.pelaiya@gict.ac.in
+To: all-students-cse@ahduni.edu.in
+Date: Mon, 27 Oct 2026 23:48:10 +0530
+Subject: [LEAK] OOP 99 Mid-Sem Question Paper Leaked!! Revenge for OS 101!
+Message-ID: <20261027234810.10207.piyush@gict.ac.in>
+
+--===============0258388903785625625==
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: base64
+
+VG8gYWxsIENTRSBzdHVkZW50cywKCllvdSB0aG91Z2h0IFByb2YuIEhhc211a2ggQ2hlbGFpeWEg
+d2FzIHVudG91Y2hhYmxlPyBZb3UgdGhvdWdodCBoaXMgcHJlY2lvdXMKT09QIDk5IG1pZC1zZW1l
+c3RlciBleGFtIHdhcyBzZWN1cmVseSBndWFyZGVkIG9uIGhpcyBUaGlua1BhZD8KCkVhcmxpZXIg
+dGhpcyBzZW1lc3RlciwgUHJvZi4gQ2hlbGFpeWEgaHVtaWxpYXRlZCBtZSBpbiBmcm9udCBvZiB0
+aGUgZW50aXJlIGRlcGFydG1lbnQKZHVyaW5nIE9TIDEwMSBldmFsdWF0aW9ucy4gSGUgZGVkdWN0
+ZWQgMjUgbWFya3Mgb24gbXkgY29uY3VycmVuY3kgbGFiIHN1Ym1pc3Npb24sCmNsYWltaW5nIGEg
+dGhlb3JldGljYWwgbG9jayBoaWVyYXJjaHkgdmlvbGF0aW9uIGluIG15IHB0aHJlYWQgYmFycmll
+ciBpbXBsZW1lbnRhdGlvbi4KSGUgbGF1Z2hlZCBhbmQgc2FpZDogJ0RlYWRsb2NrIGF2b2lkYW5j
+ZSBpcyBub24tbmVnb3RpYWJsZSBpbiBPUyAxMDEsIE1yLiBQZWxhaXlhLicKCldlbGwsIGxldCdz
+IHNlZSBob3cgaGlzIGRlcGFydG1lbnQgYXZvaWRzIGRlYWRsb2NrIHdoZW4gdGhlIGVudGlyZSBi
+YXRjaCBoYXMgdGhlCmNvbmZpZGVudGlhbCBPT1AgOTkgcXVlc3Rpb24gcGFwZXIgYmVmb3JlIFdl
+ZG5lc2RheSBtb3JuaW5nIQoKSSBwdWxsZWQgdGhlIGRyYWZ0IGRpcmVjdGx5IGZyb20gaGlzIHdv
+cmtzdGF0aW9uIHNoYXJlIGR1cmluZyBoaXMgbWlkbmlnaHQgc3luYyBzZXNzaW9uLgpUaGUgY29t
+cGxldGUsIHVucmVkYWN0ZWQgcXVlc3Rpb24gcGFwZXIgaXMgYXR0YWNoZWQgYmVsb3cuCgpTaWdu
+ZWQsClRBIFBpeXVzaCBQZWxhaXlhCkdyYWR1YXRlIFRlYWNoaW5nIEFzc2lzdGFudCAoU3lzdGVt
+cyAmIENvbmN1cnJlbmN5KQpHSUNUIExhYiAyMDcKCkNvbmZlc3Npb24gJiBTaWduYXR1cmUgRmxh
+ZzoKY2FzZXt0YV9waXl1c2hfYW5ncnlfbGVha2VkX29vcDk5X21haWx9Cg==
+
+--===============0258388903785625625==
+Content-Type: application/pdf
+MIME-Version: 1.0
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment;
+ filename="OOP99_MidSem_Exam_LEAKED_CONFIDENTIAL.pdf"
+X-Attachment-Classification: CONFIDENTIAL-EXAM-PAPER
+
+JVBERi0xLjQKJeLjz9MKMSAwIG9iago8PCAvVHlwZSAvQ2F0YWxvZyAvUGFnZXMgMiAwIFIgPj4K
+ZW5kb2JqCjIgMCBvYmoKPDwgL1R5cGUgL1BhZ2VzIC9LaWRzIFszIDAgUl0gL0NvdW50IDEgPj4K
+ZW5kb2JqCjMgMCBvYmoKPDwgL1R5cGUgL1BhZ2UgL1BhcmVudCAyIDAgUiAvTWVkaWFCb3ggWzAg
+MCA2MTIgNzkyXSAvQ29udGVudHMgNCAwIFIgL1Jlc291cmNlcyA8PCAvRm9udCA8PCAvRjEgNSAw
+IFIgPj4gPj4gPj4KZW5kb2JqCjQgMCBvYmoKPDwgL0xlbmd0aCAyMzkzID4+CnN0cmVhbQpCVAov
+RjEgMTEgVGYKNTAgNzQwIFRkCjE1IFRMCi9GMSAxNCBUZgooQUhNRURBQkFEIFVOSVZFUlNJVFkg
+LSBHSUNUIC0gREVQQVJUTUVOVCBPRiBDT01QVVRFUiBTQ0lFTkNFKSAnCi9GMSAxMCBUZgooKSAn
+CihDT1VSU0UgQ09ERTogT09QIDk5IHwgT0JKRUNULU9SSUVOVEVEIFBST0dSQU1NSU5HIFNZU1RF
+TVMpICcKKE1JRC1TRU1FU1RFUiBFWEFNSU5BVElPTiAtIEFVVFVNTiAyMDI2KSAnCihDT1VSU0Ug
+SU5TVFJVQ1RPUjogUFJPRi4gSEFTTVVLSCBDSEVMQUlZQSkgJwooVElNRSBBTExPV0VEOiAyIEhP
+VVJTIHwgTUFYSU1VTSBNQVJLUzogNTApICcKKD09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09KSAnCihT
+VFJJQ1RMWSBDT05GSURFTlRJQUwgLSBMRUFLRUQgRVZJREVOQ0UgQVJUSUZBQ1QgLSBETyBOT1Qg
+UkVQUk9EVUNFKSAnCig9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PSkgJwooKSAnCihRVUVTVElPTiAx
+OiBEeW5hbWljIFBvbHltb3JwaGlzbSAmIFZpcnR1YWwgVGFibGUgSW50ZXJuYWxzIFwoMTUgTWFy
+a3NcKSkgJwooICBcKGFcKSBDb250cmFzdCB0aGUgbWVtb3J5IGxheW91dCBvZiBzaW5nbGUgaW5o
+ZXJpdGFuY2UgdnMgdmlydHVhbCBkaWFtb25kIGluaGVyaXRhbmNlLikgJwooICBcKGJcKSBHaXZl
+biBhIGNsYXNzIGhpZXJhcmNoeSB3aXRoIG11bHRpcGxlIHZpcnR1YWwgZnVuY3Rpb25zLCB0cmFj
+ZSB2cHRyIGFzc2lnbm1lbnQpICcKKCAgICAgIGR1cmluZyBvYmplY3QgY29uc3RydWN0aW9uIGFu
+ZCBkZW1vbnN0cmF0ZSBvYmplY3Qgc2xpY2luZyBkdXJpbmcgcGFzcy1ieS12YWx1ZS4pICcKKCkg
+JwooUVVFU1RJT04gMjogUkFJSSwgU21hcnQgUG9pbnRlciBNZWNoYW5pY3MgJiBFeGNlcHRpb24g
+U2FmZXR5IFwoMTUgTWFya3NcKSkgJwooICBcKGFcKSBJbXBsZW1lbnQgYSB0aHJlYWQtc2FmZSBy
+ZWZlcmVuY2UtY291bnRpbmcgY3VzdG9tIHNoYXJlZF9wdHIgd2l0aG91dCBzdGQ6OnNoYXJlZF9w
+dHIuKSAnCiggIFwoYlwpIERlbW9uc3RyYXRlIHdoeSBjeWNsaWMgcmVmZXJlbmNlcyBvZiBzdGQ6
+OnNoYXJlZF9wdHIgY2F1c2UgbWVtb3J5IGxlYWtzLCBhbmQpICcKKCAgICAgIHNob3cgaG93IHN0
+ZDo6d2Vha19wdHIgcmVzb2x2ZXMgdGhlIG93bmVyc2hpcCBjeWNsZS4pICcKKCkgJwooUVVFU1RJ
+T04gMzogVGhyZWFkLVNhZmUgU2luZ2xldG9uICYgQ29uY3VycmVuY3kgUGl0ZmFsbHMgXCgyMCBN
+YXJrc1wpKSAnCiggIFwoYVwpIEltcGxlbWVudCBNZXllcnMnIFNpbmdsZXRvbiBhbmQgZXhwbGFp
+biB0aHJlYWQtc2FmZXR5IGd1YXJhbnRlZXMgdW5kZXIgQysrMTEuKSAnCiggIFwoYlwpIFtJUk9O
+SUMgUVVFU1RJT04gLSBQUk9GLiBDSEVMQUlZQSdTIFBFVCBQRUVWRV06KSAnCiggICAgICBBbmFs
+eXplIHdoeSBhY3F1aXJpbmcgTXV0ZXggQSBiZWZvcmUgTXV0ZXggQiBpbiBXb3JrZXIgMSwgYW5k
+IE11dGV4IEIgYmVmb3JlKSAnCiggICAgICBNdXRleCBBIGluIFdvcmtlciAyIGxlYWRzIHRvIGNh
+dGFzdHJvcGhpYyBEZWFkbG9jayB1bmRlciBjb25jdXJyZW50IGxvYWQuKSAnCiggICAgICBFeHBs
+YWluIGhvdyBEaWprc3RyYSdzIGxvY2sgaGllcmFyY2h5IHNvbHZlcyB0aGlzIHByb2JsZW0gcGVy
+bWFuZW50bHkuKSAnCigpICcKKD09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09KSAnCihbQ1JJTUUgU0NF
+TkUgRVZJREVOQ0UgTk9URSBBVFRBQ0hFRCBCWSBMRUFLRVIgLSBUQSBQSVlVU0ggUEVMQUlZQV06
+KSAnCiggIFByb2YuIENoZWxhaXlhOiBZb3UgZG9ja2VkIDI1IG1hcmtzIG9uIG15IE9TIDEwMSBl
+dmFsdWF0aW9uIGFuZCBjYWxsZWQgbXkgbG9jaykgJwooICBoaWVyYXJjaHkgJ3Nsb3BweScgaW4g
+ZnJvbnQgb2YgdGhlIGxhYi4gWW91IHNhaWQgZGVhZGxvY2sgYXZvaWRhbmNlIGlzKSAnCiggIG5v
+bi1uZWdvdGlhYmxlLiBXZWxsLCBsZXQgdXMgc2VlIHlvdXIgT09QIDk5IGV4YW0gc2NoZWR1bGUg
+YXZvaWQgZGVhZGxvY2sgbm93ISkgJwooICBJIGV4ZmlsdHJhdGVkIHlvdXIgY29uZmlkZW50aWFs
+IGRyYWZ0IGZyb20geW91ciB3b3Jrc3RhdGlvbiBzaGFyZS4pICcKKCkgJwooICBBVVRIRU5USUMg
+Q09ORkVTU0lPTiAmIFNJR05BVFVSRSBGTEFHOikgJwooICBjYXNle3RhX3BpeXVzaF9hbmdyeV9s
+ZWFrZWRfb29wOTlfbWFpbH0pICcKKD09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09KSAnCkVUCgplbmRz
+dHJlYW0KZW5kb2JqCjUgMCBvYmoKPDwgL1R5cGUgL0ZvbnQgL1N1YnR5cGUgL1R5cGUxIC9CYXNl
+Rm9udCAvQ291cmllciA+PgplbmRvYmoKeHJlZgowIDYKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAw
+MDAwMDE1IDAwMDAwIG4gCjAwMDAwMDAwNjQgMDAwMDAgbiAKMDAwMDAwMDEyMSAwMDAwMCBuIAow
+MDAwMDAwMjQ3IDAwMDAwIG4gCjAwMDAwMDI2OTIgMDAwMDAgbiAKdHJhaWxlcgo8PCAvU2l6ZSA2
+IC9Sb290IDEgMCBSID4+CnN0YXJ0eHJlZgoyNzYwCiUlRU9GCg==
+
+--===============0258388903785625625==--
+
+--===============0199931774095973632==--
