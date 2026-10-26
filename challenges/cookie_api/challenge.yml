@@ -1,0 +1,36 @@
+name: "Cookie / API: Faculty Exam Vault Inspection"
+author: "Tanish Shah (@tanishshahh)"
+category: "Web"
+description: |
+  **Case File Briefing:**
+  During forensic triage of GICT Lab 207, investigators discovered that TA Piyush Pelaiya bookmarked an internal faculty portal used by Prof. Hasmukh Chelaiya to stage draft mid-semester exams for **OS 101** and **OOP 99**.
+
+  The web portal enforces access tiers via client-side session cookies. Can your team inspect the authentication state, elevate permissions to faculty coordinator tier, or locate the unlisted REST API endpoint to retrieve Prof. Chelaiya's secret exam draft flag?
+
+  **Target Service:** `http://<LAN_IP>:5001/` (or local container port `5001`)  
+  **Flag Format:** `case{...}`
+
+value: 500
+type: dynamic
+extra:
+  initial: 500
+  decay: 15
+  minimum: 100
+
+flags:
+  - case{cookie_role_tamper_faculty_access}
+
+tags:
+  - web
+  - easy
+  - cookies
+  - story_act_1
+
+hints:
+  - content: "Inspect the Storage / Cookies tab in your browser DevTools. What roles and tiers are defined?"
+    cost: 25
+  - content: "Examine the frontend JavaScript network calls in DevTools. Is there a hidden REST API path for draft papers?"
+    cost: 50
+
+state: visible
+version: "0.1"

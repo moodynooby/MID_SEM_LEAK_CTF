@@ -13,9 +13,9 @@ Welcome challenge authors and testers! Every challenge in this CTF is an evidenc
 | **Forensics** | PDF Hidden Text: Redacted Exam | Forensics | Easy (100-200) | Leaked OOP 99 paper with white text / hidden stream. |
 | **Forensics** | Audio Spectrogram: Lab Wiretap | Stego | Medium (300-400) | Ambient audio with visual flag synthesized into frequencies. |
 | **Forensics** | Physical Forensics: Lab 207 Terminal | Forensics | Medium (300-400) | Physical crime scene PC memory dump in Lab 207. |
-| **Web & AI** | Cookie / API: Faculty Exam Vault | Web | Easy (100-200) | Client-side cookie tampering / hidden REST endpoint. |
-| **Web & AI** | AI Model Prompt: Proctor Bot Jailbreak | AI | Easy/Med (200-300) | Adversarial prompt injection against TA proctor bot. |
-| **Web & AI** | PHP2SHELL: Insecure Faculty Upload | Web | Hard (500) | File upload filter bypass to web shell execution. |
+| **Web & AI** | [Cookie / API: Faculty Exam Vault](cookie_api/) | Web | Easy (100-200) | Client-side cookie tampering / hidden REST endpoint. |
+| **Web & AI** | [AI Model Prompt: Proctor Bot Jailbreak](ai_prompt_injection/) | AI | Easy/Med (200-300) | Adversarial prompt injection against TA proctor bot. |
+| **Web & AI** | [PHP2SHELL: Insecure Faculty Upload](php2shell/) | Web | Hard (500) | File upload filter bypass to web shell execution. |
 | **Reversing** | APK Reverse Engineer: Companion App | Mobile / Rev | Medium (300-400) | Decompiling campus Android app in JADX. |
 | **Crypto** | Password Cracking: Faculty Vault | Crypto | Hard (500) | Cracking encrypted archive using custom campus wordlist. |
 | **Reversing** | Safe Exam Browser (SEB) Reversing | Reverse Eng | Hard (500) | Reversing stripped C/C++ lockdown binary in Ghidra. |

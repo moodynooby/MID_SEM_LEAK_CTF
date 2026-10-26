@@ -66,9 +66,9 @@ This repository contains the complete offline-first containerized infrastructure
 | **#10** | PDF Hidden Text: The Redacted Exam Paper | Forensics | Easy | Yesha | `challenges/pdf_hidden_text/` | Scaffolding |
 | **#11** | Audio Spectrogram: Lab Microphone Wiretap | Stego | Medium | Yesha | `challenges/audio_spectrogram/` | Scaffolding |
 | **#12** | Physical Forensics: Lab 207 Terminal | Forensics | Medium | Yesha | `challenges/physical_terminal/` | Scaffolding |
-| **#13** | Cookie / API: Faculty Exam Vault | Web | Easy | @tanishshahh | `challenges/cookie_api/` | Scaffolding |
-| **#14** | AI Model Prompt: Proctor Bot Jailbreak | AI | Easy/Med | @tanishshahh | `challenges/ai_prompt_injection/` | Scaffolding |
-| **#15** | PHP2SHELL: Faculty Upload Bypass | Web | Hard | @tanishshahh | `challenges/php2shell/` | Scaffolding |
+| **#13** | Cookie / API: Faculty Exam Vault | Web | Easy | @tanishshahh | `challenges/cookie_api/` | Completed (Verified) |
+| **#14** | AI Model Prompt: Proctor Bot Jailbreak | AI | Easy/Med | @tanishshahh | `challenges/ai_prompt_injection/` | Completed (Verified) |
+| **#15** | PHP2SHELL: Faculty Upload Bypass | Web | Hard | @tanishshahh | `challenges/php2shell/` | Completed (Verified) |
 | **#16** | Intrusion Punishments & Siren Alerts | Live Ops | — | @tanishshahh | `ops/siren_alert/` | Scaffolding |
 | **#17** | APK Reverse Engineer: Suspect's App | Reversing | Medium | @viditd1-eng | `challenges/apk_reversing/` | Scaffolding |
 | **#18** | Password Cracking: Faculty Vault | Crypto | Hard | @viditd1-eng | `challenges/password_cracking/` | Scaffolding |
