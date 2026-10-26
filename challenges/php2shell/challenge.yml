@@ -1,0 +1,38 @@
+name: "PHP2SHELL: Faculty Upload Portal Bypass"
+author: "Tanish Shah (@tanishshahh)"
+category: "Web"
+description: |
+  **Case File Briefing:**
+  To collect student lab assignments and peer review drafts, Prof. Hasmukh Chelaiya hosted an internal faculty submission portal (`upload.php`) on the department intranet.
+
+  Forensic analysis of network traffic revealed that TA Piyush Pelaiya uploaded a malicious polyglot script to achieve arbitrary command execution and leak the confidential **OOP 99** examination flag stored on the server.
+
+  The portal implements a blacklist for `.php` files, enforces MIME-type verification, and validates image magic bytes. Can your team craft a valid polyglot payload, bypass the upload restrictions, and execute `/readflag` or `cat /flag.txt` to capture the flag?
+
+  **Target Service:** `http://<LAN_IP>:5003/` (or local container port `5003`)  
+  **Flag Format:** `case{...}`
+
+value: 500
+type: dynamic
+extra:
+  initial: 500
+  decay: 15
+  minimum: 100
+
+flags:
+  - case{php_webshell_rce_faculty_portal}
+
+tags:
+  - web
+  - hard
+  - file_upload
+  - story_act_2
+
+hints:
+  - content: "Standard .php files are blocked by an extension blacklist, but what other extensions does the PHP engine execute (e.g. .phtml, .php5)?"
+    cost: 50
+  - content: "The server checks for valid image header bytes. Prepend GIF magic bytes ('GIF89a;') to your PHP webshell to create a polyglot file."
+    cost: 50
+
+state: visible
+version: "0.1"
