@@ -76,16 +76,18 @@ def main():
         print("    add it to .env, then re-run: uv run ctf theme")
         sys.exit(1)
 
+    print("[*] Activating primary theme 'm0xblood' via CTFd API...")
+    theme_ok = set_config(api_url, token, "ctf_theme", "m0xblood")
     print("[*] Pushing theme_header (CSS) via CTFd API...")
     header_ok = set_config(api_url, token, "theme_header", theme_header)
     print("[*] Pushing theme_footer (JS) via CTFd API...")
     footer_ok = set_config(api_url, token, "theme_footer", theme_footer)
 
-    if header_ok and footer_ok:
-        print("[+] Scoreboard projector theme applied successfully!")
+    if theme_ok and header_ok and footer_ok:
+        print("[+] Primary theme ('m0xblood') and scoreboard projector theme applied successfully!")
         print("    Open /scoreboard on the projector and press F11 for fullscreen.")
     else:
-        print("[!] Failed to apply one or both configs. Check CTFD_ADMIN_TOKEN and CTFD_API_URL.")
+        print("[!] Failed to apply one or more configs. Check CTFD_ADMIN_TOKEN and CTFD_API_URL.")
         sys.exit(1)
 
 

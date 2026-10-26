@@ -54,7 +54,8 @@ This repository contains the complete offline-first containerized infrastructure
    - `uv run ctf stop` preserves all volumes safely.
    - **WARNING:** Running `docker compose down -v` or `docker volume prune` **will permanently destroy all team accounts, theme configs, and custom markdown pages**. Always run `uv run ctf backup` before touching volume states.
 2. **Theme Mounts:**
-   - Custom Jinja2 themes and stylesheets must be mounted declaratively via [docker-compose.yml](docker-compose.yml). Never manually alter files inside the running container.
+   - Custom Jinja2 themes and stylesheets are mounted declaratively via [docker-compose.yml](docker-compose.yml) (`./themes/m0xblood:/opt/CTFd/CTFd/themes/m0xblood:ro`).
+   - Running `uv run ctf theme` automatically activates `m0xblood` as the primary CTFd theme via the REST API and injects big-screen scoreboard styling into `theme_header`/`theme_footer`. Never manually alter files inside the running container.
 
 ---
 

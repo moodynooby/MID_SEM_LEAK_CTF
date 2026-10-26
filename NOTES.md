@@ -142,6 +142,11 @@ At 5:15 PM (15 minutes before the competition ends), the live scoreboard is plac
   2. `tar -czf backups/ctfd_backup_<timestamp>.tar.gz database.sql /var/uploads`
 - The resulting `.tar.gz` bundle contains 100% of the live contest state. Restoring on the standby laptop reconstructs MariaDB tables and static upload assets identically in `< 90 seconds`.
 
+### Visual Styling & Theme Architecture (`themes/m0xblood` & `ctfd-theme/`)
+- **Primary Participant Theme (`m0xblood`):** Built on CTFd 3.7.0 `core-beta` architecture with Bootstrap 5, Alpine.js, and Vite bundling. Styled with high-contrast dark surfaces (`#0a0a0c`), crimson breach accents (`#ff1a40` / `#dc3545`), animated challenge board elements, and zero external CDN/font links for strict offline LAN portability. Mounted declaratively at `./themes/m0xblood:/opt/CTFd/CTFd/themes/m0xblood:ro`.
+- **Scoreboard Projector Styling (`ctfd-theme/`):** Scoped specifically to `/scoreboard` on big screens, with clamp()-scaled typography, medal highlights, and real-time solve flash animations.
+- **Unified Theme Activation:** Executing `uv run ctf theme` configures `ctf_theme = "m0xblood"` and injects the scoreboard styling into `theme_header`/`theme_footer` via the CTFd REST API.
+
 ---
 
 ## 5. Audio-Visual Soundboard Design & Cue Timing ([ops/soundboard/](ops/soundboard/))

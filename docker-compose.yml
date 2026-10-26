@@ -17,6 +17,7 @@ services:
     volumes:
       - ctfd_data:/var/uploads
       - ctfd_logs:/var/log/CTFd
+      - ./themes/m0xblood:/opt/CTFd/CTFd/themes/m0xblood:ro
     networks:
       - internal_net
       - proxy_net

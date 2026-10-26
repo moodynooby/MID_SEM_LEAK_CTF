@@ -134,6 +134,7 @@ Participants are advised during pre-event communications to have the following t
 #### 2:00 PM – 2:30 PM: Infrastructure Boot & Sanity Check
 - Manas and Krish power up Primary and Standby hosts.
 - Execute `uv run ctf start` and confirm all 4 containers healthy via `uv run ctf status`.
+- Execute `uv run ctf theme` to activate the `m0xblood` primary dark theme and inject scoreboard projector styles.
 - Connect HDMI feeds to Lab 207 and Lab 208 ceiling projectors; open `http://localhost/scoreboard` in fullscreen (`F11`).
 - Run `uv run ctf backup` and test sync to standby laptop: `uv run ctf sync 192.168.1.101`.
 

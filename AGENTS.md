@@ -103,7 +103,7 @@ All 14 challenges must adhere to the 5-step authoring standard defined in [chall
 | `uv run ctf events` | Timeline console| Interactive menu for clue drops, vanishing challenges, and lightning rounds |
 | `uv run ctf blackout`| 5:15 PM freeze | Freezes live scoreboard into suspense mode |
 | `uv run ctf reveal` | 5:30 PM unfreeze| Reveals final scoreboard for closing ceremony |
-| `uv run ctf theme` | Apply projector theme | Pushes `ctfd-theme/` CSS/JS into CTFd's `theme_header`/`theme_footer` configs |
+| `uv run ctf theme` | Apply theme & projector | Activates primary theme (`m0xblood`) and pushes `ctfd-theme/` projector styling |
 
 ---
 
