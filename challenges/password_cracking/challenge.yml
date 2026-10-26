@@ -1,0 +1,42 @@
+name: "Password Cracking: Faculty Vault & Campus Wordlist"
+author: "Vidit (@viditd1-eng)"
+category: "Crypto"
+description: |
+  **Case File Briefing:**
+  A secure zip archive named `confidential_vault.zip` was discovered staged on the faculty shared network drive. According to system access timestamps, the archive was encrypted and transferred just minutes before the network alert triggered.
+
+  Investigators believe this archive contains Prof. Hasmukh Chelaiya's master examination draft and grading key for **OOP 99**. However, the archive is protected by a strong passphrase.
+
+  Standard wordlists like `rockyou.txt` will fail completely. Department security interviews reveal the password was synthesized using campus lore entities: the lab number, course code, suspect name, and year.
+
+  Generate a targeted dictionary based on your Case Briefing Dossier, crack the archive hash using Hashcat or John the Ripper, and extract the confidential vault flag!
+
+  **Flag Format:** `case{...}`
+
+value: 500
+type: dynamic
+extra:
+  initial: 500
+  decay: 15
+  minimum: 100
+
+flags:
+  - case{custom_hashcat_wordlist_cracked_vault}
+
+tags:
+  - crypto
+  - hashcat
+  - john
+  - passwords
+  - hard
+  - story_act_2
+
+hints:
+  - content: "Standard dictionaries won't work. The password combines the lab number, course code, suspect name, and year."
+    cost: 50
+
+files:
+  - files/confidential_vault.zip
+
+state: visible
+version: "0.1"

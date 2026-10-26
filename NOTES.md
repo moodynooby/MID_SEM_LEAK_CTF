@@ -82,7 +82,7 @@ Large Language Models (ChatGPT, Claude, Gemini) can rapidly solve standard textb
 - **Vulnerability of AI:** Online hash crackers and default Hashcat runs rely on standard dictionaries like `rockyou.txt`.
 - **Countermeasure:** The password hash cannot be cracked with `rockyou.txt`. It is synthesized strictly from the Case Briefing Dossier:
   ```
-  GICT207_CSE205_HasmukhChelaiya!
+  GICT207_OS101_Piyush2026!
   ```
   Teams must construct a custom targeted dictionary using `cewl` or Python permutation scripts based on the case dossier.
 

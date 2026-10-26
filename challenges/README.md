@@ -16,8 +16,8 @@ Welcome challenge authors and testers! Every challenge in this CTF is an evidenc
 | **Web & AI** | [Cookie / API: Faculty Exam Vault](cookie_api/) | Web | Easy (100-200) | Client-side cookie tampering / hidden REST endpoint. |
 | **Web & AI** | [AI Model Prompt: Proctor Bot Jailbreak](ai_prompt_injection/) | AI | Easy/Med (200-300) | Adversarial prompt injection against TA proctor bot. |
 | **Web & AI** | [PHP2SHELL: Insecure Faculty Upload](php2shell/) | Web | Hard (500) | File upload filter bypass to web shell execution. |
-| **Reversing** | APK Reverse Engineer: Companion App | Mobile / Rev | Medium (300-400) | Decompiling campus Android app in JADX. |
-| **Crypto** | Password Cracking: Faculty Vault | Crypto | Hard (500) | Cracking encrypted archive using custom campus wordlist. |
+| **Reversing** | [APK Reverse Engineer: Companion App](apk_companion_reversing/) | Mobile / Rev | Medium (300-400) | Decompiling campus Android app in JADX. |
+| **Crypto** | [Password Cracking: Faculty Vault](password_cracking/) | Crypto | Hard (500) | Cracking encrypted archive using custom campus wordlist. |
 | **Reversing** | Safe Exam Browser (SEB) Reversing | Reverse Eng | Hard (500) | Reversing stripped C/C++ lockdown binary in Ghidra. |
 | **Network** | [DNS / Wi-Fi Logs: 2:13 AM Auto-Sync](wifi_dns_logs/) | Network | Medium (300-400) | Aruba Wi-Fi log revealing professor midnight cloud sync. |
 | **Network** | [Ransomware Infected: Backdoor PCAP](ransomware_pcap/) | Network | Medium (300-400) | Isolate malicious HTTP POST traffic & extract webshell key. |

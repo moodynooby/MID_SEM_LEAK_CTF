@@ -71,9 +71,9 @@ This repository contains the complete offline-first containerized infrastructure
 | **#14** | AI Model Prompt: Proctor Bot Jailbreak | AI | Easy/Med | @tanishshahh | `challenges/ai_prompt_injection/` | Completed (Verified) |
 | **#15** | PHP2SHELL: Faculty Upload Bypass | Web | Hard | @tanishshahh | `challenges/php2shell/` | Completed (Verified) |
 | **#16** | Intrusion Punishments & Siren Alerts | Live Ops | — | @tanishshahh | `ops/siren_alert/` | Scaffolding |
-| **#17** | APK Reverse Engineer: Suspect's App | Reversing | Medium | @viditd1-eng | `challenges/apk_reversing/` | Scaffolding |
-| **#18** | Password Cracking: Faculty Vault | Crypto | Hard | @viditd1-eng | `challenges/password_cracking/` | Scaffolding |
-| **#19** | Safe Exam Browser (SEB) Reversing | Reversing | Hard | @viditd1-eng | `challenges/seb_binary/` | Scaffolding |
+| **#17** | APK Reverse Engineer: Suspect's App | Reversing | Medium | @viditd1-eng | `challenges/apk_companion_reversing/` | Completed (Verified) |
+| **#18** | Password Cracking: Faculty Vault | Crypto | Hard | @viditd1-eng | `challenges/password_cracking/` | Completed (Verified) |
+| **#19** | Safe Exam Browser (SEB) Reversing | Reversing | Hard | @viditd1-eng | `challenges/seb_binary/` | Scaffolding (Remaining in Issue #7) |
 | **#20** | DNS / Wi-Fi Logs: 2:13 AM Auto-Sync | Network | Medium | @VP1107 | `challenges/wifi_dns_logs/` | Completed (Verified) |
 | **#21** | Ransomware Infected: Web Shell PCAP | Network | Medium | @VP1107 | `challenges/ransomware_pcap/` | Completed (Verified) |
 | **#22** | Deleted but Not Gone: Erased Exam Draft | Forensics | Easy | @VP1107 | `challenges/deleted_evidence/` | Completed (Verified) |
