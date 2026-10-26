@@ -1,0 +1,42 @@
+name: "Email Forensics: The Angry TA's Leaked Mails"
+author: "Vatsal Pandya (@VP1107)"
+category: "Forensics"
+description: |
+  **Case File Briefing:**
+  Following the unauthorized leak of the upcoming **OOP 99** Mid-Semester Examination paper, campus network administrators intercepted a raw mail spool export (`leaked_incident_mail.eml`) from the campus gateway server (`mailgw.gict.ac.in`).
+
+  The incident export contains multiple forwarded threads, decoy student complaints, and spoofed sender headers. Investigators suspect that **TA Piyush Pelaiya** exfiltrated the exam in retaliation against **Prof. Hasmukh Chelaiya** following a harsh evaluation in **OS 101**.
+
+  Analyze the RFC 822 email headers (`X-Originating-IP`, authentication tags, and MIME boundaries), cut through the decoy threads, and recover the leaked confidential exam paper and the culprit's confession signature flag.
+
+  **Flag Format:** `case{...}`
+
+value: 500
+type: dynamic
+extra:
+  initial: 500
+  decay: 15
+  minimum: 100
+
+flags:
+  - case{ta_piyush_angry_leaked_oop99_mail}
+  - case{piyush_angry_ta_os101_revenge}
+
+tags:
+  - forensics
+  - email
+  - medium
+  - story_act_1
+  - network
+
+hints:
+  - content: "Trace the un-spoofed X-Originating-IP and X-Campus-Auth-User headers in the mail thread to isolate the genuine sender message."
+    cost: 25
+  - content: "Beware of decoy attachments in forwarded student threads. Extract the base64 attachment from the message originating from Piyush's IP (10.207.42.19)."
+    cost: 50
+
+files:
+  - files/leaked_incident_mail.eml
+
+state: visible
+version: "0.1"

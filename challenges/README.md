@@ -22,7 +22,7 @@ Welcome challenge authors and testers! Every challenge in this CTF is an evidenc
 | **Network** | DNS / Wi-Fi Logs: 2:13 AM Auto-Sync | Network | Medium (300-400) | Aruba Wi-Fi log revealing professor midnight cloud sync. |
 | **Network** | Ransomware Infected: Backdoor PCAP | Network | Medium (300-400) | Isolate malicious HTTP POST traffic & extract webshell key. |
 | **Forensics** | Deleted but Not Gone: Erased Draft | Forensics | Easy (100-200) | Inode / commit recovery of erased exam paper draft. |
-| **Forensics** | Email Forensics: Angry TA's Mails | Forensics | Medium (300-400) | Mail spool of TA Piyush's angry emails to Prof. Chelaiya. |
+| **Forensics** | [Email Forensics: Angry TA's Mails](email_forensics/) | Forensics | Medium (300-400) | Mail spool of TA Piyush's angry emails to Prof. Chelaiya. |
 
 ---
 
