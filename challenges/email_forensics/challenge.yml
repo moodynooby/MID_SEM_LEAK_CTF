@@ -3,7 +3,7 @@ author: "Vatsal Pandya (@VP1107)"
 category: "Forensics"
 description: |
   **Case File Briefing:**
-  Following the unauthorized leak of the upcoming **OOP 99** Mid-Semester Examination paper, campus network administrators intercepted a raw mail spool export (`leaked_incident_mail.eml`) from the campus gateway server (`mailgw.gict.ac.in`).
+  Following the unauthorized leak of the upcoming **OOP 99** Mid-Semester Examination paper, campus network administrators intercepted a raw mail spool export (`leaked_incident_mail.eml`) from the campus gateway server (`mailgw.ahduni.edu.in`).
 
   The incident export contains multiple forwarded threads, decoy student complaints, and spoofed sender headers. Investigators suspect that **TA Piyush Pelaiya** exfiltrated the exam in retaliation against **Prof. Hasmukh Chelaiya** following a harsh evaluation in **OS 101**.
 

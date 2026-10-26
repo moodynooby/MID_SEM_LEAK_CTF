@@ -63,10 +63,10 @@ This repository contains the complete offline-first containerized infrastructure
 
 | Issue # | Challenge Name | Category | Difficulty | Assignee | Target Directory | Status |
 | :---: | :--- | :--- | :---: | :--- | :--- | :---: |
-| **#9** | Liam's Idea: Fragmented Exfiltration | Forensics | Easy | Yesha | `challenges/liams_idea/` | Scaffolding |
-| **#10** | PDF Hidden Text: The Redacted Exam Paper | Forensics | Easy | Yesha | `challenges/pdf_hidden_text/` | Scaffolding |
-| **#11** | Audio Spectrogram: Lab Microphone Wiretap | Stego | Medium | Yesha | `challenges/audio_spectrogram/` | Scaffolding |
-| **#12** | Physical Forensics: Lab 207 Terminal | Forensics | Medium | Yesha | `challenges/physical_terminal/` | Scaffolding |
+| **#9** | Liam's Idea: Fragmented Exfiltration | Forensics | Easy | Yesha | `challenges/fragmented_exfiltration/` | Completed (Verified) |
+| **#10** | PDF Hidden Text: The Redacted Exam Paper | Forensics | Easy | Yesha | `challenges/pdf_hidden_text/` | Completed (Verified) |
+| **#11** | Audio Spectrogram: Lab Microphone Wiretap | Stego | Medium | Yesha | `challenges/audio_spectrogram/` | Completed (Verified) |
+| **#12** | Physical Forensics: Lab 207 Terminal RAM Dump | Forensics | Medium | Yesha | `challenges/physical_terminal_ram/` | Completed (Verified) |
 | **#13** | Cookie / API: Faculty Exam Vault | Web | Easy | @tanishshahh | `challenges/cookie_api/` | Completed (Verified) |
 | **#14** | AI Model Prompt: Proctor Bot Jailbreak | AI | Easy/Med | @tanishshahh | `challenges/ai_prompt_injection/` | Completed (Verified) |
 | **#15** | PHP2SHELL: Faculty Upload Bypass | Web | Hard | @tanishshahh | `challenges/php2shell/` | Completed (Verified) |
@@ -92,13 +92,13 @@ This repository contains the complete offline-first containerized infrastructure
 - **The Victim:** **Prof. Hasmukh Chelaiya** (Faculty teaching **OS 101** and author of the leaked **OOP 99** Mid-Sem Exam).
 - **The Culprit:** **TA Piyush Pelaiya** (Graduate teaching assistant who received failing/unfair grades from Prof. Chelaiya in OS 101, prompting a revenge-driven exfiltration of the OOP 99 exam paper).
 - **The Decoys & Framed Students:**
-  - *Rohan Sharma* (`@binary_breeze`): Lab 208 check-in decoy.
-  - *Vikram Patel* (`@ghost_in_the_lab`): Terminal footprint decoy.
-  - *Ananya Iyer* (`@root_ninja`): Active VPN session decoy.
-  - *Siddharth Mehta* (`@cipher_sid`): Student Lounge Wi-Fi decoy.
-  - *Pooja Nair* (`@data_drifter`): Seminar Hall club meeting decoy.
+  - *Sansh Vhah* (`@binary_breeze`): Lab 208 check-in decoy.
+  - *Danas Moshi* (`@ghost_in_the_lab`): Terminal footprint decoy.
+  - *Prish Koddar* (`@root_ninja`): Active VPN session decoy.
+  - *Tryan Ahakkar* (`@cipher_sid`): Student Lounge Wi-Fi decoy.
+  - *Parsh Hatel* (`@data_drifter`): Seminar Hall club meeting decoy.
 - **The Master Plot Twist (Challenge #20):**
-  - Wi-Fi logs indicate that at **02:13:42 IST**, device `prof_deshmukh_thinkpad_x1` synced the mid-sem draft to a shared directory, which TA Piyush hijacked via an unprotected session!
+  - Wi-Fi logs indicate that at **02:13:42 IST**, device `prof_chelaiya_thinkpad_x1` synced the mid-sem draft to a shared directory, which TA Piyush hijacked via an unprotected session!
 
 ---
 
@@ -127,6 +127,9 @@ uv run ctf events --event lightning_end     # 5:10 PM: Lock Lightning Round
 uv run ctf events --event clue_drop_2       # 5:10 PM: Broadcast Intel Clue #2
 uv run ctf blackout                         # 5:15 PM: Freeze scoreboard into suspense mode
 uv run ctf reveal                           # 5:30 PM: Unfreeze scoreboard for ceremony
+uv run ctf theme                            # Apply m0xblood theme and scoreboard projector styling
+uv run ctf seed                             # Seed all challenges, flags, attachments into CTFd
+uv run ctf setup                            # One-shot stack bootstrap, challenge seeder & bindings
 ```
 
 ---

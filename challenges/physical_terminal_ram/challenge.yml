@@ -1,0 +1,48 @@
+name: "Physical Forensics: Lab 207 Terminal RAM Dump"
+author: "Yesha (Forensics Track Lead)"
+category: "Forensics"
+description: |
+  **Case File Briefing:**
+  Following the midnight breach, campus incident responders cordoned off workstation **PC-04** in **GICT Lab 207**.
+
+  Before fleeing the scene, the intruder abruptly logged out, leaving the terminal session uncommitted. First responders preserved the volatile physical memory state by creating a live memory capture (`lab207_terminal_ram.raw`).
+
+  **Crime Scene Workstation Access:**
+  Participants physically stationed in Lab 207 can walk to designated **PC-04** to acquire the memory capture directly from volatile storage (`/dev/shm/lab207_terminal_ram.raw`) via USB drive or perform live triage.
+
+  **Backup / Failover Access:**
+  An identical forensic snapshot (`lab207_terminal_ram.raw`) is also provided directly below as a downloadable offline mirror to prevent physical bottlenecks.
+
+  Analyze the memory dump using **Volatility 3** (inspect bash processes, command history, and environment variables) or forensic memory carving tools, and recover the leaked authorization token flag.
+
+  **Flag Format:** `case{...}`
+
+value: 500
+type: dynamic
+extra:
+  initial: 500
+  decay: 15
+  minimum: 100
+
+flags:
+  - case{volatility3_lab207_terminal_ram}
+
+tags:
+  - forensics
+  - physical
+  - memory
+  - volatility
+  - medium
+  - story_act_2
+
+hints:
+  - content: "Examine the environment variables of active bash processes. In Linux memory dumps, the `environ` array stores exported session keys."
+    cost: 25
+  - content: "Use Volatility 3 plugins `linux.bash.Bash` and `linux.envars.Envars`, or run `strings -a lab207_terminal_ram.raw | grep -i 'case{'`."
+    cost: 50
+
+files:
+  - files/lab207_terminal_ram.raw
+
+state: visible
+version: "0.1"

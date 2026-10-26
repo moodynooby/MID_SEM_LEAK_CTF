@@ -1,0 +1,43 @@
+name: "PDF Hidden Text: The Redacted Exam Paper"
+author: "Yesha (Forensics Track Lead)"
+category: "Forensics"
+description: |
+  **Case File Briefing:**
+  A confidential draft copy of the upcoming **OOP 99 (CSE 205)** Mid-Semester Examination authored by **Prof. Hasmukh Chelaiya** was leaked onto the campus network prior to final approval.
+
+  Curiously, when investigators opened the document (`OOP99_Exam_Paper_REDACTED.pdf`), **Section C** (worth 20 marks) appeared completely blocked out with solid black redaction bars. Department admins claim the confidential grading rubric and bonus question were redacted before the file leaked.
+
+  However, amateur document editors often make a fatal mistake: applying cosmetic black rectangles without flattening the underlying PDF text stream.
+
+  Analyze the PDF structure, look beneath the cosmetic redaction layer, and expose the leaked master rubric flag.
+
+  **Flag Format:** `case{...}`
+
+value: 500
+type: dynamic
+extra:
+  initial: 500
+  decay: 15
+  minimum: 100
+
+flags:
+  - case{redacted_pdf_layer_text_exposed}
+
+tags:
+  - forensics
+  - pdf
+  - text-layer
+  - easy
+  - story_act_1
+
+hints:
+  - content: "A visual black box in a PDF is often just a vector rectangle drawn on top of the text. The underlying text operators might still be present in the content stream."
+    cost: 25
+  - content: "Try extracting all plain text using command line utilities like `pdftotext OOP99_Exam_Paper_REDACTED.pdf -` or `strings`."
+    cost: 50
+
+files:
+  - files/OOP99_Exam_Paper_REDACTED.pdf
+
+state: visible
+version: "0.1"

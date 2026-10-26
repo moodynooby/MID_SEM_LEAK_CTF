@@ -91,15 +91,15 @@ def create_minimal_pdf(title: str, lines: list[str]) -> bytes:
 
 
 def build_decoy_thread_1() -> MIMEMultipart:
-    """Decoy 1: Innocent student Rohan Sharma inquiring about OS 101 lab grades."""
+    """Decoy 1: Innocent student Sansh Vhah inquiring about OS 101 lab grades."""
     msg = MIMEMultipart()
-    msg["From"] = "Rohan Sharma <rohan.s@gict.ac.in>"
-    msg["To"] = "Prof. Hasmukh Chelaiya <hasmukh.chelaiya@gict.ac.in>"
+    msg["From"] = "Sansh Vhah <sansh.v@ahduni.edu.in>"
+    msg["To"] = "Prof. Hasmukh Chelaiya <hasmukh.chelaiya@ahduni.edu.in>"
     msg["Subject"] = "Re: OS 101 Assignment 2 - Evaluation Inquiry (Lab 208)"
     msg["Date"] = "Mon, 27 Oct 2026 17:15:22 +0530"
-    msg["Message-ID"] = "<20261027171522.rohan.os101@gict.ac.in>"
+    msg["Message-ID"] = "<20261027171522.sansh.os101@ahduni.edu.in>"
     msg["X-Originating-IP"] = "[10.208.15.44]"
-    msg["X-Campus-Auth-User"] = "rohan.s"
+    msg["X-Campus-Auth-User"] = "sansh.v"
 
     body = (
         "Respected Prof. Chelaiya,\n\n"
@@ -107,7 +107,7 @@ def build_decoy_thread_1() -> MIMEMultipart:
         "deducted marks citing lock ordering issues. Could you please verify if the attached\n"
         "grading rubric was applied uniformly across all batches?\n\n"
         "Sincerely,\n"
-        "Rohan Sharma (Roll: AU24BTECH042)\n"
+        "Sansh Vhah (Roll: AU24BTECH042)\n"
         "Lab 208 Workstation\n"
     )
     msg.attach(MIMEText(body, "plain"))
@@ -139,9 +139,9 @@ def build_decoy_thread_1() -> MIMEMultipart:
 
 
 def build_decoy_thread_2() -> MIMEMultipart:
-    """Decoy 2: Spoofed student complaint attempting to shift blame to Vikram Patel."""
+    """Decoy 2: Spoofed student complaint attempting to shift blame to Danas Moshi."""
     msg = MIMEMultipart()
-    msg["From"] = "Vikram Patel <vikram.p@gict.ac.in>"
+    msg["From"] = "Danas Moshi <danas.m@ahduni.edu.in>"
     msg["To"] = "Academic Grievance Cell <grievance@ahduni.edu.in>"
     msg["Subject"] = "ANONYMOUS TIP: Someone accessed exam drafts in Lab 207"
     msg["Date"] = "Mon, 27 Oct 2026 21:35:10 +0530"
@@ -275,30 +275,30 @@ def build_culprit_exfiltration_message() -> MIMEMultipart:
 
     # Authentic mail gateway routing headers
     msg["Received"] = (
-        "from mailgw.gict.ac.in (mailgw.gict.ac.in [172.16.0.25])\n"
+        "from mailgw.ahduni.edu.in (mailgw.ahduni.edu.in [172.16.0.25])\n"
         "    by campus-mail.ahduni.edu.in (Postfix) with ESMTP id 4X98bL207v\n"
         "    for <all-students-cse@ahduni.edu.in>; Mon, 27 Oct 2026 23:48:14 +0530 (IST)"
     )
     msg["Received"] = (
         "from dhcp-10-207-42-19.campus.internal (piyush-laptop.dyn.campus.internal [10.207.42.19])\n"
         "    (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)\n"
-        "    by mailgw.gict.ac.in (Postfix) with ESMTPSA id 3K91aB411z\n"
+        "    by mailgw.ahduni.edu.in (Postfix) with ESMTPSA id 3K91aB411z\n"
         "    for <all-students-cse@ahduni.edu.in>; Mon, 27 Oct 2026 23:48:12 +0530 (IST)"
     )
 
     # Forensic signature headers
     msg["X-Originating-IP"] = "[10.207.42.19]"
     msg["X-Campus-Auth-User"] = "piyush.pelaiya"
-    msg["X-Authenticated-Sender"] = "piyush.pelaiya@gict.ac.in"
+    msg["X-Authenticated-Sender"] = "piyush.pelaiya@ahduni.edu.in"
     msg["X-Mailer"] = "Thunderbird/115.3.1 (Linux; Ubuntu 24.04 LTS)"
 
     # Spoofed visual headers (what the casual recipient sees)
     msg["From"] = '"Anonymous Student Council" <student_council_leaks@protonmail.com>'
-    msg["Reply-To"] = "piyush.pelaiya@gict.ac.in"
+    msg["Reply-To"] = "piyush.pelaiya@ahduni.edu.in"
     msg["To"] = "all-students-cse@ahduni.edu.in"
     msg["Date"] = "Mon, 27 Oct 2026 23:48:10 +0530"
     msg["Subject"] = "[LEAK] OOP 99 Mid-Sem Question Paper Leaked!! Revenge for OS 101!"
-    msg["Message-ID"] = "<20261027234810.10207.piyush@gict.ac.in>"
+    msg["Message-ID"] = "<20261027234810.10207.piyush@ahduni.edu.in>"
 
     confession_body = (
         "To all CSE students,\n\n"
@@ -341,14 +341,14 @@ def generate_incident_eml(output_path: Path):
     """
     Assemble the master incident triage export containing:
     - Master incident triage header from AU-CIRT to Prof. Chelaiya
-    - Decoy Thread 1: Rohan Sharma OS 101 rubric inquiry
-    - Decoy Thread 2: Vikram Patel spoofed report
+    - Decoy Thread 1: Sansh Vhah OS 101 rubric inquiry
+    - Decoy Thread 2: Danas Moshi spoofed report
     - Decoy Thread 3: Dean's office security circular
     - True Evidence: TA Piyush Pelaiya's authenticated exfiltration email with leaked exam PDF
     """
     master_msg = MIMEMultipart("mixed")
     master_msg["From"] = "Campus Security Operations <soc@ahduni.edu.in>"
-    master_msg["To"] = "Prof. Hasmukh Chelaiya <hasmukh.chelaiya@gict.ac.in>"
+    master_msg["To"] = "Prof. Hasmukh Chelaiya <hasmukh.chelaiya@ahduni.edu.in>"
     master_msg["Cc"] = "Dean of Academic Affairs <dean.academic@ahduni.edu.in>"
     master_msg["Date"] = "Tue, 28 Oct 2026 01:15:30 +0530"
     master_msg["Subject"] = (
@@ -361,7 +361,7 @@ def generate_incident_eml(output_path: Path):
 
     briefing = (
         "Dear Prof. Chelaiya,\n\n"
-        "At 00:15 IST, our campus mail filter gateway (mailgw.gict.ac.in) triggered an\n"
+        "At 00:15 IST, our campus mail filter gateway (mailgw.ahduni.edu.in) triggered an\n"
         "automated alert on a high-volume outbound mail blast targeting the student body.\n\n"
         "The intercepted export collates multiple threads captured between 17:00 and 23:50 IST\n"
         "on 27 October 2026. The exfiltration message utilized spoofed external 'From' headers\n"
@@ -370,7 +370,7 @@ def generate_incident_eml(output_path: Path):
         "Please review the attached thread components, analyze the RFC 822 routing headers,\n"
         "and verify the authenticity of the attached OOP 99 draft paper.\n\n"
         "Forensic Evidence Attached:\n"
-        "  1. Decoy Thread #1: rohan_sharma_os101_rubric.eml (Student grade inquiry)\n"
+        "  1. Decoy Thread #1: sansh_vhah_os101_rubric.eml (Student grade inquiry)\n"
         "  2. Decoy Thread #2: anonymous_lab207_tip.eml (Spoofed blame redirect)\n"
         "  3. Decoy Thread #3: dean_security_circular.eml (Archival administrative memo)\n"
         "  4. Evidence Item #4: intercepted_exfiltration_blast.eml (Authentic exfiltration blast)\n\n"
@@ -382,7 +382,7 @@ def generate_incident_eml(output_path: Path):
     # Attach Decoys as message/rfc822 sub-messages
     msg_decoy1 = MIMEMessage(build_decoy_thread_1())
     msg_decoy1.add_header(
-        "Content-Disposition", "attachment", filename="rohan_sharma_os101_rubric.eml"
+        "Content-Disposition", "attachment", filename="sansh_vhah_os101_rubric.eml"
     )
     master_msg.attach(msg_decoy1)
 

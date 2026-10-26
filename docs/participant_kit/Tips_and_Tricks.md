@@ -7,10 +7,10 @@ Tips to maximize your team's score and solve the case efficiently:
 
 ### 1. Teamwork & Role Delegation (Teams of 2–4)
 - **Don't all look at the same screen:** Divide and conquer.
-  - **Teammate 1:** Handles forensics files (EXIF, hex editing, Wireshark).
-  - **Teammate 2:** Handles web inspection & log grepping.
-  - **Teammate 3:** Tackles cryptography and cipher decoding in CyberChef.
-- **Act II Dual-Route Strategy:** Since Act II has two routes (Log Analysis and Web Source), pick the one your team feels most confident with!
+  - **Teammate 1:** Handles forensics artifacts (git reflogs, hex recovery, Wireshark PCAPs).
+  - **Teammate 2:** Handles web inspection, cookie tampering, and AI prompt interaction.
+  - **Teammate 3:** Tackles binary decompilation (JADX) and targeted dictionary generation for hash cracking.
+- **Cross-Track Correlation:** Clues discovered in wireless DHCP logs or case briefings directly assist in building wordlists and validating suspect alibis.
 
 ---
 
@@ -29,7 +29,7 @@ Tips to maximize your team's score and solve the case efficiently:
   - IP addresses (e.g. `10.207.x.x`)
   - Usernames and handles (e.g. `@ghost_in_the_lab`)
   - MAC addresses
-- You will need to correlate all of these in **Act V** to name the fictional culprit!
+- You will need to correlate all of these across forensic tracks to uncover the culprit's motive and reconstruct the leak!
 
 ---
 

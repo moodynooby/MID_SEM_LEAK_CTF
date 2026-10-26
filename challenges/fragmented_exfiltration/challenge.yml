@@ -1,0 +1,53 @@
+name: "Liam's Idea: Fragmented Exfiltration"
+author: "Yesha (Forensics Track Lead)"
+category: "Forensics"
+description: |
+  **Case File Briefing:**
+  During the midnight breach in GICT Lab 207, campus Data Loss Prevention (DLP) systems triggered an alert on an outbound HTTP POST sequence originating from workstation **PC-04**.
+
+  Network investigators recovered 12 fragmented payload artifacts (`part01.txt` through `part12.txt`). The exfiltrator split an intercepted CCTV terminal recording across non-standard chunk boundaries with custom DLP bypass headers to defeat perimeter inspection.
+
+  Reassemble the fragmented exfiltration stream in correct order, strip the firewall wrapper comments and whitespace, reconstruct the binary media artifact, and uncover the exfiltration evidence and flag.
+
+  **Flag Format:** `case{...}`
+
+value: 500
+type: dynamic
+extra:
+  initial: 500
+  decay: 15
+  minimum: 100
+
+flags:
+  - case{reconstructed_exfil_chunk_assembly}
+
+tags:
+  - forensics
+  - base64
+  - video
+  - chunking
+  - easy
+  - story_act_1
+
+hints:
+  - content: "All 12 chunks (part01.txt ... part12.txt) contain firewall header lines starting with '#'. Filter those out before concatenating the Base64 stream."
+    cost: 25
+  - content: "Use a simple shell pipeline: `grep -v '^#' part*.txt | tr -d '\\r\\n ' | base64 -d > exfil.mp4`, then view the video in VLC or run strings/ffprobe."
+    cost: 50
+
+files:
+  - files/part01.txt
+  - files/part02.txt
+  - files/part03.txt
+  - files/part04.txt
+  - files/part05.txt
+  - files/part06.txt
+  - files/part07.txt
+  - files/part08.txt
+  - files/part09.txt
+  - files/part10.txt
+  - files/part11.txt
+  - files/part12.txt
+
+state: visible
+version: "0.1"

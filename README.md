@@ -37,10 +37,13 @@ Manage the entire event across Windows, macOS, and Linux using the unified **`uv
 # 1. Start CTFd Stack and detect your LAN IP
 uv run ctf start
 
-# 2. Check container status & health
+# 2. Complete setup: seed all challenges, flags, files & themes
+uv run ctf setup
+
+# 3. Check container status & health
 uv run ctf status
 
-# 3. Stop containers gracefully
+# 4. Stop containers gracefully
 uv run ctf stop
 ```
 

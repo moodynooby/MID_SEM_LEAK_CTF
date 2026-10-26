@@ -1,0 +1,41 @@
+name: "Audio Spectrogram: Lab Microphone Wiretap"
+author: "Yesha (Forensics Track Lead)"
+category: "Stego"
+description: |
+  **Case File Briefing:**
+  At 02:12 AM on the night of the incident, campus surveillance activated an ambient audio sensor situated directly above workstation **PC-04** in GICT Lab 207.
+
+  The recording (`lab207_ambient_wiretap.wav`) captured background ventilation, 50Hz AC power hum, and sporadic keyboard keystrokes from the intruder. However, campus signals intelligence detected unusual harmonic density in the ultrasonic high frequencies (16 kHz to 20 kHz).
+
+  Investigate the acoustic recording using spectral visualization tools (e.g., **Audacity** or **Sonic Visualiser**). Switch to Spectrogram view, examine the ultrasonic band, and read the exfiltration transmission watermark flag.
+
+  **Flag Format:** `case{...}`
+
+value: 500
+type: dynamic
+extra:
+  initial: 500
+  decay: 15
+  minimum: 100
+
+flags:
+  - case{spectrogram_lab207_wiretap_audio}
+
+tags:
+  - stego
+  - audio
+  - spectrogram
+  - medium
+  - story_act_2
+
+hints:
+  - content: "Open the audio in Audacity (free cross-platform audio tool). Click the track name dropdown on the left and select 'Spectrogram' instead of 'Waveform'."
+    cost: 25
+  - content: "In Audacity, open Spectrogram Settings: set the Maximum Frequency to 20000 Hz and Minimum Frequency to 15000 Hz. Adjust brightness/gain if needed."
+    cost: 50
+
+files:
+  - files/lab207_ambient_wiretap.wav
+
+state: visible
+version: "0.1"

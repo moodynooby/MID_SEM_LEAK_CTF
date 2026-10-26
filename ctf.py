@@ -15,6 +15,8 @@ Usage:
   uv run ctf blackout          - 5:15 PM Scoreboard Freeze (Suspense mode)
   uv run ctf reveal            - 5:30 PM Scoreboard Reveal (Awards ceremony)
   uv run ctf theme             - Apply big-screen scoreboard projector theme
+  uv run ctf seed              - Seed all challenges, flags, attachments & dynamic scoring into CTFd
+  uv run ctf setup             - One-shot full setup (DB, challenges, themes, and bindings)
 """
 
 import os
@@ -290,6 +292,16 @@ def cmd_theme():
     script = ROOT_DIR / "ops" / "apply_scoreboard_theme.py"
     subprocess.run([sys.executable, str(script)], cwd=str(ROOT_DIR))
 
+def cmd_seed():
+    script = ROOT_DIR / "ops" / "seed_challenges.py"
+    subprocess.run([sys.executable, str(script)], cwd=str(ROOT_DIR))
+
+def cmd_setup():
+    console.print(Panel.fit("[bold cyan]Executing Complete Automated CTF Setup...[/bold cyan]"))
+    cmd_seed()
+    cmd_theme()
+    console.print("[bold green][+] CTFd stack fully configured, challenges seeded, and themes bound![/bold green]")
+
 def main():
     parser = argparse.ArgumentParser(
         description="IEEE AUSB Multiplatform CTF Manager",
@@ -320,6 +332,8 @@ def main():
     subparsers.add_parser("blackout", help="Trigger 5:15 PM scoreboard blackout")
     subparsers.add_parser("reveal", help="Trigger 5:30 PM closing reveal")
     subparsers.add_parser("theme", help="Apply big-screen scoreboard projector theme")
+    subparsers.add_parser("seed", help="Seed challenges, flags, files, and theme into CTFd")
+    subparsers.add_parser("setup", help="One-shot full setup: configure DB, seed challenges, apply themes")
 
     args = parser.parse_args()
 
@@ -343,6 +357,10 @@ def main():
         cmd_reveal()
     elif args.command == "theme":
         cmd_theme()
+    elif args.command == "seed":
+        cmd_seed()
+    elif args.command == "setup":
+        cmd_setup()
     else:
         parser.print_help()
 

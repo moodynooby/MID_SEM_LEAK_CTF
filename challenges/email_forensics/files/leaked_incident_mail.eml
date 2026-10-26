@@ -1,7 +1,7 @@
-Content-Type: multipart/mixed; boundary="===============0199931774095973632=="
+Content-Type: multipart/mixed; boundary="===============6729262344498265385=="
 MIME-Version: 1.0
 From: Campus Security Operations <soc@ahduni.edu.in>
-To: Prof. Hasmukh Chelaiya <hasmukh.chelaiya@gict.ac.in>
+To: Prof. Hasmukh Chelaiya <hasmukh.chelaiya@ahduni.edu.in>
 Cc: Dean of Academic Affairs <dean.academic@ahduni.edu.in>
 Date: Tue, 28 Oct 2026 01:15:30 +0530
 Subject: FW: [INCIDENT TICKET #7042] Re: URGENT: Leak Investigation -
@@ -10,48 +10,48 @@ Message-ID: <20261028011530.soc.cirt.7042@ahduni.edu.in>
 X-Incident-Ticket: INCIDENT-2026-7042-MIDSEM-LEAK
 X-Priority: 1 (Highest)
 
---===============0199931774095973632==
+--===============6729262344498265385==
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
 
 RGVhciBQcm9mLiBDaGVsYWl5YSwKCkF0IDAwOjE1IElTVCwgb3VyIGNhbXB1cyBtYWlsIGZpbHRl
-ciBnYXRld2F5IChtYWlsZ3cuZ2ljdC5hYy5pbikgdHJpZ2dlcmVkIGFuCmF1dG9tYXRlZCBhbGVy
-dCBvbiBhIGhpZ2gtdm9sdW1lIG91dGJvdW5kIG1haWwgYmxhc3QgdGFyZ2V0aW5nIHRoZSBzdHVk
-ZW50IGJvZHkuCgpUaGUgaW50ZXJjZXB0ZWQgZXhwb3J0IGNvbGxhdGVzIG11bHRpcGxlIHRocmVh
-ZHMgY2FwdHVyZWQgYmV0d2VlbiAxNzowMCBhbmQgMjM6NTAgSVNUCm9uIDI3IE9jdG9iZXIgMjAy
-Ni4gVGhlIGV4ZmlsdHJhdGlvbiBtZXNzYWdlIHV0aWxpemVkIHNwb29mZWQgZXh0ZXJuYWwgJ0Zy
-b20nIGhlYWRlcnMKY2xhaW1pbmcgdG8gYmUgYW4gJ0Fub255bW91cyBTdHVkZW50IENvdW5jaWwn
-LiBIb3dldmVyLCBpbnRlcm5hbCBnYXRld2F5IGF1dGhlbnRpY2F0aW9uCnJlY29yZHMgYW5kIFgt
-T3JpZ2luYXRpbmctSVAgdHJhY2VzIHBvaW50IHRvIGEgd29ya3N0YXRpb24gaW5zaWRlIEdJQ1Qg
-TGFiIDIwNy4KClBsZWFzZSByZXZpZXcgdGhlIGF0dGFjaGVkIHRocmVhZCBjb21wb25lbnRzLCBh
-bmFseXplIHRoZSBSRkMgODIyIHJvdXRpbmcgaGVhZGVycywKYW5kIHZlcmlmeSB0aGUgYXV0aGVu
-dGljaXR5IG9mIHRoZSBhdHRhY2hlZCBPT1AgOTkgZHJhZnQgcGFwZXIuCgpGb3JlbnNpYyBFdmlk
-ZW5jZSBBdHRhY2hlZDoKICAxLiBEZWNveSBUaHJlYWQgIzE6IHJvaGFuX3NoYXJtYV9vczEwMV9y
-dWJyaWMuZW1sIChTdHVkZW50IGdyYWRlIGlucXVpcnkpCiAgMi4gRGVjb3kgVGhyZWFkICMyOiBh
-bm9ueW1vdXNfbGFiMjA3X3RpcC5lbWwgKFNwb29mZWQgYmxhbWUgcmVkaXJlY3QpCiAgMy4gRGVj
-b3kgVGhyZWFkICMzOiBkZWFuX3NlY3VyaXR5X2NpcmN1bGFyLmVtbCAoQXJjaGl2YWwgYWRtaW5p
-c3RyYXRpdmUgbWVtbykKICA0LiBFdmlkZW5jZSBJdGVtICM0OiBpbnRlcmNlcHRlZF9leGZpbHRy
-YXRpb25fYmxhc3QuZW1sIChBdXRoZW50aWMgZXhmaWx0cmF0aW9uIGJsYXN0KQoKLSBBaG1lZGFi
-YWQgVW5pdmVyc2l0eSBDeWJlciBJbmNpZGVudCBSZXNwb25zZSBUZWFtIChBVS1DSVJUKQpHSUNU
-IFNlY3VyaXR5IE9wZXJhdGlvbnMgQ2VudGVyCg==
+ciBnYXRld2F5IChtYWlsZ3cuYWhkdW5pLmVkdS5pbikgdHJpZ2dlcmVkIGFuCmF1dG9tYXRlZCBh
+bGVydCBvbiBhIGhpZ2gtdm9sdW1lIG91dGJvdW5kIG1haWwgYmxhc3QgdGFyZ2V0aW5nIHRoZSBz
+dHVkZW50IGJvZHkuCgpUaGUgaW50ZXJjZXB0ZWQgZXhwb3J0IGNvbGxhdGVzIG11bHRpcGxlIHRo
+cmVhZHMgY2FwdHVyZWQgYmV0d2VlbiAxNzowMCBhbmQgMjM6NTAgSVNUCm9uIDI3IE9jdG9iZXIg
+MjAyNi4gVGhlIGV4ZmlsdHJhdGlvbiBtZXNzYWdlIHV0aWxpemVkIHNwb29mZWQgZXh0ZXJuYWwg
+J0Zyb20nIGhlYWRlcnMKY2xhaW1pbmcgdG8gYmUgYW4gJ0Fub255bW91cyBTdHVkZW50IENvdW5j
+aWwnLiBIb3dldmVyLCBpbnRlcm5hbCBnYXRld2F5IGF1dGhlbnRpY2F0aW9uCnJlY29yZHMgYW5k
+IFgtT3JpZ2luYXRpbmctSVAgdHJhY2VzIHBvaW50IHRvIGEgd29ya3N0YXRpb24gaW5zaWRlIEdJ
+Q1QgTGFiIDIwNy4KClBsZWFzZSByZXZpZXcgdGhlIGF0dGFjaGVkIHRocmVhZCBjb21wb25lbnRz
+LCBhbmFseXplIHRoZSBSRkMgODIyIHJvdXRpbmcgaGVhZGVycywKYW5kIHZlcmlmeSB0aGUgYXV0
+aGVudGljaXR5IG9mIHRoZSBhdHRhY2hlZCBPT1AgOTkgZHJhZnQgcGFwZXIuCgpGb3JlbnNpYyBF
+dmlkZW5jZSBBdHRhY2hlZDoKICAxLiBEZWNveSBUaHJlYWQgIzE6IHNhbnNoX3ZoYWhfb3MxMDFf
+cnVicmljLmVtbCAoU3R1ZGVudCBncmFkZSBpbnF1aXJ5KQogIDIuIERlY295IFRocmVhZCAjMjog
+YW5vbnltb3VzX2xhYjIwN190aXAuZW1sIChTcG9vZmVkIGJsYW1lIHJlZGlyZWN0KQogIDMuIERl
+Y295IFRocmVhZCAjMzogZGVhbl9zZWN1cml0eV9jaXJjdWxhci5lbWwgKEFyY2hpdmFsIGFkbWlu
+aXN0cmF0aXZlIG1lbW8pCiAgNC4gRXZpZGVuY2UgSXRlbSAjNDogaW50ZXJjZXB0ZWRfZXhmaWx0
+cmF0aW9uX2JsYXN0LmVtbCAoQXV0aGVudGljIGV4ZmlsdHJhdGlvbiBibGFzdCkKCi0gQWhtZWRh
+YmFkIFVuaXZlcnNpdHkgQ3liZXIgSW5jaWRlbnQgUmVzcG9uc2UgVGVhbSAoQVUtQ0lSVCkKR0lD
+VCBTZWN1cml0eSBPcGVyYXRpb25zIENlbnRlcgo=
 
---===============0199931774095973632==
+--===============6729262344498265385==
 Content-Type: message/rfc822
 MIME-Version: 1.0
-Content-Disposition: attachment; filename="rohan_sharma_os101_rubric.eml"
+Content-Disposition: attachment; filename="sansh_vhah_os101_rubric.eml"
 
-Content-Type: multipart/mixed; boundary="===============3026074552839259529=="
+Content-Type: multipart/mixed; boundary="===============0464453145937755441=="
 MIME-Version: 1.0
-From: Rohan Sharma <rohan.s@gict.ac.in>
-To: Prof. Hasmukh Chelaiya <hasmukh.chelaiya@gict.ac.in>
+From: Sansh Vhah <sansh.v@ahduni.edu.in>
+To: Prof. Hasmukh Chelaiya <hasmukh.chelaiya@ahduni.edu.in>
 Subject: Re: OS 101 Assignment 2 - Evaluation Inquiry (Lab 208)
 Date: Mon, 27 Oct 2026 17:15:22 +0530
-Message-ID: <20261027171522.rohan.os101@gict.ac.in>
+Message-ID: <20261027171522.sansh.os101@ahduni.edu.in>
 X-Originating-IP: [10.208.15.44]
-X-Campus-Auth-User: rohan.s
+X-Campus-Auth-User: sansh.v
 
---===============3026074552839259529==
+--===============0464453145937755441==
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -63,10 +63,10 @@ deducted marks citing lock ordering issues. Could you please verify if the attac
 grading rubric was applied uniformly across all batches?
 
 Sincerely,
-Rohan Sharma (Roll: AU24BTECH042)
+Sansh Vhah (Roll: AU24BTECH042)
 Lab 208 Workstation
 
---===============3026074552839259529==
+--===============0464453145937755441==
 Content-Type: application/pdf
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
@@ -95,16 +95,16 @@ MDAgbiAKMDAwMDAwMDA2NCAwMDAwMCBuIAowMDAwMDAwMTIxIDAwMDAwIG4gCjAwMDAwMDAyNDcg
 MDAwMDAgbiAKMDAwMDAwMDk3MiAwMDAwMCBuIAp0cmFpbGVyCjw8IC9TaXplIDYgL1Jvb3QgMSAw
 IFIgPj4Kc3RhcnR4cmVmCjEwNDAKJSVFT0YK
 
---===============3026074552839259529==--
+--===============0464453145937755441==--
 
---===============0199931774095973632==
+--===============6729262344498265385==
 Content-Type: message/rfc822
 MIME-Version: 1.0
 Content-Disposition: attachment; filename="anonymous_lab207_tip.eml"
 
-Content-Type: multipart/mixed; boundary="===============7899468025055072670=="
+Content-Type: multipart/mixed; boundary="===============8522887805991878899=="
 MIME-Version: 1.0
-From: Vikram Patel <vikram.p@gict.ac.in>
+From: Danas Moshi <danas.m@ahduni.edu.in>
 To: Academic Grievance Cell <grievance@ahduni.edu.in>
 Subject: ANONYMOUS TIP: Someone accessed exam drafts in Lab 207
 Date: Mon, 27 Oct 2026 21:35:10 +0530
@@ -112,7 +112,7 @@ Message-ID: <20261027213510.spoofed.tip@ahduni.edu.in>
 X-Originating-IP: [10.207.99.101]
 X-Campus-Auth-User: unknown_guest
 
---===============7899468025055072670==
+--===============8522887805991878899==
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -124,7 +124,7 @@ A student was browsing the network share. Attached is a terminal log capture.
 
 Decoy Flag Verification: case{decoy_spoofed_student_submission_flag}
 
---===============7899468025055072670==
+--===============8522887805991878899==
 Content-Type: application/pdf
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
@@ -147,14 +147,14 @@ NSBmIAowMDAwMDAwMDE1IDAwMDAwIG4gCjAwMDAwMDAwNjQgMDAwMDAgbiAKMDAwMDAwMDEyMSAw
 MDAwMCBuIAowMDAwMDAwMjQ3IDAwMDAwIG4gCjAwMDAwMDA2NDkgMDAwMDAgbiAKdHJhaWxlcgo8
 PCAvU2l6ZSA2IC9Sb290IDEgMCBSID4+CnN0YXJ0eHJlZgo3MTcKJSVFT0YK
 
---===============7899468025055072670==--
+--===============8522887805991878899==--
 
---===============0199931774095973632==
+--===============6729262344498265385==
 Content-Type: message/rfc822
 MIME-Version: 1.0
 Content-Disposition: attachment; filename="dean_security_circular.eml"
 
-Content-Type: multipart/mixed; boundary="===============5377568205530014229=="
+Content-Type: multipart/mixed; boundary="===============1292255123717713670=="
 MIME-Version: 1.0
 From: Dean of Academic Affairs <dean.academic@ahduni.edu.in>
 To: All Faculty & TAs <cse-faculty-ta@ahduni.edu.in>
@@ -164,7 +164,7 @@ Message-ID: <20261026110000.dean.circular@ahduni.edu.in>
 X-Originating-IP: [10.200.1.5]
 X-Campus-Auth-User: dean.academic
 
---===============5377568205530014229==
+--===============1292255123717713670==
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -179,7 +179,7 @@ All drafts must be stored exclusively on encrypted faculty drives.
 Regards,
 Office of Academic Affairs
 
---===============5377568205530014229==
+--===============1292255123717713670==
 Content-Type: application/pdf
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
@@ -206,37 +206,37 @@ IDY1NTM1IGYgCjAwMDAwMDAwMTUgMDAwMDAgbiAKMDAwMDAwMDA2NCAwMDAwMCBuIAowMDAwMDAw
 MTIxIDAwMDAwIG4gCjAwMDAwMDAyNDcgMDAwMDAgbiAKMDAwMDAwMDg4MiAwMDAwMCBuIAp0cmFp
 bGVyCjw8IC9TaXplIDYgL1Jvb3QgMSAwIFIgPj4Kc3RhcnR4cmVmCjk1MAolJUVPRgo=
 
---===============5377568205530014229==--
+--===============1292255123717713670==--
 
---===============0199931774095973632==
+--===============6729262344498265385==
 Content-Type: message/rfc822
 MIME-Version: 1.0
 Content-Disposition: attachment; filename="intercepted_exfiltration_blast.eml"
 
-Content-Type: multipart/mixed; boundary="===============0258388903785625625=="
+Content-Type: multipart/mixed; boundary="===============0303560689738257175=="
 MIME-Version: 1.0
-Received: from mailgw.gict.ac.in (mailgw.gict.ac.in [172.16.0.25])
+Received: from mailgw.ahduni.edu.in (mailgw.ahduni.edu.in [172.16.0.25])
     by campus-mail.ahduni.edu.in (Postfix) with ESMTP id 4X98bL207v
     for <all-students-cse@ahduni.edu.in>;
  Mon, 27 Oct 2026 23:48:14 +0530 (IST)
 Received: from dhcp-10-207-42-19.campus.internal
  (piyush-laptop.dyn.campus.internal [10.207.42.19])
     (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
-    by mailgw.gict.ac.in (Postfix) with ESMTPSA id 3K91aB411z
+    by mailgw.ahduni.edu.in (Postfix) with ESMTPSA id 3K91aB411z
     for <all-students-cse@ahduni.edu.in>;
  Mon, 27 Oct 2026 23:48:12 +0530 (IST)
 X-Originating-IP: [10.207.42.19]
 X-Campus-Auth-User: piyush.pelaiya
-X-Authenticated-Sender: piyush.pelaiya@gict.ac.in
+X-Authenticated-Sender: piyush.pelaiya@ahduni.edu.in
 X-Mailer: Thunderbird/115.3.1 (Linux; Ubuntu 24.04 LTS)
 From: "Anonymous Student Council" <student_council_leaks@protonmail.com>
-Reply-To: piyush.pelaiya@gict.ac.in
+Reply-To: piyush.pelaiya@ahduni.edu.in
 To: all-students-cse@ahduni.edu.in
 Date: Mon, 27 Oct 2026 23:48:10 +0530
 Subject: [LEAK] OOP 99 Mid-Sem Question Paper Leaked!! Revenge for OS 101!
-Message-ID: <20261027234810.10207.piyush@gict.ac.in>
+Message-ID: <20261027234810.10207.piyush@ahduni.edu.in>
 
---===============0258388903785625625==
+--===============0303560689738257175==
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
@@ -259,7 +259,7 @@ ZWQsClRBIFBpeXVzaCBQZWxhaXlhCkdyYWR1YXRlIFRlYWNoaW5nIEFzc2lzdGFudCAoU3lzdGVt
 cyAmIENvbmN1cnJlbmN5KQpHSUNUIExhYiAyMDcKCkNvbmZlc3Npb24gJiBTaWduYXR1cmUgRmxh
 ZzoKY2FzZXt0YV9waXl1c2hfYW5ncnlfbGVha2VkX29vcDk5X21haWx9Cg==
 
---===============0258388903785625625==
+--===============0303560689738257175==
 Content-Type: application/pdf
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
@@ -320,6 +320,6 @@ MDAwMDE1IDAwMDAwIG4gCjAwMDAwMDAwNjQgMDAwMDAgbiAKMDAwMDAwMDEyMSAwMDAwMCBuIAow
 MDAwMDAwMjQ3IDAwMDAwIG4gCjAwMDAwMDI2OTIgMDAwMDAgbiAKdHJhaWxlcgo8PCAvU2l6ZSA2
 IC9Sb290IDEgMCBSID4+CnN0YXJ0eHJlZgoyNzYwCiUlRU9GCg==
 
---===============0258388903785625625==--
+--===============0303560689738257175==--
 
---===============0199931774095973632==--
+--===============6729262344498265385==--

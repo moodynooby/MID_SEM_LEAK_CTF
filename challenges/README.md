@@ -9,10 +9,10 @@ Welcome challenge authors and testers! Every challenge in this CTF is an evidenc
 
 | Track | Challenge Name | Category | Difficulty | Target Description |
 | :--- | :--- | :--- | :--- | :--- |
-| **Forensics** | Liam's Idea: Fragmented Exfiltration | Forensics | Easy (100-200) | Exfiltrated video split into Base64 parts (`part*.txt`). |
-| **Forensics** | PDF Hidden Text: Redacted Exam | Forensics | Easy (100-200) | Leaked OOP 99 paper with white text / hidden stream. |
-| **Forensics** | Audio Spectrogram: Lab Wiretap | Stego | Medium (300-400) | Ambient audio with visual flag synthesized into frequencies. |
-| **Forensics** | Physical Forensics: Lab 207 Terminal | Forensics | Medium (300-400) | Physical crime scene PC memory dump in Lab 207. |
+| **Forensics** | [Liam's Idea: Fragmented Exfiltration](fragmented_exfiltration/) | Forensics | Easy (100-200) | Exfiltrated video split into Base64 parts (`part*.txt`). |
+| **Forensics** | [PDF Hidden Text: The Redacted Exam Paper](pdf_hidden_text/) | Forensics | Easy (100-200) | Leaked OOP 99 paper with white text / hidden stream. |
+| **Forensics** | [Audio Spectrogram: Lab Microphone Wiretap](audio_spectrogram/) | Stego | Medium (300-400) | Ambient audio with visual flag synthesized into frequencies. |
+| **Forensics** | [Physical Forensics: Lab 207 Terminal RAM Dump](physical_terminal_ram/) | Forensics | Medium (300-400) | Physical crime scene PC memory dump in Lab 207. |
 | **Web & AI** | [Cookie / API: Faculty Exam Vault](cookie_api/) | Web | Easy (100-200) | Client-side cookie tampering / hidden REST endpoint. |
 | **Web & AI** | [AI Model Prompt: Proctor Bot Jailbreak](ai_prompt_injection/) | AI | Easy/Med (200-300) | Adversarial prompt injection against TA proctor bot. |
 | **Web & AI** | [PHP2SHELL: Insecure Faculty Upload](php2shell/) | Web | Hard (500) | File upload filter bypass to web shell execution. |

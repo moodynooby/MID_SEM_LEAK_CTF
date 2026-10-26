@@ -9,7 +9,7 @@
 - **True Flag:** `case{chelaiya_thinkpad_auto_sync_0213}`
 - **Decoy Honeyflags:**
   - `case{decoy_student_mac_address}`
-  - `case{rohan_sharma_library_ap_decoy}`
+  - `case{sansh_vhah_library_ap_decoy}`
   - `case{nice_try_blind_ai_wifi_grep}`
 
 ---
@@ -36,9 +36,9 @@ TA Piyush Pelaiya, who had persistent network monitoring in Lab 207, hijacked th
    - Cross-reference the identified MAC address (`a4:c4:94:02:13:42`) against the separate DHCP lease table `dhcp_leases.log`.
 
 3. **Multiple Decoy Student Traces & Honeyflags:**
-   The logs contain traces of all 5 fictional student suspects from the case dossier (Rohan, Vikram, Ananya, Siddharth, Pooja) plus decoy honeyflags:
+   The logs contain traces of all 5 fictional student suspects from the case dossier (Sansh, Danas, Prish, Tryan, Parsh) plus decoy honeyflags:
    - `case{decoy_student_mac_address}`
-   - `case{rohan_sharma_library_ap_decoy}`
+   - `case{sansh_vhah_library_ap_decoy}`
    - `case{nice_try_blind_ai_wifi_grep}`
    A blind `grep -i "case{"` or AI regex scrape will trap these decoy tokens.
 

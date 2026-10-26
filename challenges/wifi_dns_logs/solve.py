@@ -22,6 +22,7 @@ from pathlib import Path
 TARGET_FLAG = "case{chelaiya_thinkpad_auto_sync_0213}"
 KNOWN_DECOYS = {
     "case{decoy_student_mac_address}",
+    "case{sansh_vhah_library_ap_decoy}",
     "case{rohan_sharma_library_ap_decoy}",
     "case{nice_try_blind_ai_wifi_grep}",
 }

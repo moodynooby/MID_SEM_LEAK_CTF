@@ -1,0 +1,143 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page
+   /Parent 2 0 R
+   /MediaBox [0 0 612 792]
+   /Resources <<
+      /Font <<
+         /F1 4 0 R
+         /F2 5 0 R
+         /F3 6 0 R
+      >>
+   >>
+   /Contents 7 0 R
+>>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+6 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Oblique >>
+endobj
+7 0 obj
+<< /Length 2009 >>
+stream
+0.1 0.1 0.1 rg
+BT
+/F2 16 Tf
+50 740 Td
+(AHMEDABAD UNIVERSITY - SCHOOL OF ENGINEERING AND APPLIED SCIENCE) Tj
+ET
+BT
+/F1 11 Tf
+50 722 Td
+(Department of Computer Science & Engineering | Academic Year 2026-2027) Tj
+ET
+BT
+/F2 13 Tf
+50 695 Td
+(CSE 205: Object-Oriented Programming (OOP 99) - Mid-Semester Exam) Tj
+ET
+BT
+/F1 10 Tf
+50 675 Td
+(Course Faculty: Prof. Hasmukh Chelaiya    | Date: 28 Oct 2026 | Time: 2 Hours | Max Marks: 50) Tj
+ET
+0.3 0.3 0.3 RG
+1.5 w
+50 660 m
+562 660 l
+S
+BT
+/F3 9 Tf
+50 642 Td
+(CONFIDENTIAL DRAFT - PRE-DISTRIBUTION REVIEW COPY. UNAUTHORIZED SHARING STRICTLY FORBIDDEN.) Tj
+ET
+BT
+/F2 11 Tf
+50 615 Td
+(SECTION A: Inheritance Models & Dynamic Polymorphism [15 Marks]) Tj
+ET
+BT
+/F1 10 Tf
+50 595 Td
+(Q1. [8 Marks] Explain the internal memory layout of a C++ vtable pointer (__vptr).) Tj
+0 -15 Td
+(    Discuss how multiple inheritance complicates virtual table offsets and pointer fixups.) Tj
+0 -20 Td
+(Q2. [7 Marks] Analyze the diamond problem in C++ and explain how virtual base classes) Tj
+0 -15 Td
+(    resolve ambiguous member variable instantiation.) Tj
+ET
+BT
+/F2 11 Tf
+50 515 Td
+(SECTION B: Memory Management & Object Lifetime [15 Marks]) Tj
+ET
+BT
+/F1 10 Tf
+50 495 Td
+(Q3. [15 Marks] Evaluate the implementation of RAII in custom smart pointers.) Tj
+0 -15 Td
+(    Demonstrate how std::weak_ptr prevents reference-count cycles in graph nodes.) Tj
+ET
+BT
+/F2 11 Tf
+50 435 Td
+(SECTION C: Advanced Systems & Security Analysis [20 Marks] - [REDACTED SECTION]) Tj
+ET
+0 0 0 rg
+0 0 0 RG
+48 330 515 90 re
+f
+1 1 1 rg
+BT
+/F2 10 Tf
+55 395 Td
+(QUESTION 4 [CLASSIFIED BONUS SECTION - 20 MARKS]:) Tj
+ET
+BT
+/F1 9 Tf
+55 375 Td
+(Faculty Solution & Master Rubric: Analyze vulnerability CVE-2026-9901 in TA grading sandbox.) Tj
+0 -14 Td
+(LEAKED ANSWER KEY FLAG: case{redacted_pdf_layer_text_exposed}) Tj
+0 -14 Td
+(Investigative Note: File recovered from TA Piyush Pelaiya workstation staging cache.) Tj
+ET
+0.5 0.5 0.5 rg
+BT
+/F1 8 Tf
+220 50 Td
+(GICT Exam Cell -- Confidential Document -- Page 1 of 1) Tj
+ET
+
+endstream
+endobj
+xref
+0 8
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000121 00000 n 
+0000000321 00000 n 
+0000000391 00000 n 
+0000000466 00000 n 
+0000000544 00000 n 
+trailer
+<< /Size 8
+   /Root 1 0 R
+>>
+startxref
+2605
+%%EOF

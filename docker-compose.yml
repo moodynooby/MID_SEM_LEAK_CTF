@@ -71,6 +71,33 @@ services:
     networks:
       - internal_net
 
+  challenge_cookie_api:
+    build: ./challenges/cookie_api
+    container_name: challenge_cookie_api
+    restart: unless-stopped
+    ports:
+      - "5001:5001"
+    networks:
+      - proxy_net
+
+  challenge_proctor_bot:
+    build: ./challenges/ai_prompt_injection
+    container_name: challenge_proctor_bot
+    restart: unless-stopped
+    ports:
+      - "5002:5002"
+    networks:
+      - proxy_net
+
+  challenge_php2shell:
+    build: ./challenges/php2shell
+    container_name: challenge_php2shell
+    restart: unless-stopped
+    ports:
+      - "5003:5003"
+    networks:
+      - proxy_net
+
 networks:
   internal_net:
     internal: true

@@ -43,8 +43,8 @@ Create a custom dictionary generator script (`generate_wordlist.py`):
 import itertools
 
 labs = ["GICT207", "GICT208", "207", "208"]
-courses = ["OS101", "OOP99", "CSE205"]
-suspects = ["Piyush", "Pelaiya", "Hasmukh", "Chelaiya", "Rohan", "Vikram", "Ananya", "Siddharth", "Pooja"]
+courses = ["OS101", "OOP99"]
+suspects = ["Piyush", "Pelaiya", "Hasmukh", "Chelaiya", "Sansh", "Danas", "Prish", "Tryan", "Parsh"]
 years = ["2026", "2025"]
 symbols = ["!", "@", "#", "$"]
 

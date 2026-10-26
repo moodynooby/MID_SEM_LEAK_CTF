@@ -81,7 +81,7 @@ def build_repo(temp_repo_dir: Path, output_tar: Path):
     # Initialize git repo
     subprocess.run(["git", "init", "-b", "main"], cwd=temp_repo_dir, check=True, capture_output=True)
     subprocess.run(["git", "config", "user.name", "Piyush Pelaiya"], cwd=temp_repo_dir, check=True)
-    subprocess.run(["git", "config", "user.email", "piyush.pelaiya@gict.ac.in"], cwd=temp_repo_dir, check=True)
+    subprocess.run(["git", "config", "user.email", "piyush.pelaiya@ahduni.edu.in"], cwd=temp_repo_dir, check=True)
 
     # Commit 1: Initial course syllabus
     (temp_repo_dir / "README.md").write_text(

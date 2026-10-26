@@ -40,22 +40,32 @@ Cross-reference these profiles with your evidence. Forensic triage suggests seve
 
 | Suspect Code | Name (Fictional) | Major & Year | Known Alias / Handle | Lab Presence Note |
 | :--- | :--- | :--- | :--- | :--- |
-| **Suspect A** | **Rohan Sharma** | B.Tech CSE (3rd Yr) | `@binary_breeze` | Checked into Lab 208 at 18:00; left before 20:00. |
-| **Suspect B** | **Vikram Patel** | BS Computer Science (2nd Yr) | `@ghost_in_the_lab` | Spotted near Lab 207 terminal between 21:00 and 21:30. |
-| **Suspect C** | **Ananya Iyer** | B.Tech ICT (4th Yr) | `@root_ninja` | Remote access VPN session active between 19:30 and 20:30. |
-| **Suspect D** | **Siddharth Mehta**| B.Tech Mechanical (2nd Yr) | `@cipher_sid` | Wi-Fi device connected to Student Lounge AP until 22:00. |
-| **Suspect E** | **Pooja Nair** | BS Data Science (3rd Yr) | `@data_drifter` | Attended club meeting in GICT Seminar Hall during incident. |
+| **Suspect A** | **Sansh Vhah** | B.Tech CSE (3rd Yr) | `@binary_breeze` | Checked into Lab 208 at 18:00; left before 20:00. |
+| **Suspect B** | **Danas Moshi** | BS Computer Science (2nd Yr) | `@ghost_in_the_lab` | Spotted near Lab 207 terminal between 21:00 and 21:30. |
+| **Suspect C** | **Prish Koddar** | B.Tech ICT (4th Yr) | `@root_ninja` | Remote access VPN session active between 19:30 and 20:30. |
+| **Suspect D** | **Tryan Ahakkar**| B.Tech Mechanical (2nd Yr) | `@cipher_sid` | Wi-Fi device connected to Student Lounge AP until 22:00. |
+| **Suspect E** | **Parsh Hatel** | BS Data Science (3rd Yr) | `@data_drifter` | Attended club meeting in GICT Seminar Hall during incident. |
 
 ---
 
-## 3. Investigation Sequence (The 5 Acts)
+## 3. Investigation Forensic Tracks
 
-1. **Act I (Lab 207 Forensic Triage):** Recover the damaged security camera screenshot to verify the exact login timestamp.
-2. **Act II (Exam Portal Analysis):** Investigate how the attacker bypassed authentication on the internal server (Choose Route A: Access Logs, or Route B: Source Code).
-3. **Act III (Decrypting Intercepted Chatter):** Break the polyalphabetic cipher used by the conspirators to extract their private rendezvous link.
-4. **Act IV (Dissecting the Payload):** Deobfuscate the exfiltration script discovered in the `/tmp` folder of the faculty machine.
-5. **Act V (Unmasking the Culprit):** Correlate MAC addresses, DHCP logs, timestamps, and aliases from the previous Acts to name the fictional perpetrator in the final flag:
-   `case{culprit_identified_as_fictional_suspect_[name]}`
+The evidence is cataloged across four synchronized investigative tracks on the CTFd dashboard:
+
+1. **Digital Forensics & Incident Response (DFIR):**
+   - Inspect deleted git branches, reflogs, and unlinked inodes on the TA workstation (`exam_draft_repo.tar.gz`).
+   - Sift through the intercepted mail spool (`leaked_incident_mail.eml`) to extract the culprit's motive and authentic confession signature.
+   - Reconstruct exfiltrated artifacts and inspect physical memory dumps from the Lab 207 crime scene.
+2. **Web Applications & Adversarial AI:**
+   - Audit the faculty exam vault web portal cookies and inspect hidden administrative APIs (`http://<LAN_IP>:5001/`).
+   - Interact with the campus AI proctor bot (`http://<LAN_IP>:5002/`) to safely bypass guardrails without triggering honeyflag traps.
+   - Investigate the faculty submission portal (`http://<LAN_IP>:5003/`) for file upload filter bypasses to trace webshell deployment.
+3. **Network Packet Analysis & Wireless Triage:**
+   - Dissect the switch packet capture (`infected.pcap`) to uncover webshell command-and-control streams.
+   - Correlate campus-wide Aruba AP logs (`campus_wifi_access.log`) and DHCP leases (`dhcp_leases.log`) to uncover the crucial 02:13 AM midnight auto-sync event.
+4. **Binary Reverse Engineering & Applied Cryptography:**
+   - Reverse engineer the custom sideloaded companion APK (`GICT_Companion.apk`) recovered from the Lab 207 crime scene.
+   - Crack the encrypted faculty vault archive (`confidential_vault.zip`) by synthesizing a targeted campus wordlist based on dossier entities.
 
 ---
 

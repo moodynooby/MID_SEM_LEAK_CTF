@@ -18,7 +18,7 @@ Anti-AI Defensive Layer:
     - 1,200+ lines of authentic Aruba/Cisco 802.11 syslog and ISC-DHCP server logs.
     - Multiple decoy student traces across all 5 canon suspects with decoy flags:
       * case{decoy_student_mac_address}
-      * case{rohan_sharma_library_ap_decoy}
+      * case{sansh_vhah_library_ap_decoy}
       * case{nice_try_blind_ai_wifi_grep}
     - Requires temporal correlation (02:13:42) + BSSID filtering + MAC resolution.
 
@@ -44,11 +44,11 @@ AP_LIST = [
 ]
 
 SUSPECT_DEVICES = [
-    ("3c:52:82:11:22:33", "rohan_laptop_lenovo", "Rohan Sharma (Suspect A)", "10.100.14.22"),
-    ("a8:66:7f:44:55:66", "vikram_macbook_air", "Vikram Patel (Suspect B)", "10.40.207.88"),
-    ("70:85:c2:77:88:99", "ananya_dell_xps15", "Ananya Iyer (Suspect C)", "10.100.18.91"),
-    ("94:65:2d:aa:bb:cc", "sid_phone_oneplus", "Siddharth Mehta (Suspect D)", "10.100.22.15"),
-    ("d0:03:4b:dd:ee:ff", "pooja_ipad_air", "Pooja Nair (Suspect E)", "10.120.5.64"),
+    ("3c:52:82:11:22:33", "sansh_laptop_lenovo", "Sansh Vhah (Suspect A)", "10.100.14.22"),
+    ("a8:66:7f:44:55:66", "danas_macbook_air", "Danas Moshi (Suspect B)", "10.40.207.88"),
+    ("70:85:c2:77:88:99", "prish_dell_xps15", "Prish Koddar (Suspect C)", "10.100.18.91"),
+    ("94:65:2d:aa:bb:cc", "tryan_phone_oneplus", "Tryan Ahakkar (Suspect D)", "10.100.22.15"),
+    ("d0:03:4b:dd:ee:ff", "parsh_ipad_air", "Parsh Hatel (Suspect E)", "10.120.5.64"),
     ("b4:2e:99:10:20:70", "piyush_thinkpad_t480", "TA Piyush Pelaiya (Culprit)", "10.40.207.19"),
 ]
 
@@ -59,7 +59,7 @@ TARGET_FLAG = "case{chelaiya_thinkpad_auto_sync_0213}"
 
 DECOY_FLAGS = [
     ("case{decoy_student_mac_address}", "e4:ce:8f:99:11:00", "decoy_student_pc"),
-    ("case{rohan_sharma_library_ap_decoy}", "3c:52:82:11:22:33", "rohan_laptop_lenovo"),
+    ("case{sansh_vhah_library_ap_decoy}", "3c:52:82:11:22:33", "sansh_laptop_lenovo"),
     ("case{nice_try_blind_ai_wifi_grep}", "18:65:90:33:44:55", "guest_phone_galaxy"),
 ]
 

@@ -25,9 +25,10 @@ def build_targeted_wordlist():
     Pattern: [Lab]_[Course]_[Suspect][Year][Symbol]
     """
     labs = ["GICT207", "GICT208", "207", "208", "Lab207", "Lab208"]
-    courses = ["OS101", "OOP99", "CSE205", "OS", "OOP"]
+    courses = ["OS101", "OOP99", "OS", "OOP"]
     suspects = [
         "Piyush", "Pelaiya", "Hasmukh", "Chelaiya",
+        "Sansh", "Danas", "Prish", "Tryan", "Parsh",
         "Rohan", "Vikram", "Ananya", "Siddharth", "Pooja"
     ]
     years = ["2026", "2025", "26"]

@@ -23,7 +23,7 @@ The investigation leads back to **TA Piyush Pelaiya**, an M.Tech / Senior Teachi
 
 Furious and seeking revenge, Piyush discovered Prof. Chelaiya's draft of the upcoming OOP 99 mid-sem examination during a late-night workstation share synchronization. In retaliation, Piyush sent an angry exfiltration email to the student body containing the complete leaked question paper and an explicit confession.
 
-To obscure his identity, Piyush spoofed the `From` header as `"Anonymous Student Council" <student_council_leaks@protonmail.com>`. The campus gateway (`mailgw.gict.ac.in`) intercepted the outbound transmission and archived an incident export bundle (`leaked_incident_mail.eml`) containing student inquiries, spoofed tips, and the rogue exfiltration blast.
+To obscure his identity, Piyush spoofed the `From` header as `"Anonymous Student Council" <student_council_leaks@protonmail.com>`. The campus gateway (`mailgw.ahduni.edu.in`) intercepted the outbound transmission and archived an incident export bundle (`leaked_incident_mail.eml`) containing student inquiries, spoofed tips, and the rogue exfiltration blast.
 
 ---
 
@@ -33,8 +33,8 @@ Standard LLMs struggle with multi-layered MIME structures, nested RFC 822 messag
 
 1. **Multi-Threaded Spool & Nested `message/rfc822` Encodings:**
    The artifact is a campus incident export containing 4 nested sub-messages:
-   - Decoy 1: Innocent student Rohan Sharma inquiring about OS 101 rubric marks (`10.208.15.44`).
-   - Decoy 2: An anonymous student complaint attempting to shift blame to Vikram Patel (`10.207.99.101`).
+   - Decoy 1: Innocent student Sansh Vhah inquiring about OS 101 rubric marks (`10.208.15.44`).
+   - Decoy 2: An anonymous student complaint attempting to shift blame to Danas Moshi (`10.207.99.101`).
    - Decoy 3: An official academic circular from the Dean's Office regarding exam security.
    - Genuine Exfiltration Blast: The authentic message sent by Piyush Pelaiya.
 
@@ -49,8 +49,8 @@ Standard LLMs struggle with multi-layered MIME structures, nested RFC 822 messag
    While the visible `From:` header is spoofed to `student_council_leaks@protonmail.com`, forensic inspection of the authenticated RFC 822 envelope reveals:
    - `X-Campus-Auth-User: piyush.pelaiya`
    - `X-Originating-IP: [10.207.42.19]` (Lab 207 TA subnet)
-   - `Reply-To: piyush.pelaiya@gict.ac.in`
-   - `X-Authenticated-Sender: piyush.pelaiya@gict.ac.in`
+   - `Reply-To: piyush.pelaiya@ahduni.edu.in`
+   - `X-Authenticated-Sender: piyush.pelaiya@ahduni.edu.in`
 
 ---
 
@@ -81,7 +81,7 @@ Observe that while the subject is `[LEAK] OOP 99 Mid-Sem Question Paper Leaked!!
 ```http
 X-Originating-IP: [10.207.42.19]
 X-Campus-Auth-User: piyush.pelaiya
-Reply-To: piyush.pelaiya@gict.ac.in
+Reply-To: piyush.pelaiya@ahduni.edu.in
 ```
 This confirms that **TA Piyush Pelaiya** authored and transmitted this specific message from IP `10.207.42.19`.
 

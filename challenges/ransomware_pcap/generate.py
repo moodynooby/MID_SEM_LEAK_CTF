@@ -242,7 +242,7 @@ def build_pcap(output_path: Path):
         b"User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64)\r\n"
         b"Content-Type: application/x-www-form-urlencoded\r\n"
         b"Content-Length: 72\r\n\r\n"
-        b"user=student_rohan&token=case{decoy_plaintext_login_honeyflag}&action=login"
+        b"user=student_sansh&token=case{decoy_plaintext_login_honeyflag}&action=login"
     )
     res1 = (
         b"HTTP/1.1 200 OK\r\n"

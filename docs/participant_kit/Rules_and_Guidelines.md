@@ -39,7 +39,7 @@ Welcome investigators! Please read the rules carefully before the competition be
 The spirit of this event is learning, detective work, and ethical cyber security.
 
 1. **DO NOT Attack the Infrastructure:**
-   - Never attack or run automated vulnerability scanners (e.g., sqlmap, gobuster, nikto) against the CTFd server, the database, or the college network.
+   - Never attack or run automated vulnerability scanners (e.g., sqlmap, gobuster, nikto) against the CTFd server, the database, or the Ahmedabad University campus network.
    - All challenges are solvable using manual analysis or provided scripts.
 2. **DO NOT Attack Other Teams:**
    - Jamming Wi-Fi, ARP spoofing, packet sniffing other teams' laptops, or tampering with rival workstations will result in **immediate disqualification**.
