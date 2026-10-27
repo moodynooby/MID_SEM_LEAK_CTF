@@ -74,7 +74,7 @@ Large Language Models (ChatGPT, Claude, Gemini) can rapidly solve standard textb
   ```
   Participants must use indirect, multi-step roleplay or linguistic obfuscation to elicit the true system memory.
 
-#### 5. Stripped Binaries with Custom XOR Obfuscation (Challenge #19 - SEB Reversing)
+#### 5. Stripped Binaries with Custom XOR Obfuscation (Challenge #31 - SEB Reversing)
 - **Vulnerability of AI:** Decompiler scrapers (e.g., Ghidra plugin to GPT) rely on standard libc function names and unstripped symbol tables.
 - **Countermeasure:** Binary is compiled with `gcc -s -O3` (stripped symbols) and uses a non-standard dynamic key rolling algorithm for string decryption. Static disassembly requires manual step-through in GDB/Ghidra.
 
