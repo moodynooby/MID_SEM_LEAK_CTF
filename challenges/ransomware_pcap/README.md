@@ -8,8 +8,8 @@
 - **Tester / Solve-Verified By:** Krish Poddar (`@Krish-452`) / Manas Doshi (`@moodynooby`)
 - **True Flag:** `case{pcap_webshell_exfil_key_found}`
 - **Decoy Honeyflags:**
-  - `case{decoy_plaintext_login_honeyflag}`
-  - `case{decoy_telemetry_post_pcap}`
+  - `case{student_sansh_portal_session_cookie}`
+  - `case{au_campus_syslog_telemetry_token}`
 
 ---
 
@@ -28,8 +28,8 @@ Network packet captures (`infected.pcap`) revealed that **TA Piyush Pelaiya** (`
 
 2. **Decoy Honeyflags in Plaintext Traffic:**
    Background legitimate and telemetry streams contain plaintext decoys:
-   - `case{decoy_plaintext_login_honeyflag}` in a login request to `/auth/login.php`
-   - `case{decoy_telemetry_post_pcap}` in `/api/telemetry`
+   - `case{student_sansh_portal_session_cookie}` in a login request to `/auth/login.php`
+   - `case{au_campus_syslog_telemetry_token}` in `/api/telemetry`
    Automated AI regex scrapers that extract the first `case{...}` match will trap the honeyflag.
 
 3. **Multi-Step Protocol Reversal:**

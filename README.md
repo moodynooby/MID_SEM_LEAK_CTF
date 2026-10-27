@@ -1,6 +1,6 @@
 # Case File: The Mid-Sem Leak — CTF Infrastructure
 ## IEEE AUSB (Ahmedabad University Student Branch)
-**Event Date:** 28 October 2026 | **Venues:** Computer Labs 207 & 208, GICT
+**Event Date:** 28 October 2026 | **Venues:** Computer Labs 207 & 208, AU
 
 ---
 

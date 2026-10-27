@@ -3,7 +3,7 @@
 
 Welcome to your first digital forensics case! Keep this cheat sheet handy during the competition.
 
-<!-- TODO(ta_piyush): remove testing flag case{decoy_superficial_html_comment} -->
+<!-- TODO(ta_piyush): remove testing flag case{staging_lab207_workstation_setup_key} -->
 
 ---
 

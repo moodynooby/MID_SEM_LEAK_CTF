@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-GICT Faculty Exam Vault - Web Service
+AU Faculty Exam Vault - Web Service
 Challenge: Cookie / API: Faculty Exam Vault Inspection
 Author: Tanish Shah (@tanishshahh)
 IEEE AUSB CTF: Case File: The Mid-Sem Leak
 """
 
 import json
-from http.server import HTTPServer, BaseHTTPRequestHandler
+from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from http.cookies import SimpleCookie
 from urllib.parse import urlparse
 
@@ -15,13 +15,13 @@ HOST = "0.0.0.0"
 PORT = 5001
 
 FLAG_TRUE = "case{cookie_role_tamper_faculty_access}"
-FLAG_HONEYPOT = "case{nice_try_admin_decoy_endpoint}"
+FLAG_HONEYPOT = "case{faculty_admin_portal_root_auth_2026}"
 
 HTML_TEMPLATE = """<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>GICT Faculty Exam Vault | Ahmedabad University</title>
+  <title>AU Faculty Exam Vault | Ahmedabad University</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     :root {{
@@ -156,7 +156,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <body>
   <div class="container">
     <header>
-      <div class="badge">GICT Internal Exam Staging Network</div>
+      <div class="badge">AU Internal Exam Staging Network</div>
       <h1>Faculty Exam Vault v1.4</h1>
       <p class="subtitle">Instructor: Prof. Hasmukh Chelaiya &bull; Dept. of Computer Science & Engineering</p>
     </header>
@@ -173,7 +173,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
   </div>
 
   <footer>
-    <p>Protected by GICT Academic Access Security Gateway. Unauthorized inspection will be audited.</p>
+    <p>Protected by AU Academic Access Security Gateway. Unauthorized inspection will be audited.</p>
   </footer>
 
   <script>
@@ -315,7 +315,7 @@ class VaultHandler(BaseHTTPRequestHandler):
             </table>
 
             <p style="margin-top: 20px; font-size: 13px; color: var(--muted);">
-              Notice: If you believe you are receiving this message in error, verify your credentials with GICT Department IT.
+              Notice: If you believe you are receiving this message in error, verify your credentials with AU Department IT.
             </p>
             """
 
@@ -337,8 +337,8 @@ class VaultHandler(BaseHTTPRequestHandler):
 
 def run():
     server_address = (HOST, PORT)
-    httpd = HTTPServer(server_address, VaultHandler)
-    print(f"[*] GICT Faculty Exam Vault server running on http://{HOST}:{PORT}")
+    httpd = ThreadingHTTPServer(server_address, VaultHandler)
+    print(f"[*] AU Faculty Exam Vault server running on http://{HOST}:{PORT}")
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:

@@ -1,7 +1,7 @@
 # Scoreboard Projector Theme
 
 Big-screen styling for CTFd's `/scoreboard` page, for the projectors in
-GICT Labs 207 & 208 (issue: *Big-Screen Projector Dashboard & AV Experience*).
+AU Labs 207 & 208 (issue: *Big-Screen Projector Dashboard & AV Experience*).
 
 ## What this does
 

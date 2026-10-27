@@ -3,7 +3,7 @@ author: "Vatsal Pandya (@VP1107)"
 category: "Forensics"
 description: |
   **Case File Briefing:**
-  Forensic imaging of the TA workstation in GICT Lab 207 recovered a compressed git repository archive (`exam_draft_repo.tar.gz`).
+  Forensic imaging of the TA workstation in AU Lab 207 recovered a compressed git repository archive (`exam_draft_repo.tar.gz`).
 
   Investigators suspect TA Piyush Pelaiya staged an early draft of the leaked **OOP 99** examination here, but panicked and deleted the file with `rm -f OOP99_exam_draft_v1.pdf` before committing the change.
 

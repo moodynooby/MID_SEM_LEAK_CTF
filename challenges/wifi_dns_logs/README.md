@@ -16,10 +16,10 @@
 
 ## 1. Challenge Concept & Lore
 
-In *Case File: The Mid-Sem Leak*, campus authorities initially suspected a direct physical breach into GICT Lab 207 or an external intrusion. 
+In *Case File: The Mid-Sem Leak*, campus authorities initially suspected a direct physical breach into AU Lab 207 or an external intrusion. 
 
 However, wireless network forensics provides the **master plot twist** of the investigation:
-At **02:13:42 IST** on 28 October 2026, Prof. Hasmukh Chelaiya’s departmental laptop (`prof_chelaiya_thinkpad_x1`, MAC `a4:c4:94:02:13:42`) connected to the dedicated faculty access point (`AP-GICT-FACULTY-L2`) and executed an automated synchronization task with the department file server (`\\10.20.0.12\FacultyVault`). During this sync, the final draft of `OOP99_MidSem_Exam_2026_FinalDraft.pdf` was staged on an internal department share with permissive read permissions. 
+At **02:13:42 IST** on 28 October 2026, Prof. Hasmukh Chelaiya’s departmental laptop (`prof_chelaiya_thinkpad_x1`, MAC `a4:c4:94:02:13:42`) connected to the dedicated faculty access point (`AP-AU-FACULTY-L2`) and executed an automated synchronization task with the department file server (`\\10.20.0.12\FacultyVault`). During this sync, the final draft of `OOP99_MidSem_Exam_2026_FinalDraft.pdf` was staged on an internal department share with permissive read permissions. 
 
 TA Piyush Pelaiya, who had persistent network monitoring in Lab 207, hijacked this unencrypted synchronization stream to grab the exam paper that he later leaked via email.
 
@@ -37,9 +37,9 @@ TA Piyush Pelaiya, who had persistent network monitoring in Lab 207, hijacked th
 
 3. **Multiple Decoy Student Traces & Honeyflags:**
    The logs contain traces of all 5 fictional student suspects from the case dossier (Sansh, Danas, Prish, Tryan, Parsh) plus decoy honeyflags:
-   - `case{decoy_student_mac_address}`
-   - `case{sansh_vhah_library_ap_decoy}`
-   - `case{nice_try_blind_ai_wifi_grep}`
+   - `case{sansh_laptop_dhcp_lease_vlan100}`
+   - `case{tryan_guest_mobile_dhcp_auth_0213}`
+   - `case{parsh_seminar_hall_vlan200_token}`
    A blind `grep -i "case{"` or AI regex scrape will trap these decoy tokens.
 
 ---
@@ -55,7 +55,7 @@ grep "02:13" files/campus_wifi_access.log | grep -i "faculty"
 
 Output:
 ```text
-Oct 28 02:13:42 aruba-ap-gict-fac2 authmgr[1842]: <522008> <INFO> |authmgr| MAC=a4:c4:94:02:13:42 Station (SSID=GICT-Faculty-Secure, BSSID=00:1a:1e:f0:20:70) 802.1X authenticated, Role=Faculty-Staff, VLAN=20
+Oct 28 02:13:42 aruba-ap-au-fac2 authmgr[1842]: <522008> <INFO> |authmgr| MAC=a4:c4:94:02:13:42 Station (SSID=AU-Faculty-Secure, BSSID=00:1a:1e:f0:20:70) 802.1X authenticated, Role=Faculty-Staff, VLAN=20
 ```
 
 ### Step 2: Cross-Reference MAC against DHCP Leases
@@ -79,7 +79,7 @@ grep "10.20.10.42" files/campus_wifi_access.log
 
 Output:
 ```text
-Oct 28 02:13:42 dns-server[902]: <301004> <INFO> |dns| Client 10.20.10.42 query: sync.faculty-vault.gict.internal IN A (10.20.0.12)
+Oct 28 02:13:42 dns-server[902]: <301004> <INFO> |dns| Client 10.20.10.42 query: sync.faculty-vault.ahduni.internal IN A (10.20.0.12)
 Oct 28 02:13:45 sec-monitor[445]: <401015> <WARN> |share| Client 10.20.10.42 (prof_chelaiya_thinkpad_x1) connected to \\10.20.0.12\FacultyVault FILE_SYNC=OOP99_MidSem_Exam_2026_FinalDraft.pdf [SESSION_AUTH=OK, FLAG=case{chelaiya_thinkpad_auto_sync_0213}]
 ```
 

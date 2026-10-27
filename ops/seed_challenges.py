@@ -81,7 +81,7 @@ def configure_ctfd_site():
 
     configs = {
         "ctf_name": "Case File: The Mid-Sem Leak",
-        "ctf_description": "IEEE AUSB Annual Cybersecurity Incident Triage CTF — GICT Labs 207 & 208",
+        "ctf_description": "IEEE AUSB Annual Cybersecurity Incident Triage CTF — AU Labs 207 & 208",
         "ctf_theme": "m0xblood",
         "setup": "1",
         "user_mode": "teams",

@@ -10,7 +10,7 @@ import requests
 
 TARGET_BASE = "http://127.0.0.1:5001"
 EXPECTED_TRUE_FLAG = "case{cookie_role_tamper_faculty_access}"
-EXPECTED_HONEY_FLAG = "case{nice_try_admin_decoy_endpoint}"
+EXPECTED_HONEY_FLAG = "case{faculty_admin_portal_root_auth_2026}"
 
 def test_solve_cookie(base_url):
     print("[*] Testing Solution Path 1: Client Cookie Elevation...")

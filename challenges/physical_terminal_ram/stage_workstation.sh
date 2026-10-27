@@ -38,7 +38,7 @@ export TARGET_VAULT="https://faculty.ahduni.edu.in/vault/oop99"
 clear
 cat << "EOF"
 ================================================================================
-          AHMEDABAD UNIVERSITY (SEAS / GICT) — CAMPUS SECURITY
+          AHMEDABAD UNIVERSITY (SEAS / AU) — CAMPUS SECURITY
                        CRIME SCENE PRESERVATION NOTICE
 ================================================================================
  VENUE: Computer Lab 207                     DESIGNATION: PC-04 (Evidence Terminal)

@@ -1,5 +1,5 @@
 # AGENTS.md — Agent Governance & Operational Constitution
-> **Case File: The Mid-Sem Leak** | IEEE AUSB CTF (28 Oct 2026, GICT Labs 207 & 208)  
+> **Case File: The Mid-Sem Leak** | IEEE AUSB CTF (28 Oct 2026, AU Labs 207 & 208)  
 > **Tech Leads:** Manas (@moodynooby) & Krish (@Krish-452) | **Core Organizer:** Vansh Shah  
 > **Track Contributors:** Vidit (@viditd1-eng), Tanish (@tanishshahh), Vatsal (@VP1107), Yesha  
 

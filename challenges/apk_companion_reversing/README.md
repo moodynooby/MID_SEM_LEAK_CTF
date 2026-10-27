@@ -4,21 +4,21 @@
 **Track:** Binary & Crypto / Mobile Reverse Engineering  
 **Difficulty:** Medium (500 pts dynamic: 500 initial / 15 decay / 100 min)  
 **Author:** Vidit (@viditd1-eng)  
-**Target File:** `files/GICT_Companion.apk`  
+**Target File:** `files/AU_Companion.apk`  
 **Flag:** `case{apk_decompiled_jadx_secret_extracted}`  
 
 ---
 
 ### 1. Narrative & Canon Lore
-In Act IV of the investigation, forensics responders cataloged physical artifacts recovered from the crime scene at GICT Lab 207. Beside the unlocked Linux workstation, investigators recovered an Android smartphone belonging to TA Piyush Pelaiya. 
+In Act IV of the investigation, forensics responders cataloged physical artifacts recovered from the crime scene at AU Lab 207. Beside the unlocked Linux workstation, investigators recovered an Android smartphone belonging to TA Piyush Pelaiya. 
 
-A sideloaded application named **GICT Companion** (`org.ieee.ausb.gictcompanion`) was active in background processes. Piyush used this custom build to maintain an unauthorized persistent API session into Prof. Chelaiya's grading portal. The app includes an internal authentication and handshake controller (`SecurityVerification`) that reconstructs the master vault authorization token.
+A sideloaded application named **AU Companion** (`org.ieee.ausb.aucompanion`) was active in background processes. Piyush used this custom build to maintain an unauthorized persistent API session into Prof. Chelaiya's grading portal. The app includes an internal authentication and handshake controller (`SecurityVerification`) that reconstructs the master vault authorization token.
 
 ---
 
 ### 2. Anti-AI Defensive Layer
 - **No Plaintext Strings:** Textbook CTF APKs place flags in `strings.xml` or hardcode plaintext strings in Java classes, which can be scraped instantly with `strings` or LLMs reading raw dumps.
-- **Dynamic XOR Key Schedule:** In `GICT_Companion.apk`, the secret is stored as a byte array (`ENC_PAYLOAD`) and decrypted using a multi-term dynamic schedule involving the loop index, a linear transformation, and a periodic key:
+- **Dynamic XOR Key Schedule:** In `AU_Companion.apk`, the secret is stored as a byte array (`ENC_PAYLOAD`) and decrypted using a multi-term dynamic schedule involving the loop index, a linear transformation, and a periodic key:
   $$\text{decrypted}[i] = \text{ENC\_PAYLOAD}[i] \oplus ((0\text{x}5A \cdot (i + 1) + 0\text{x}42) \pmod{256}) \oplus \text{AUTH\_SALT}[i \pmod{|\text{AUTH\_SALT}|}]$$
 - Automated prompt-injection or passive LLM scrapers without runtime symbolic evaluation cannot deduce the key without reverse-calculating the mathematical transformations.
 
@@ -27,13 +27,13 @@ A sideloaded application named **GICT Companion** (`org.ieee.ausb.gictcompanion`
 ### 3. Step-by-Step Walkthrough Solution
 
 #### Step 1: Inspect the APK with JADX-GUI
-Open `GICT_Companion.apk` in [JADX](https://github.com/skylot/jadx) or run CLI decompiler:
+Open `AU_Companion.apk` in [JADX](https://github.com/skylot/jadx) or run CLI decompiler:
 ```bash
-jadx -d decompiled_apk files/GICT_Companion.apk
+jadx -d decompiled_apk files/AU_Companion.apk
 ```
 
 #### Step 2: Analyze `MainActivity.java`
-Navigate to `org.ieee.ausb.gictcompanion.MainActivity`:
+Navigate to `org.ieee.ausb.aucompanion.MainActivity`:
 ```java
 btnVerify.setOnClickListener(new View.OnClickListener() {
     @Override
@@ -48,19 +48,19 @@ btnVerify.setOnClickListener(new View.OnClickListener() {
 Notice that when validation succeeds, `SecurityVerification.getMasterKey()` is invoked to obtain the master authorization key.
 
 #### Step 3: Analyze `SecurityVerification.java`
-Inspect `org.ieee.ausb.gictcompanion.SecurityVerification`:
+Inspect `org.ieee.ausb.aucompanion.SecurityVerification`:
 ```java
 public final class SecurityVerification {
     private static final byte[] ENC_PAYLOAD = new byte[] {
-        (byte) -72, (byte) -34, (byte) 96, (byte) -101, (byte) 32, (byte) 13, (byte) -8, (byte) 75,
-        (byte) 5, (byte) -3, (byte) 4, (byte) 76, (byte) -17, (byte) 11, (byte) -89, (byte) -64,
-        (byte) 21, (byte) -86, (byte) -53, (byte) 84, (byte) -101, (byte) -52, (byte) 126, (byte) -115,
-        (byte) 26, (byte) 86, (byte) -15, (byte) 38, (byte) 52, (byte) -101, (byte) 110, (byte) -21,
-        (byte) -26, (byte) 15, (byte) -79, (byte) -52, (byte) 109, (byte) -94, (byte) -57, (byte) 114,
-        (byte) -111, (byte) 36
+        (byte) -66, (byte) -62, (byte) 124, (byte) -3, (byte) 79, (byte) 13, (byte) -2, (byte) 38,
+        (byte) 114, (byte) -9, (byte) 17, (byte) 81, (byte) -28, (byte) 8, (byte) -67, (byte) -46,
+        (byte) 15, (byte) -78, (byte) -63, (byte) 70, (byte) -116, (byte) -34, (byte) 105, (byte) -107,
+        (byte) 97, (byte) 37, (byte) -105, (byte) 79, (byte) 89, (byte) -22, (byte) 9, (byte) -119,
+        (byte) -15, (byte) 17, (byte) -81, (byte) -35, (byte) 124, (byte) -94, (byte) -51, (byte) 98,
+        (byte) -101, (byte) 57
     };
 
-    private static final byte[] AUTH_SALT = "GICT_2026_AUTH_KEY_AUSB".getBytes();
+    private static final byte[] AUTH_SALT = "AU_2026_AUTH_KEY_AUSB".getBytes();
     private static final int SCHEDULE_SALT = 0x5a;
 
     public static String getMasterKey() {
@@ -80,11 +80,11 @@ public final class SecurityVerification {
 Replicate the decryption loop in a quick Python solver:
 ```python
 enc_payload = [
-    -72, -34, 96, -101, 32, 13, -8, 75, 5, -3, 4, 76, -17, 11, -89, -64,
-    21, -86, -53, 84, -101, -52, 126, -115, 26, 86, -15, 38, 52, -101, 110,
-    -21, -26, 15, -79, -52, 109, -94, -57, 114, -111, 36
+    -66, -62, 124, -3, 79, 13, -2, 38, 114, -9, 17, 81, -28, 8, -67, -46,
+    15, -78, -63, 70, -116, -34, 105, -107, 97, 37, -105, 79, 89, -22, 9,
+    -119, -15, 17, -81, -35, 124, -94, -51, 98, -101, 57
 ]
-auth_salt = b"GICT_2026_AUTH_KEY_AUSB"
+auth_salt = b"AU_2026_AUTH_KEY_AUSB"
 schedule_salt = 0x5a
 
 flag = ""

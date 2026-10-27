@@ -4,7 +4,7 @@ Challenge Artifact Generator: Suspect's Companion App
 Track: Binary & Crypto / Mobile Reversing
 Case File: The Mid-Sem Leak (IEEE AUSB CTF 2026)
 
-Compiles and packages GICT_Companion.apk containing obfuscated authentication
+Compiles and packages AU_Companion.apk containing obfuscated authentication
 and dynamic XOR token reconstruction logic.
 """
 
@@ -17,11 +17,11 @@ from pathlib import Path
 
 CHALLENGE_DIR = Path(__file__).resolve().parent
 DIST_DIR = CHALLENGE_DIR / "files"
-OUTPUT_APK = DIST_DIR / "GICT_Companion.apk"
+OUTPUT_APK = DIST_DIR / "AU_Companion.apk"
 
 MANIFEST_XML = """<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.ieee.ausb.gictcompanion"
+    package="org.ieee.ausb.aucompanion"
     android:versionCode="1"
     android:versionName="1.0.4-dev">
 
@@ -31,7 +31,7 @@ MANIFEST_XML = """<?xml version="1.0" encoding="utf-8"?>
     <application
         android:allowBackup="false"
         android:icon="@android:drawable/sym_def_app_icon"
-        android:label="GICT Companion"
+        android:label="AU Companion"
         android:supportsRtl="true"
         android:theme="@android:style/Theme.Material.Light.NoActionBar">
         <activity
@@ -46,7 +46,7 @@ MANIFEST_XML = """<?xml version="1.0" encoding="utf-8"?>
 </manifest>
 """
 
-MAIN_ACTIVITY_JAVA = """package org.ieee.ausb.gictcompanion;
+MAIN_ACTIVITY_JAVA = """package org.ieee.ausb.aucompanion;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -70,7 +70,7 @@ public class MainActivity extends Activity {
         layout.setPadding(32, 32, 32, 32);
 
         TextView header = new TextView(this);
-        header.setText("GICT Lab 207/208 Companion [Debug v1.0.4]");
+        header.setText("AU Lab 207/208 Companion [Debug v1.0.4]");
         header.setTextSize(18);
         layout.addView(header);
 
@@ -108,26 +108,26 @@ public class MainActivity extends Activity {
 }
 """
 
-SECURITY_VERIFICATION_JAVA = """package org.ieee.ausb.gictcompanion;
+SECURITY_VERIFICATION_JAVA = """package org.ieee.ausb.aucompanion;
 
 /**
  * Confidential Security Verification Layer
- * Author: TA Piyush Pelaiya (GICT CS&E)
+ * Author: TA Piyush Pelaiya (AU CS&E)
  * Notice: Do not distribute outside Lab 207 private network.
  */
 public final class SecurityVerification {
     // Dynamic obfuscated payload synthesized from dynamic XOR key schedule
     // Target flag: case{apk_decompiled_jadx_secret_extracted}
     private static final byte[] ENC_PAYLOAD = new byte[] {
-        (byte) -72, (byte) -34, (byte) 96, (byte) -101, (byte) 32, (byte) 13, (byte) -8, (byte) 75,
-        (byte) 5, (byte) -3, (byte) 4, (byte) 76, (byte) -17, (byte) 11, (byte) -89, (byte) -64,
-        (byte) 21, (byte) -86, (byte) -53, (byte) 84, (byte) -101, (byte) -52, (byte) 126, (byte) -115,
-        (byte) 26, (byte) 86, (byte) -15, (byte) 38, (byte) 52, (byte) -101, (byte) 110, (byte) -21,
-        (byte) -26, (byte) 15, (byte) -79, (byte) -52, (byte) 109, (byte) -94, (byte) -57, (byte) 114,
-        (byte) -111, (byte) 36
+        (byte) -66, (byte) -62, (byte) 124, (byte) -3, (byte) 79, (byte) 13, (byte) -2, (byte) 38,
+        (byte) 114, (byte) -9, (byte) 17, (byte) 81, (byte) -28, (byte) 8, (byte) -67, (byte) -46,
+        (byte) 15, (byte) -78, (byte) -63, (byte) 70, (byte) -116, (byte) -34, (byte) 105, (byte) -107,
+        (byte) 97, (byte) 37, (byte) -105, (byte) 79, (byte) 89, (byte) -22, (byte) 9, (byte) -119,
+        (byte) -15, (byte) 17, (byte) -81, (byte) -35, (byte) 124, (byte) -94, (byte) -51, (byte) 98,
+        (byte) -101, (byte) 57
     };
 
-    private static final byte[] AUTH_SALT = "GICT_2026_AUTH_KEY_AUSB".getBytes();
+    private static final byte[] AUTH_SALT = "AU_2026_AUTH_KEY_AUSB".getBytes();
     private static final int SCHEDULE_SALT = 0x5a;
 
     private SecurityVerification() {}
@@ -226,7 +226,7 @@ def build_apk():
 
     with tempfile.TemporaryDirectory() as tmpdir:
         tmp_path = Path(tmpdir)
-        src_dir = tmp_path / "src" / "org" / "ieee" / "ausb" / "gictcompanion"
+        src_dir = tmp_path / "src" / "org" / "ieee" / "ausb" / "aucompanion"
         src_dir.mkdir(parents=True, exist_ok=True)
 
         manifest_file = tmp_path / "AndroidManifest.xml"

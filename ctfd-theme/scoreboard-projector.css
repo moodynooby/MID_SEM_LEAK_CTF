@@ -1,6 +1,6 @@
 /*
  * Scoreboard Projector Mode — high-contrast styling for /scoreboard on
- * the big-screen projectors in GICT Labs 207 & 208.
+ * the big-screen projectors in AU Labs 207 & 208.
  *
  * Scoped entirely under `body.projector-mode` so it has zero effect on
  * any other CTFd page (login, challenges, admin). The class is only

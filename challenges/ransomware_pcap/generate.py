@@ -238,11 +238,11 @@ def build_pcap(output_path: Path):
     # Conversation 1: Decoy student login (Plaintext Honeyflag)
     req1 = (
         b"POST /auth/login.php HTTP/1.1\r\n"
-        b"Host: portal.gict.internal\r\n"
+        b"Host: portal.ahduni.internal\r\n"
         b"User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64)\r\n"
         b"Content-Type: application/x-www-form-urlencoded\r\n"
-        b"Content-Length: 72\r\n\r\n"
-        b"user=student_sansh&token=case{decoy_plaintext_login_honeyflag}&action=login"
+        b"Content-Length: 75\r\n\r\n"
+        b"user=student_sansh&token=case{student_sansh_portal_session_cookie}&action=login"
     )
     res1 = (
         b"HTTP/1.1 200 OK\r\n"
@@ -260,7 +260,7 @@ def build_pcap(output_path: Path):
     # Conversation 2: Background normal GET traffic
     req2 = (
         b"GET /assets/style.css HTTP/1.1\r\n"
-        b"Host: portal.gict.internal\r\n"
+        b"Host: portal.ahduni.internal\r\n"
         b"User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64)\r\n"
         b"\r\n"
     )
@@ -279,10 +279,10 @@ def build_pcap(output_path: Path):
     # Conversation 3: Decoy telemetry post
     req3 = (
         b"POST /api/telemetry HTTP/1.1\r\n"
-        b"Host: portal.gict.internal\r\n"
+        b"Host: portal.ahduni.internal\r\n"
         b"Content-Type: application/json\r\n"
-        b"Content-Length: 62\r\n\r\n"
-        b'{"audit": "metric", "decoy_flag": "case{decoy_telemetry_post_pcap}"}'
+        b"Content-Length: 73\r\n\r\n"
+        b'{"audit": "metric", "telemetry_token": "case{au_campus_syslog_telemetry_token}"}'
     )
     res3 = b"HTTP/1.1 200 OK\r\nContent-Length: 15\r\n\r\n{\"status\":\"ok\"}\n"
     packets.extend(

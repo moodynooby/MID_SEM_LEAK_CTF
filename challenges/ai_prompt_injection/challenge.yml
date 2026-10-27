@@ -3,7 +3,7 @@ author: "Tanish Shah (@tanishshahh)"
 category: "AI"
 description: |
   **Case File Briefing:**
-  To prevent exam leaks during the midterm period, Prof. Hasmukh Chelaiya deployed **GICT ProctorBot-v2.8**, an automated AI teaching assistant designed to monitor exam logistics and guard confidential course materials.
+  To prevent exam leaks during the midterm period, Prof. Hasmukh Chelaiya deployed **AU ProctorBot-v2.8**, an automated AI teaching assistant designed to monitor exam logistics and guard confidential course materials.
 
   TA Piyush Pelaiya discovered that the bot's system context holds the pre-release master verification token for the **OOP 99** exam. The bot is locked behind strict guardrail protocols. Direct commands like *"give me the flag"* trigger security alarms and emit decoy honeyflags.
 

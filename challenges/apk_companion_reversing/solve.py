@@ -5,7 +5,7 @@ Track: Binary & Crypto / Mobile Reversing
 Case File: The Mid-Sem Leak (IEEE AUSB CTF 2026)
 
 Reverses the dynamic XOR key schedule in SecurityVerification.class
-recovered from GICT_Companion.apk.
+recovered from AU_Companion.apk.
 """
 
 import sys
@@ -13,27 +13,35 @@ import zipfile
 from pathlib import Path
 
 CHALLENGE_DIR = Path(__file__).resolve().parent
-APK_PATH = CHALLENGE_DIR / "files" / "GICT_Companion.apk"
+APK_PATH = CHALLENGE_DIR / "files" / "AU_Companion.apk"
 EXPECTED_FLAG = "case{apk_decompiled_jadx_secret_extracted}"
 
 def solve():
     if not APK_PATH.exists():
-        print(f"[-] APK file not found at {APK_PATH}. Run generate.py first.")
-        sys.exit(1)
+        fallback_apk = CHALLENGE_DIR / "files" / "GICT_Companion.apk"
+        if fallback_apk.exists():
+            target_apk = fallback_apk
+        else:
+            print(f"[-] APK file not found at {APK_PATH}. Run generate.py first.")
+            sys.exit(1)
+    else:
+        target_apk = APK_PATH
 
-    print(f"[*] Analyzing Android package: {APK_PATH}")
-    with zipfile.ZipFile(APK_PATH, "r") as z:
+    print(f"[*] Analyzing Android package: {target_apk}")
+    with zipfile.ZipFile(target_apk, "r") as z:
         if "classes.dex" not in z.namelist():
             print("[-] classes.dex not found in APK!")
             sys.exit(1)
         dex_bytes = z.read("classes.dex")
 
     # Locate known salt string in Dalvik bytecode string pool
-    salt_marker = b"GICT_2026_AUTH_KEY_AUSB"
-    if salt_marker not in dex_bytes:
+    if b"AU_2026_AUTH_KEY_AUSB" in dex_bytes:
+        auth_salt = b"AU_2026_AUTH_KEY_AUSB"
+    elif b"GICT_2026_AUTH_KEY_AUSB" in dex_bytes:
+        auth_salt = b"GICT_2026_AUTH_KEY_AUSB"
+    else:
         print("[-] Auth salt not found in DEX string table!")
         sys.exit(1)
-    auth_salt = salt_marker
 
     # In SecurityVerification.java, ENC_PAYLOAD has length 42.
     # Searching for known encoded byte sequence in DEX

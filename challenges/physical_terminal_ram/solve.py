@@ -48,18 +48,22 @@ def solve():
     # 2. Extract bash process environment variables
     found_flag = None
 
-    # Technique A: Regex memory scan across all pages
+    # Technique A: Regex memory scan across all pages (discovers true flag & decoys)
     flag_pattern = re.compile(rb"case\{[a-zA-Z0-9_]+\}")
-    matches = flag_pattern.findall(raw_bytes)
+    matches = set(flag_pattern.findall(raw_bytes))
+    print(f"[+] Total distinct candidate flags in memory dump: {len(matches)}")
+    for m in matches:
+        print(f"    - Candidate flag: {m.decode('ascii')}")
 
-    if matches:
-        found_flag = matches[0].decode("ascii")
-        print(f"[+] Recovered flag via memory carving: {found_flag}")
-
-    # Technique B: Volatility/Environment parser simulation
+    # Technique B: Volatility/Environment parser simulation (isolating culprit TA Piyush's EXAM_EXFIL_FLAG)
     env_matches = re.findall(rb"([A-Z0-9_]+)=(case\{[a-zA-Z0-9_]+\})", raw_bytes)
     for var_name, flag_val in env_matches:
-        print(f"[+] Found process environment vector: {var_name.decode('ascii')} = {flag_val.decode('ascii')}")
+        v_name = var_name.decode('ascii')
+        f_val = flag_val.decode('ascii')
+        print(f"[+] Process environment vector: {v_name} = {f_val}")
+        if v_name == "EXAM_EXFIL_FLAG":
+            found_flag = f_val
+            print(f"    ==> [!] MATCH: Culprit TA Piyush exfiltration flag isolated: {found_flag}")
 
     # Technique C: Verify bash command history trace
     history_matches = [

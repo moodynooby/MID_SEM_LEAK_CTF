@@ -3,7 +3,7 @@ author: "Yesha (Forensics Track Lead)"
 category: "Stego"
 description: |
   **Case File Briefing:**
-  At 02:12 AM on the night of the incident, campus surveillance activated an ambient audio sensor situated directly above workstation **PC-04** in GICT Lab 207.
+  At 02:12 AM on the night of the incident, campus surveillance activated an ambient audio sensor situated directly above workstation **PC-04** in AU Lab 207.
 
   The recording (`lab207_ambient_wiretap.wav`) captured background ventilation, 50Hz AC power hum, and sporadic keyboard keystrokes from the intruder. However, campus signals intelligence detected unusual harmonic density in the ultrasonic high frequencies (16 kHz to 20 kHz).
 

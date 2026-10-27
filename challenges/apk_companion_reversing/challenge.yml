@@ -3,7 +3,7 @@ author: "Vidit (@viditd1-eng)"
 category: "Reversing"
 description: |
   **Case File Briefing:**
-  During forensic triage of a smartphone recovered from the GICT Lab 207 terminal desk, investigators identified a custom sideloaded Android application (`GICT_Companion.apk`).
+  During forensic triage of a smartphone recovered from the AU Lab 207 terminal desk, investigators identified a custom sideloaded Android application (`AU_Companion.apk`).
 
   According to campus network records, this companion app was used by TA Piyush Pelaiya to maintain an authenticated administrative bridge to the department grading portal. The app includes a security verification module that validates faculty session tokens and generates a cryptographic handshake key.
 
@@ -34,7 +34,7 @@ hints:
     cost: 50
 
 files:
-  - files/GICT_Companion.apk
+  - files/AU_Companion.apk
 
 state: visible
 version: "0.1"

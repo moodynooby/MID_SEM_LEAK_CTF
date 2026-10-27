@@ -21,7 +21,7 @@ import shutil
 from pathlib import Path
 
 TARGET_FLAG = "case{always_read_the_cheat_sheet_first}"
-DECOY_FLAG = "case{decoy_superficial_html_comment}"
+DECOY_FLAG = "case{staging_lab207_workstation_setup_key}"
 
 
 def build_cheatsheet(output_path: Path, master_docs_path: Path):

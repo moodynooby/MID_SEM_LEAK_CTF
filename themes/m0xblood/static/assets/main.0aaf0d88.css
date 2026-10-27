@@ -11468,7 +11468,7 @@ main {
     margin-bottom: 2rem;
     text-align: center;
     background-color: #000;
-    background-image: url('https://raw.githubusercontent.com/boitatech/mediakit/master/images/bg.gif');
+    background-image: url('/themes/m0xblood/static/img/bg.gif');
     color: var(--bs-white)
 }
 

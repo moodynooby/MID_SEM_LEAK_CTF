@@ -41,6 +41,25 @@ services:
       - proxy_net
     depends_on:
       - ctfd
+      - anubis
+
+  anubis:
+    image: ghcr.io/techarohq/anubis:latest
+    container_name: ctfd_anubis
+    restart: unless-stopped
+    environment:
+      - BIND=:8080
+      - TARGET=http://ctfd:8000
+      - DIFFICULTY=3
+      - SERVE_ROBOTS_TXT=true
+      - POLICY_FNAME=/data/cfg/botPolicy.yaml
+      - OG_PASSTHROUGH=true
+    volumes:
+      - ./conf/anubis/botPolicy.yaml:/data/cfg/botPolicy.yaml:ro
+    networks:
+      - proxy_net
+    depends_on:
+      - ctfd
 
   db:
     image: mariadb:10.11
@@ -84,10 +103,10 @@ services:
     build: ./challenges/ai_prompt_injection
     container_name: challenge_proctor_bot
     restart: unless-stopped
-    ports:
-      - "5002:5002"
-    networks:
-      - proxy_net
+    network_mode: host
+    environment:
+      - OLLAMA_URL=http://127.0.0.1:11434
+      - OLLAMA_MODEL=smollm2
 
   challenge_php2shell:
     build: ./challenges/php2shell

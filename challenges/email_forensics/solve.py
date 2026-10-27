@@ -26,9 +26,9 @@ from pathlib import Path
 
 TARGET_FLAG = "case{ta_piyush_angry_leaked_oop99_mail}"
 KNOWN_DECOYS = {
-    "case{decoy_os101_rubric_not_the_leak}",
-    "case{decoy_spoofed_student_submission_flag}",
-    "case{nice_try_blind_ai_decoy_syllabus}",
+    "case{os101_assignment2_grading_rubric_official}",
+    "case{student_sansh_lab_extension_request_auth}",
+    "case{dean_academic_integrity_protocol_2026}",
 }
 
 

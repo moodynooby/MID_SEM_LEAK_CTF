@@ -10,7 +10,7 @@ Generates:
 Storyline Context:
     At 02:13:42 IST, TA Piyush exfiltrated CCTV footage and terminal captures
     confirming the theft of Prof. Hasmukh Chelaiya's OOP 99 mid-sem exam paper.
-    To bypass GICT's campus Data Loss Prevention (DLP) packet size inspectors,
+    To bypass AU's campus Data Loss Prevention (DLP) packet size inspectors,
     he fragmented the Base64 stream across 12 irregular chunks (part01.txt ... part12.txt).
 
 Anti-AI Defensive Layer:
@@ -41,7 +41,7 @@ def generate_video(output_mp4_path: Path):
     """Generates a compact CCTV terminal MP4 video embedding the flag."""
     text_content = (
         "=========================================\n"
-        " GICT LAB 207 - CCTV FOOTAGE [CAM 04]  \n"
+        " AU LAB 207 - CCTV FOOTAGE [CAM 04]  \n"
         " TIMESTAMP: 2026-10-28 02:13:42 IST     \n"
         " SUSPECT WORKSTATION: PC-04 [TA PIYUSH] \n"
         " INCIDENT: EXFILTRATION OF OOP 99 EXAM  \n"
@@ -66,7 +66,7 @@ def generate_video(output_mp4_path: Path):
                 "fontsize=18:fontcolor=#00ff88:line_spacing=6"
             ),
             "-metadata", f"comment={FLAG}",
-            "-metadata", f"title=GICT_LAB207_CCTV_CAM04_EXFIL_{FLAG}",
+            "-metadata", f"title=AU_LAB207_CCTV_CAM04_EXFIL_{FLAG}",
             "-c:v", "libx264",
             "-preset", "ultrafast",
             "-pix_fmt", "yuv420p",
@@ -88,7 +88,7 @@ def generate_fallback_mp4(output_mp4_path: Path):
         "-f", "lavfi",
         "-i", "testsrc=duration=2:size=320x240:rate=10",
         "-metadata", f"comment={FLAG}",
-        "-metadata", f"title=GICT_LAB207_EXFIL_{FLAG}",
+        "-metadata", f"title=AU_LAB207_EXFIL_{FLAG}",
         "-c:v", "libx264",
         "-preset", "ultrafast",
         str(output_mp4_path)
@@ -99,7 +99,7 @@ def generate_fallback_mp4(output_mp4_path: Path):
         # Raw binary MP4 container with ftyp box and flag embedded
         # Standard ISO Base Media File Format (MP4)
         ftyp = b"\x00\x00\x00\x18ftypmp42\x00\x00\x00\x00mp42isom"
-        mdat_data = f"GICT_INCIDENT_CCTV_PC04_TIMESTAMP_02:13:42_{FLAG}_OOP99".encode("utf-8")
+        mdat_data = f"AU_INCIDENT_CCTV_PC04_TIMESTAMP_02:13:42_{FLAG}_OOP99".encode("utf-8")
         mdat = len(mdat_data + b"\x00\x00\x00\x00").to_bytes(4, "big") + b"mdat" + mdat_data
         output_mp4_path.write_bytes(ftyp + mdat)
 
@@ -133,7 +133,7 @@ def main():
 
         header = (
             f"# ====================================================================\n"
-            f"# GICT CAMPUS SECURITY — INTERCEPTED DLP EXFILTRATION STREAM\n"
+            f"# AU CAMPUS SECURITY — INTERCEPTED DLP EXFILTRATION STREAM\n"
             f"# INCIDENT ID: 2026-10-28-OOP99-LEAK | FRAGMENT: {part_num:02d}/{NUM_PARTS:02d}\n"
             f"# SOURCE: 10.207.42.19 (Lab 207 PC-04) -> WAN GATEWAY\n"
             f"# NOTICE: Payload chunks must be assembled sequentially and cleaned.\n"

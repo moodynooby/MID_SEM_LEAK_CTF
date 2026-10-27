@@ -9,7 +9,7 @@ Generates:
 
 Storyline Context:
     At 02:12 AM, campus surveillance activated an ambient acoustic sensor stationed
-    near PC-04 in GICT Lab 207. While the audio captures low-frequency air-conditioner
+    near PC-04 in AU Lab 207. While the audio captures low-frequency air-conditioner
     hum, electrical 50Hz hum, and sporadic keyboard clicks, high-frequency ultrasonic
     analysis reveals an acoustic watermark synthesized in the 16 kHz – 19.5 kHz range.
 

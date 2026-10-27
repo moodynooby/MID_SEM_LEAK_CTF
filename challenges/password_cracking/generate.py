@@ -5,7 +5,7 @@ Track: Binary & Crypto / Custom Password Cracking
 Case File: The Mid-Sem Leak (IEEE AUSB CTF 2026)
 
 Generates confidential_vault.zip encrypted with campus lore entity password:
-'GICT207_OS101_Piyush2026!'
+'AU207_OS101_Piyush2026!'
 """
 
 import os
@@ -20,7 +20,7 @@ CHALLENGE_DIR = Path(__file__).resolve().parent
 DIST_DIR = CHALLENGE_DIR / "files"
 OUTPUT_ZIP = DIST_DIR / "confidential_vault.zip"
 
-PASSWORD = "GICT207_OS101_Piyush2026!"
+PASSWORD = "AU207_OS101_Piyush2026!"
 FLAG = "case{custom_hashcat_wordlist_cracked_vault}"
 
 EXAM_CONTENT = """================================================================================
@@ -29,7 +29,7 @@ DEPARTMENT OF COMPUTER SCIENCE & ENGINEERING
 MID-SEMESTER EXAMINATION - OCTOBER 2026
 COURSE: OOP 99 (OBJECT ORIENTED PROGRAMMING SYSTEMS)
 INSTRUCTOR: PROF. HASMUKH CHELAIYA
-VENUE: GICT LAB 207 / 208
+VENUE: AU LAB 207 / 208
 TIME ALLOWED: 2 HOURS                                          MAX MARKS: 50
 ================================================================================
 
@@ -84,7 +84,7 @@ Q4. (15 Marks)
 Verify the master exam release token recorded in faculty_vault_flag.txt.
 """
 
-NOTE_CONTENT = """[!] SECURITY AUDIT ADVISORY - GICT LAB 207
+NOTE_CONTENT = """[!] SECURITY AUDIT ADVISORY - AU LAB 207
 TO: Prof. Hasmukh Chelaiya
 FROM: TA Piyush Pelaiya
 DATE: 27-Oct-2026 21:14 IST

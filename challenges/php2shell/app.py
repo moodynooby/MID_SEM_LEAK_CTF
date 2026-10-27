@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-GICT Faculty Submission Portal - Insecure File Upload Web Service
+AU Faculty Submission Portal - Insecure File Upload Web Service
 Challenge: PHP2SHELL: Faculty Upload Portal Bypass
 Author: Tanish Shah (@tanishshahh)
 IEEE AUSB CTF: Case File: The Mid-Sem Leak
@@ -9,7 +9,8 @@ IEEE AUSB CTF: Case File: The Mid-Sem Leak
 import os
 import re
 import html
-from http.server import HTTPServer, BaseHTTPRequestHandler
+import uuid
+from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 import email.parser
 
@@ -36,7 +37,7 @@ INDEX_HTML = """<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>GICT Faculty Assignment Upload Portal</title>
+  <title>AU Faculty Assignment Upload Portal</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     :root {
@@ -159,7 +160,7 @@ INDEX_HTML = """<!DOCTYPE html>
 <body>
   <div class="container">
     <header>
-      <div class="badge">GICT Internal Submission Gateway</div>
+      <div class="badge">AU Internal Submission Gateway</div>
       <h1>Prof. Chelaiya's Course Upload Portal</h1>
       <p class="subtitle">Courses: OS 101 &bull; OOP 99 &bull; Academic Year 2026</p>
     </header>
@@ -183,7 +184,7 @@ INDEX_HTML = """<!DOCTYPE html>
   </div>
 
   <footer>
-    <p>Powered by Apache/2.4.52 (Ubuntu) PHP/8.1 FastCGI Integration &bull; GICT Lab 207</p>
+    <p>Powered by Apache/2.4.52 (Ubuntu) PHP/8.1 FastCGI Integration &bull; AU Lab 207</p>
   </footer>
 </body>
 </html>
@@ -213,12 +214,19 @@ class UploadPortalHandler(BaseHTTPRequestHandler):
             filename = os.path.basename(path)
             filepath = os.path.join(UPLOAD_DIR, filename)
 
+            # If not direct match, check for latest file ending with _filename or base filename
             if not os.path.exists(filepath):
-                self.send_response(404)
-                self.send_header("Content-Type", "text/plain")
-                self.end_headers()
-                self.wfile.write(b"404 Not Found: Uploaded file does not exist.")
-                return
+                candidates = [f for f in os.listdir(UPLOAD_DIR) if f.endswith(f"_{filename}") or f == filename]
+                if candidates:
+                    candidates.sort(key=lambda x: os.path.getmtime(os.path.join(UPLOAD_DIR, x)), reverse=True)
+                    filepath = os.path.join(UPLOAD_DIR, candidates[0])
+                    filename = candidates[0]
+                else:
+                    self.send_response(404)
+                    self.send_header("Content-Type", "text/plain")
+                    self.end_headers()
+                    self.wfile.write(b"404 Not Found: Uploaded file does not exist.")
+                    return
 
             ext = os.path.splitext(filename)[1].lower()
             query_params = parse_qs(parsed.query)
@@ -332,11 +340,21 @@ class UploadPortalHandler(BaseHTTPRequestHandler):
                 self.render_index(f'<div class="result-box error">{err_msg}</div>')
                 return
 
-            # Save the file
-            safe_filename = re.sub(r'[^a-zA-Z0-9_.-]', '_', filename)
+            # Save the file with unique prefix to prevent concurrent team overwrite collisions
+            clean_name = re.sub(r'[^a-zA-Z0-9_.-]', '_', filename)
+            prefix = uuid.uuid4().hex[:6]
+            safe_filename = f"{prefix}_{clean_name}"
             save_path = os.path.join(UPLOAD_DIR, safe_filename)
             with open(save_path, "wb") as f:
                 f.write(uploaded_file)
+
+            # Also maintain a fallback copy of clean_name for automated tools/scripts
+            latest_path = os.path.join(UPLOAD_DIR, clean_name)
+            try:
+                with open(latest_path, "wb") as lf:
+                    lf.write(uploaded_file)
+            except Exception:
+                pass
 
             file_url = f"/uploads/{safe_filename}"
             success_msg = (
@@ -352,7 +370,7 @@ class UploadPortalHandler(BaseHTTPRequestHandler):
 
 def run():
     server_address = (HOST, PORT)
-    httpd = HTTPServer(server_address, UploadPortalHandler)
+    httpd = ThreadingHTTPServer(server_address, UploadPortalHandler)
     print(f"[*] PHP2SHELL Faculty Upload Portal running on http://{HOST}:{PORT}")
     try:
         httpd.serve_forever()

@@ -137,7 +137,7 @@ def build_pdf_document(output_path: Path):
         "BT",
         "/F1 8 Tf",
         "220 50 Td",
-        "(GICT Exam Cell -- Confidential Document -- Page 1 of 1) Tj",
+        "(AU Exam Cell -- Confidential Document -- Page 1 of 1) Tj",
         "ET",
     ]
 

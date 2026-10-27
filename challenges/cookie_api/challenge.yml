@@ -3,7 +3,7 @@ author: "Tanish Shah (@tanishshahh)"
 category: "Web"
 description: |
   **Case File Briefing:**
-  During forensic triage of GICT Lab 207, investigators discovered that TA Piyush Pelaiya bookmarked an internal faculty portal used by Prof. Hasmukh Chelaiya to stage draft mid-semester exams for **OS 101** and **OOP 99**.
+  During forensic triage of AU Lab 207, investigators discovered that TA Piyush Pelaiya bookmarked an internal faculty portal used by Prof. Hasmukh Chelaiya to stage draft mid-semester exams for **OS 101** and **OOP 99**.
 
   The web portal enforces access tiers via client-side session cookies. Can your team inspect the authentication state, elevate permissions to faculty coordinator tier, or locate the unlisted REST API endpoint to retrieve Prof. Chelaiya's secret exam draft flag?
 

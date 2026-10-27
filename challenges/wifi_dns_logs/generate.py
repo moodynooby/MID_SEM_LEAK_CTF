@@ -11,7 +11,7 @@ Generates:
 Storyline Canon Context:
     At 02:13:42 IST on 28 October 2026, Prof. Hasmukh Chelaiya's department laptop
     (prof_chelaiya_thinkpad_x1, MAC a4:c4:94:02:13:42) associated with the faculty
-    access point AP-GICT-FACULTY-L2 and initiated an automated background cloud sync of
+    access point AP-AU-FACULTY-L2 and initiated an automated background cloud sync of
     the confidential OOP 99 examination draft.
 
 Anti-AI Defensive Layer:
@@ -34,10 +34,10 @@ from pathlib import Path
 random.seed(20261028)
 
 AP_LIST = [
-    ("AP-GICT-FACULTY-L2", "00:1a:1e:f0:20:70", "GICT-Faculty-Secure", "VLAN 20"),
-    ("AP-GICT-LAB207", "00:1a:1e:f0:20:71", "GICT-Labs-Internal", "VLAN 40"),
-    ("AP-GICT-LAB208", "00:1a:1e:f0:20:72", "GICT-Labs-Internal", "VLAN 40"),
-    ("AP-GICT-FOYER-G", "00:1a:1e:f0:10:01", "AUSB-Student-Air", "VLAN 100"),
+    ("AP-AU-FACULTY-L2", "00:1a:1e:f0:20:70", "AU-Faculty-Secure", "VLAN 20"),
+    ("AP-AU-LAB207", "00:1a:1e:f0:20:71", "AU-Labs-Internal", "VLAN 40"),
+    ("AP-AU-LAB208", "00:1a:1e:f0:20:72", "AU-Labs-Internal", "VLAN 40"),
+    ("AP-AU-FOYER-G", "00:1a:1e:f0:10:01", "AUSB-Student-Air", "VLAN 100"),
     ("AP-STUDENT-LOUNGE", "00:1a:1e:f0:10:02", "AUSB-Student-Air", "VLAN 100"),
     ("AP-LIBRARY-1F", "00:1a:1e:f0:30:05", "AUSB-Library-Silent", "VLAN 110"),
     ("AP-SEMINAR-HALL", "00:1a:1e:f0:40:10", "AUSB-Guest-Open", "VLAN 120"),
@@ -58,9 +58,9 @@ TARGET_IP = "10.20.10.42"
 TARGET_FLAG = "case{chelaiya_thinkpad_auto_sync_0213}"
 
 DECOY_FLAGS = [
-    ("case{decoy_student_mac_address}", "e4:ce:8f:99:11:00", "decoy_student_pc"),
-    ("case{sansh_vhah_library_ap_decoy}", "3c:52:82:11:22:33", "sansh_laptop_lenovo"),
-    ("case{nice_try_blind_ai_wifi_grep}", "18:65:90:33:44:55", "guest_phone_galaxy"),
+    ("case{sansh_laptop_dhcp_lease_vlan100}", "3c:52:82:11:22:33", "sansh_laptop_lenovo"),
+    ("case{tryan_guest_mobile_dhcp_auth_0213}", "94:65:2d:aa:bb:cc", "tryan_phone_oneplus"),
+    ("case{parsh_seminar_hall_vlan200_token}", "d0:03:4b:dd:ee:ff", "parsh_ipad_air"),
 ]
 
 
@@ -125,8 +125,8 @@ def build_wifi_and_dhcp_logs(output_wifi_path: Path, output_dhcp_path: Path):
 
             # 1. 802.11 Association to Faculty AP
             wifi_lines.append(
-                f"{t_str_wifi} aruba-ap-gict-fac2 authmgr[1842]: <522008> <INFO> |authmgr| "
-                f"MAC={TARGET_MAC} Station (SSID=GICT-Faculty-Secure, BSSID=00:1a:1e:f0:20:70) "
+                f"{t_str_wifi} aruba-ap-au-fac2 authmgr[1842]: <522008> <INFO> |authmgr| "
+                f"MAC={TARGET_MAC} Station (SSID=AU-Faculty-Secure, BSSID=00:1a:1e:f0:20:70) "
                 f"802.1X authenticated, Role=Faculty-Staff, VLAN=20"
             )
             # 2. DHCP lease assignment on Faculty VLAN 20
@@ -138,7 +138,7 @@ def build_wifi_and_dhcp_logs(output_wifi_path: Path, output_dhcp_path: Path):
             # 3. DNS lookup for department cloud storage
             wifi_lines.append(
                 f"{target_dt.strftime('%b %d %H:%M:%S')} dns-server[902]: <301004> <INFO> |dns| "
-                f"Client {TARGET_IP} query: sync.faculty-vault.gict.internal IN A (10.20.0.12)"
+                f"Client {TARGET_IP} query: sync.faculty-vault.ahduni.internal IN A (10.20.0.12)"
             )
             # 4. SMB File Share connection log showing exam draft access
             wifi_lines.append(

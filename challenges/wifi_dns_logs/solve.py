@@ -6,7 +6,7 @@ Author: Vatsal Pandya (@VP1107)
 
 Solve Path:
     1. Parse 'files/campus_wifi_access.log' for events occurring on the Faculty AP
-       (SSID: GICT-Faculty-Secure / BSSID: 00:1a:1e:f0:20:70) between 02:00 and 02:30 AM.
+       (SSID: AU-Faculty-Secure / BSSID: 00:1a:1e:f0:20:70) between 02:00 and 02:30 AM.
     2. Detect connection spike at 02:13:42 IST associated with MAC: a4:c4:94:02:13:42.
     3. Cross-reference MAC address against 'files/dhcp_leases.log' to identify
        the device hostname (prof_chelaiya_thinkpad_x1) and allocated IP (10.20.10.42).
@@ -21,10 +21,9 @@ from pathlib import Path
 
 TARGET_FLAG = "case{chelaiya_thinkpad_auto_sync_0213}"
 KNOWN_DECOYS = {
-    "case{decoy_student_mac_address}",
-    "case{sansh_vhah_library_ap_decoy}",
-    "case{rohan_sharma_library_ap_decoy}",
-    "case{nice_try_blind_ai_wifi_grep}",
+    "case{sansh_laptop_dhcp_lease_vlan100}",
+    "case{tryan_guest_mobile_dhcp_auth_0213}",
+    "case{parsh_seminar_hall_vlan200_token}",
 }
 
 

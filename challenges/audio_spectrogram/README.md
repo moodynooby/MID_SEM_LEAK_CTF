@@ -8,7 +8,7 @@
 ---
 
 ## 1. Challenge Overview & Canon Storyline
-At 02:12 AM on the night of the incident, an ambient microphone sensor stationed above workstation PC-04 in GICT Lab 207 captured room audio. While the human ear only hears 50 Hz electrical hum, air ventilation, and keyboard clicks, an acoustic watermark was modulated into the high-frequency ultrasonic spectrum (16.0 kHz – 19.5 kHz).
+At 02:12 AM on the night of the incident, an ambient microphone sensor stationed above workstation PC-04 in AU Lab 207 captured room audio. While the human ear only hears 50 Hz electrical hum, air ventilation, and keyboard clicks, an acoustic watermark was modulated into the high-frequency ultrasonic spectrum (16.0 kHz – 19.5 kHz).
 
 ---
 

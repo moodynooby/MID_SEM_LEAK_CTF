@@ -6,7 +6,7 @@
 **Author:** Vidit (@viditd1-eng)  
 **Target File:** `files/confidential_vault.zip`  
 **Flag:** `case{custom_hashcat_wordlist_cracked_vault}`  
-**Password:** `GICT207_OS101_Piyush2026!`  
+**Password:** `AU207_OS101_Piyush2026!`  
 
 ---
 
@@ -18,10 +18,10 @@ The file is encrypted with PKZIP traditional stream encryption. When interviewed
 ---
 
 ### 2. Anti-AI Defensive Layer
-- **Immunity to Standard Dictionaries:** Standard wordlists like `rockyou.txt` or general online Rainbow tables will completely fail because the password `GICT207_OS101_Piyush2026!` is unique to this campus scenario.
+- **Immunity to Standard Dictionaries:** Standard wordlists like `rockyou.txt` or general online Rainbow tables will completely fail because the password `AU207_OS101_Piyush2026!` is unique to this campus scenario.
 - **Contextual Synthesis Required:** Generic LLMs prompted with the zip file or hash cannot crack it without synthesizing combinations derived from the **Case Briefing Dossier** (`docs/participant_kit/Case_Briefing_Dossier.md`).
 - **Entity Correlation:** Participants must combine:
-  - Lab: `GICT207` / `GICT208`
+  - Lab: `AU207` / `AU208`
   - Course: `OS101` / `OOP99`
   - Primary Suspect: `Piyush`
   - Year: `2026`
@@ -42,7 +42,7 @@ Create a custom dictionary generator script (`generate_wordlist.py`):
 ```python
 import itertools
 
-labs = ["GICT207", "GICT208", "207", "208"]
+labs = ["AU207", "AU208", "207", "208"]
 courses = ["OS101", "OOP99"]
 suspects = ["Piyush", "Pelaiya", "Hasmukh", "Chelaiya", "Sansh", "Danas", "Prish", "Tryan", "Parsh"]
 years = ["2026", "2025"]
@@ -63,7 +63,7 @@ john --wordlist=campus_wordlist.txt vault_hash.txt
 Output:
 ```
 Loaded 1 password hash (PKZIP [32/64])
-GICT207_OS101_Piyush2026! (files/confidential_vault.zip)
+AU207_OS101_Piyush2026! (files/confidential_vault.zip)
 ```
 
 **Using Hashcat:**
@@ -74,7 +74,7 @@ hashcat -m 17200 vault_hash.txt campus_wordlist.txt
 #### Step 4: Extract Archive & Read Flag
 Extract the archive using the cracked password:
 ```bash
-unzip -P "GICT207_OS101_Piyush2026!" files/confidential_vault.zip
+unzip -P "AU207_OS101_Piyush2026!" files/confidential_vault.zip
 cat faculty_vault_flag.txt
 ```
 Output:

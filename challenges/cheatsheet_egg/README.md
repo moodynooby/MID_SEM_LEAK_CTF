@@ -8,7 +8,7 @@
 - **Tester / Solve-Verified By:** Krish Poddar (`@Krish-452`) / Manas Doshi (`@moodynooby`)
 - **True Flag:** `case{always_read_the_cheat_sheet_first}`
 - **Decoy Honeyflags:**
-  - `case{decoy_superficial_html_comment}`
+  - `case{staging_lab207_workstation_setup_key}`
 
 ---
 
@@ -26,7 +26,7 @@ To reward thorough teams who inspect the provided materials thoroughly before la
    Rendered markdown views (such as GitHub preview, VS Code preview, or HTML renders) hide comments (`<!-- ... -->`). Superficial browser skimming will miss the token.
 
 2. **Decoy Developer Comments:**
-   The file includes a decoy developer comment with a honeyflag (`case{decoy_superficial_html_comment}`) near the top to catch naive top-down regex parsers.
+   The file includes a decoy developer comment with a honeyflag (`case{staging_lab207_workstation_setup_key}`) near the top to catch naive top-down regex parsers.
 
 3. **True Easter Egg Block:**
    The true token is embedded in the dedicated footer comment block:

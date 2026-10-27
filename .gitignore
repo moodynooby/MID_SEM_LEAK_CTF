@@ -12,6 +12,7 @@
 *.cert
 *.crt
 *credentials.csv
+*Registration Form Responses*.csv
 # Allow example environment file
 !.env.example
 

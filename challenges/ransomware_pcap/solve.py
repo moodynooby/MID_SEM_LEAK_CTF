@@ -21,8 +21,8 @@ from pathlib import Path
 
 TARGET_FLAG = "case{pcap_webshell_exfil_key_found}"
 KNOWN_DECOYS = {
-    "case{decoy_plaintext_login_honeyflag}",
-    "case{decoy_telemetry_post_pcap}",
+    "case{student_sansh_portal_session_cookie}",
+    "case{au_campus_syslog_telemetry_token}",
 }
 
 

@@ -1,0 +1,37 @@
+# Anubis Bot Policy for IEEE AUSB CTF: Case File: The Mid-Sem Leak
+# Protects CTFd from automated AI scrapers, headless crawlers, and aggressive botting.
+
+bots:
+  # Deny known pathological scrapers and AI crawler User-Agents
+  - name: deny-ai-crawlers
+    user_agent_regex: "(?i)(GPTBot|ChatGPT|ClaudeBot|PerplexityBot|Bytespider|CCBot|Diffbot|FacebookBot|Google-Extended|Omgilibot)"
+    action: DENY
+
+  # Deny common automated vulnerability scanners
+  - name: deny-scanners
+    user_agent_regex: "(?i)(sqlmap|nikto|nuclei|acunetix|dirbuster|gobuster|ffuf|wfuzz)"
+    action: DENY
+
+  # Passthrough for real-time SSE scoreboard events
+  - name: allow-sse-events
+    path_regex: "^/events"
+    action: ALLOW
+
+  # Passthrough for CTFd REST API (admin operations, timeline triggers, scoring sync)
+  - name: allow-ctfd-api
+    path_regex: "^/api/.*"
+    action: ALLOW
+
+  # Passthrough for static evidence downloads
+  - name: allow-challenge-files
+    path_regex: "^/files/.*"
+    action: ALLOW
+
+  # Passthrough for projector AV console
+  - name: allow-av-console
+    path_regex: "^/av-console/.*"
+    action: ALLOW
+
+  # Challenge regular browsers with lightweight proof-of-work (difficulty 3)
+  - name: browser-challenge
+    action: CHALLENGE

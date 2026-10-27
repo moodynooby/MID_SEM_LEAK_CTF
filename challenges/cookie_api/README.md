@@ -5,12 +5,12 @@
 **Category:** Web  
 **Difficulty:** Easy (100–200 pts, Dynamic initial: 500, decay: 15, minimum: 100)  
 **True Flag:** `case{cookie_role_tamper_faculty_access}`  
-**Decoy Honeyflag:** `case{nice_try_admin_decoy_endpoint}`  
+**Decoy Honeyflag:** `case{faculty_admin_portal_root_auth_2026}`  
 
 ---
 
 ### 1. Narrative Lore & Storyline Context
-In GICT Lab 207, TA Piyush Pelaiya accessed an internal faculty staging interface used by Prof. Hasmukh Chelaiya to verify draft exam questions for **OS 101** and **OOP 99**. The web service was intended solely for faculty and exam coordinators, but relies on insecure client-side session cookie state to enforce permissions.
+In AU Lab 207, TA Piyush Pelaiya accessed an internal faculty staging interface used by Prof. Hasmukh Chelaiya to verify draft exam questions for **OS 101** and **OOP 99**. The web service was intended solely for faculty and exam coordinators, but relies on insecure client-side session cookie state to enforce permissions.
 
 ---
 
@@ -44,7 +44,7 @@ In GICT Lab 207, TA Piyush Pelaiya accessed an internal faculty staging interfac
      {
        "error": "DECOY_ADMIN_RESTRICTED",
        "message": "Security honeypot triggered. Decoy flag issued.",
-       "flag": "case{nice_try_admin_decoy_endpoint}"
+       "flag": "case{faculty_admin_portal_root_auth_2026}"
      }
      ```
    - Submitting the decoy flag to CTFd yields an incorrect submission penalty.
@@ -89,6 +89,6 @@ Expected output:
 [*] Testing Solution Path 2: Unlisted REST Endpoint...
 [+] Flag found via REST API: case{cookie_role_tamper_faculty_access}
 [*] Verifying Anti-AI Honeyflag Endpoint (/api/v1/admin/secret)...
-[+] Honeypot triggered properly with decoy flag: case{nice_try_admin_decoy_endpoint}
+[+] Honeypot triggered properly with decoy flag: case{faculty_admin_portal_root_auth_2026}
 [SUCCESS] All verification tests passed cleanly (Exit 0).
 ```

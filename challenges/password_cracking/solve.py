@@ -24,7 +24,7 @@ def build_targeted_wordlist():
     Constructs a targeted wordlist using the lore entities from the Case Dossier:
     Pattern: [Lab]_[Course]_[Suspect][Year][Symbol]
     """
-    labs = ["GICT207", "GICT208", "207", "208", "Lab207", "Lab208"]
+    labs = ["AU207", "AU208", "GICT207", "GICT208", "207", "208", "Lab207", "Lab208"]
     courses = ["OS101", "OOP99", "OS", "OOP"]
     suspects = [
         "Piyush", "Pelaiya", "Hasmukh", "Chelaiya",

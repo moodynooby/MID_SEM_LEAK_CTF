@@ -3,7 +3,7 @@ author: "Yesha (Forensics Track Lead)"
 category: "Forensics"
 description: |
   **Case File Briefing:**
-  During the midnight breach in GICT Lab 207, campus Data Loss Prevention (DLP) systems triggered an alert on an outbound HTTP POST sequence originating from workstation **PC-04**.
+  During the midnight breach in AU Lab 207, campus Data Loss Prevention (DLP) systems triggered an alert on an outbound HTTP POST sequence originating from workstation **PC-04**.
 
   Network investigators recovered 12 fragmented payload artifacts (`part01.txt` through `part12.txt`). The exfiltrator split an intercepted CCTV terminal recording across non-standard chunk boundaries with custom DLP bypass headers to defeat perimeter inspection.
 

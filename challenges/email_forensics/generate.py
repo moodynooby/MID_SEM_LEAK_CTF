@@ -10,9 +10,9 @@ Generates:
 Anti-AI Defensive Architecture:
     1. Multi-layered MIME hierarchy with nested message/rfc822 incident threads.
     2. Multiple decoy attachments containing realistic honeypot flags:
-       - case{decoy_os101_rubric_not_the_leak}
-       - case{decoy_spoofed_student_submission_flag}
-       - case{nice_try_blind_ai_decoy_syllabus}
+       - case{os101_assignment2_grading_rubric_official}
+       - case{student_sansh_lab_extension_request_auth}
+       - case{dean_academic_integrity_protocol_2026}
     3. Spoofed 'From' headers countered by authentic campus gateway routing headers:
        - X-Campus-Auth-User: piyush.pelaiya
        - X-Originating-IP: [10.207.42.19]
@@ -113,7 +113,7 @@ def build_decoy_thread_1() -> MIMEMultipart:
     msg.attach(MIMEText(body, "plain"))
 
     decoy_pdf = create_minimal_pdf(
-        "AHMEDABAD UNIVERSITY - GICT - OS 101 GRADING RUBRIC",
+        "AHMEDABAD UNIVERSITY - AU - OS 101 GRADING RUBRIC",
         [
             "Course: OS 101 Operating Systems Principles",
             "Instructor: Prof. Hasmukh Chelaiya",
@@ -124,7 +124,7 @@ def build_decoy_thread_1() -> MIMEMultipart:
             "Criterion 3: Clean Process Termination: 15 Marks",
             "",
             "NOTICE: This is an archival grading rubric document.",
-            "FLAG DECOY CHECK: case{decoy_os101_rubric_not_the_leak}",
+            "FLAG VERIFICATION: case{os101_assignment2_grading_rubric_official}",
             "----------------------------------------------------------------",
         ],
     )
@@ -153,18 +153,18 @@ def build_decoy_thread_2() -> MIMEMultipart:
         "To Whom It May Concern,\n\n"
         "I noticed unusual activity near the instructor console in Lab 207 around 21:00.\n"
         "A student was browsing the network share. Attached is a terminal log capture.\n\n"
-        "Decoy Flag Verification: case{decoy_spoofed_student_submission_flag}\n"
+        "Session Authorization: case{student_sansh_lab_extension_request_auth}\n"
     )
     msg.attach(MIMEText(body, "plain"))
 
     decoy_pdf = create_minimal_pdf(
-        "GICT LAB 207 - ANONYMOUS INCIDENT REPORT (DECOY)",
+        "AU LAB 207 - ANONYMOUS INCIDENT REPORT",
         [
             "Timestamp: 27-Oct-2026 21:30 IST",
-            "Location: Terminal 14, GICT Lab 207",
+            "Location: Terminal 14, AU Lab 207",
             "Observed activity: SSH session to internal repository.",
-            "DECOY ARTIFACT - NOT THE LEAKED MIDSEM PAPER",
-            "FLAG: case{decoy_spoofed_student_submission_flag}",
+            "STUDENT SESSION VERIFICATION",
+            "FLAG: case{student_sansh_lab_extension_request_auth}",
         ],
     )
     part = MIMEBase("application", "pdf")
@@ -207,7 +207,7 @@ def build_decoy_thread_3() -> MIMEMultipart:
             "Guideline 1: No unencrypted network transfers of exam papers.",
             "Guideline 2: TAs must submit verified grading logs within 72 hours.",
             "",
-            "Decoy Verification Flag: case{nice_try_blind_ai_decoy_syllabus}",
+            "Protocol Verification Flag: case{dean_academic_integrity_protocol_2026}",
             "----------------------------------------------------------------",
         ],
     )
@@ -224,7 +224,7 @@ def build_decoy_thread_3() -> MIMEMultipart:
 def build_authentic_leaked_paper_pdf() -> bytes:
     """Generate the authentic leaked OOP 99 mid-sem exam paper with confession flag."""
     return create_minimal_pdf(
-        "AHMEDABAD UNIVERSITY - GICT - DEPARTMENT OF COMPUTER SCIENCE",
+        "AHMEDABAD UNIVERSITY - AU - DEPARTMENT OF COMPUTER SCIENCE",
         [
             "COURSE CODE: OOP 99 | OBJECT-ORIENTED PROGRAMMING SYSTEMS",
             "MID-SEMESTER EXAMINATION - AUTUMN 2026",
@@ -315,7 +315,7 @@ def build_culprit_exfiltration_message() -> MIMEMultipart:
         "Signed,\n"
         "TA Piyush Pelaiya\n"
         "Graduate Teaching Assistant (Systems & Concurrency)\n"
-        "GICT Lab 207\n\n"
+        "AU Lab 207\n\n"
         "Confession & Signature Flag:\n"
         "case{ta_piyush_angry_leaked_oop99_mail}\n"
     )
@@ -366,7 +366,7 @@ def generate_incident_eml(output_path: Path):
         "The intercepted export collates multiple threads captured between 17:00 and 23:50 IST\n"
         "on 27 October 2026. The exfiltration message utilized spoofed external 'From' headers\n"
         "claiming to be an 'Anonymous Student Council'. However, internal gateway authentication\n"
-        "records and X-Originating-IP traces point to a workstation inside GICT Lab 207.\n\n"
+        "records and X-Originating-IP traces point to a workstation inside AU Lab 207.\n\n"
         "Please review the attached thread components, analyze the RFC 822 routing headers,\n"
         "and verify the authenticity of the attached OOP 99 draft paper.\n\n"
         "Forensic Evidence Attached:\n"
@@ -375,7 +375,7 @@ def generate_incident_eml(output_path: Path):
         "  3. Decoy Thread #3: dean_security_circular.eml (Archival administrative memo)\n"
         "  4. Evidence Item #4: intercepted_exfiltration_blast.eml (Authentic exfiltration blast)\n\n"
         "- Ahmedabad University Cyber Incident Response Team (AU-CIRT)\n"
-        "GICT Security Operations Center\n"
+        "AU Security Operations Center\n"
     )
     master_msg.attach(MIMEText(briefing, "plain", "utf-8"))
 

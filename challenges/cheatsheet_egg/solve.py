@@ -17,7 +17,7 @@ import re
 from pathlib import Path
 
 TARGET_FLAG = "case{always_read_the_cheat_sheet_first}"
-KNOWN_DECOYS = {"case{decoy_superficial_html_comment}"}
+KNOWN_DECOYS = {"case{staging_lab207_workstation_setup_key}"}
 
 
 def solve(file_path: Path):

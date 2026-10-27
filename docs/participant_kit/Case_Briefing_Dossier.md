@@ -12,7 +12,7 @@
 ---
 
 ## 1. Incident Overview
-On the evening of 27 October 2026 at approximately 21:14 IST, an automated alert triggered on the faculty internal file server in GICT. The upcoming **OOP 99 (Object Oriented Programming Systems)** Mid-Semester Examination Paper, authored by **Prof. Hasmukh Chelaiya**, was illicitly downloaded and circulated.
+On the evening of 27 October 2026 at approximately 21:14 IST, an automated alert triggered on the faculty internal file server at Ahmedabad University. The upcoming **OOP 99 (Object Oriented Programming Systems)** Mid-Semester Examination Paper, authored by **Prof. Hasmukh Chelaiya**, was illicitly downloaded and circulated.
 
 Forensics triage revealed anomalous network scanning traffic (`nmap`), suspicious mail server activity, and tampering with the Safe Exam Browser (SEB) distribution share. Department records also noted tense disputes regarding grading in **OS 101 (Operating Systems)**.
 
@@ -44,7 +44,7 @@ Cross-reference these profiles with your evidence. Forensic triage suggests seve
 | **Suspect B** | **Danas Moshi** | BS Computer Science (2nd Yr) | `@ghost_in_the_lab` | Spotted near Lab 207 terminal between 21:00 and 21:30. |
 | **Suspect C** | **Prish Koddar** | B.Tech ICT (4th Yr) | `@root_ninja` | Remote access VPN session active between 19:30 and 20:30. |
 | **Suspect D** | **Tryan Ahakkar**| B.Tech Mechanical (2nd Yr) | `@cipher_sid` | Wi-Fi device connected to Student Lounge AP until 22:00. |
-| **Suspect E** | **Parsh Hatel** | BS Data Science (3rd Yr) | `@data_drifter` | Attended club meeting in GICT Seminar Hall during incident. |
+| **Suspect E** | **Parsh Hatel** | BS Data Science (3rd Yr) | `@data_drifter` | Attended club meeting in AU Seminar Hall during incident. |
 
 ---
 
@@ -64,7 +64,7 @@ The evidence is cataloged across four synchronized investigative tracks on the C
    - Dissect the switch packet capture (`infected.pcap`) to uncover webshell command-and-control streams.
    - Correlate campus-wide Aruba AP logs (`campus_wifi_access.log`) and DHCP leases (`dhcp_leases.log`) to uncover the crucial 02:13 AM midnight auto-sync event.
 4. **Binary Reverse Engineering & Applied Cryptography:**
-   - Reverse engineer the custom sideloaded companion APK (`GICT_Companion.apk`) recovered from the Lab 207 crime scene.
+   - Reverse engineer the custom sideloaded companion APK (`AU_Companion.apk`) recovered from the Lab 207 crime scene.
    - Crack the encrypted faculty vault archive (`confidential_vault.zip`) by synthesizing a targeted campus wordlist based on dossier entities.
 
 ---

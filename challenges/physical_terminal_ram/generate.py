@@ -9,7 +9,7 @@ Generates:
 
 Storyline Context:
     At 02:14 AM on 28 October 2026, campus security quarantined Workstation PC-04 in
-    GICT Lab 207 after TA Piyush Pelaiya fled the room. To prevent loss of volatile
+    AU Lab 207 after TA Piyush Pelaiya fled the room. To prevent loss of volatile
     artifacts before power-off, a memory snapshot of the active terminal session was
     dumped to `/dev/shm/lab207_terminal_ram.raw`.
 
@@ -82,6 +82,23 @@ def generate_memory_dump():
     )
     pages[120][:len(decoy_sshd)] = decoy_sshd
 
+    # Decoy Process 1: Student Sansh Vhah (PID 1102) - Framed student terminal
+    decoy_sansh = (
+        b"COMM=bash\x00PID=1102\x00PPID=1100\x00UID=1004\x00USER=sansh_vhah\x00"
+        b"TTY=/dev/pts/0\x00EXE=/bin/bash\x00CWD=/home/sansh_vhah\x00"
+        b"LAB_SESSION_TOKEN=case{sansh_lab208_checkin_token}\x00"
+        b"HISTFILE=/home/sansh_vhah/.bash_history\x00"
+    )
+    pages[210][:len(decoy_sansh)] = decoy_sansh
+
+    # Decoy Process 2: Student Danas Moshi (PID 1240) - Framed student terminal
+    decoy_danas = (
+        b"COMM=bash\x00PID=1240\x00PPID=1235\x00UID=1005\x00USER=danas_moshi\x00"
+        b"TTY=/dev/pts/2\x00EXE=/bin/bash\x00CWD=/home/danas_moshi\x00"
+        b"STUDENT_AUTH=case{danas_terminal_footprint_auth}\x00"
+    )
+    pages[260][:len(decoy_danas)] = decoy_danas
+
     # 3. Inject Culprit TA Piyush's Bash Process Memory (PID 1337)
     # Page A: Process Task Descriptor & Heap Metadata
     task_info = (
@@ -93,13 +110,13 @@ def generate_memory_dump():
     # Page B: Authentic Environment Vector Block (environ)
     env_vars = [
         "SHELL=/bin/bash",
-        "SESSION_MANAGER=local/gict-lab207-pc04:@/tmp/.ICE-unix/1337",
+        "SESSION_MANAGER=local/au-lab207-pc04:@/tmp/.ICE-unix/1337",
         "QT_ACCESSIBILITY=1",
         "COLORTERM=truecolor",
         "SSH_CONNECTION=10.207.42.19 54210 10.207.1.5 22",
         "HISTCONTROL=ignoredups",
         "HISTSIZE=1000",
-        "HOSTNAME=gict-lab207-pc04",
+        "HOSTNAME=au-lab207-pc04",
         "PWD=/home/ta_piyush",
         "LOGNAME=ta_piyush",
         "XDG_SESSION_TYPE=x11",
