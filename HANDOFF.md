@@ -73,7 +73,7 @@ This repository contains the complete offline-first containerized infrastructure
 | **#16** | Intrusion Punishments & Siren Alerts | Live Ops | — | @tanishshahh | `ops/siren_alert/` | Scaffolding |
 | **#17** | APK Reverse Engineer: Suspect's App | Reversing | Medium | @viditd1-eng | `challenges/apk_companion_reversing/` | Completed (Verified) |
 | **#18** | Password Cracking: Faculty Vault | Crypto | Hard | @viditd1-eng | `challenges/password_cracking/` | Completed (Verified) |
-| **#31** | Safe Exam Browser (SEB) Reversing | Reversing | Hard | @viditd1-eng | `challenges/seb_binary/` | Scaffolding (Track #7 / Issue #31) |
+| **#31** | Safe Exam Browser (SEB) Reversing | Reversing | Hard | @C00LVansh | `challenges/seb_binary/` | Scaffolding (Windows PE64 / Issue #31) |
 | **#20** | DNS / Wi-Fi Logs: 2:13 AM Auto-Sync | Network | Medium | @VP1107 | `challenges/wifi_dns_logs/` | Completed (Verified) |
 | **#21** | Ransomware Infected: Web Shell PCAP | Network | Medium | @VP1107 | `challenges/ransomware_pcap/` | Completed (Verified) |
 | **#22** | Deleted but Not Gone: Erased Exam Draft | Forensics | Easy | @VP1107 | `challenges/deleted_evidence/` | Completed (Verified) |
