@@ -97,14 +97,14 @@ Projected on the main screens in Labs 207 & 208, the Spin Wheel introduces inter
 
 | Segment Name | Probability Weight | Visual Icon | In-Game Effect | Risk / Reward Level |
 | :--- | :---: | :---: | :--- | :--- |
-| **Hot Sauce Shot** | 20% | 🌶️ | One teammate eats 1 spoonful of hot sauce $\rightarrow$ 1 free hint awarded without point penalty. | High Physical / High Reward |
+| **Hot Sauce Shot** | 25% | 🌶️ | One teammate eats 1 spoonful of hot sauce $\rightarrow$ 1 free hint awarded without point penalty. | High Physical / High Reward |
 | **Public Intel Drop** | 15% | 💡 | Host announces a global 1-sentence clue on the projector screen for all teams. | Neutral / Cooperative |
 | **5-Min Speed Window** | 15% | ⚡ | If the spinning team solves any challenge in the next 5 mins, they receive +50 bonus points. | High Urgency Reward |
 | **2-Min Keyboard Freeze** | 10% | 🛑 | The entire spinning team must step back from computers for 120 seconds. | Mild Penalty |
-| **Eliminate a Decoy** | 15% | 🎭 | Host publicly eliminates one innocent suspect profile from the case board. | Pure Benefit |
+| **Eliminate a Decoy** | 1% | 🎭 | Host publicly eliminates one innocent suspect profile from the case board (Rare golden outcome). | Legendary Benefit |
 | **Teammate Role Swap** | 10% | 🔄 | Teammates must swap seats and workstations for the next 10 minutes. | Chaotic Fun |
-| **Sweet Relief** | 10% | 🍬 | A bowl of chocolates/candy delivered to the team's workstation. | Morale Booster |
-| **Sound the Alarm** | 5% | 🚨 | Lab PA system sounds an intrusion alarm for 5 seconds. | Atmospheric Chaos |
+| **Sweet Relief** | 14% | 🍬 | A bowl of chocolates/candy delivered to the team's workstation. | Morale Booster |
+| **Sound the Alarm** | 10% | 🚨 | Lab PA system sounds an intrusion alarm for 5 seconds. | Atmospheric Chaos |
 
 ### B. Hot Sauce Lifelines Protocol
 1. **Stationing:** A designated "Hot Sauce Station" is supervised by floor volunteers equipped with paper towels, water cups, spoons, and certified mild-to-medium hot sauce (approx. 5,000–10,000 Scoville Heat Units, e.g., Jalapeño/Sriracha blend — completely safe for consumption).

@@ -17,7 +17,7 @@
       {
         id: "hot_sauce",
         name: "Hot Sauce Shot",
-        weight: 20,
+        weight: 25,
         icon: "🌶️",
         color: "#dc2626",
         textColor: "#ffffff",
@@ -57,7 +57,7 @@
       {
         id: "eliminate_decoy",
         name: "Eliminate a Decoy",
-        weight: 15,
+        weight: 1,
         icon: "🎭",
         color: "#7c3aed",
         textColor: "#ffffff",
@@ -77,7 +77,7 @@
       {
         id: "sweet_relief",
         name: "Sweet Relief",
-        weight: 10,
+        weight: 14,
         icon: "🍬",
         color: "#059669",
         textColor: "#ffffff",
@@ -87,7 +87,7 @@
       {
         id: "sound_alarm",
         name: "Sound the Alarm",
-        weight: 5,
+        weight: 10,
         icon: "🚨",
         color: "#ea580c",
         textColor: "#ffffff",
