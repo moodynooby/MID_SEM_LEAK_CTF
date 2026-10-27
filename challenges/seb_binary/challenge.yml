@@ -1,0 +1,43 @@
+name: "Safe Exam Browser (SEB): Windows Kiosk Lockdown Reversing"
+author: "Vansh Shah (@C00LVansh)"
+category: "Reverse Engineering"
+description: |
+  **Case File Briefing:**
+  Digital forensics investigators extracted a suspicious binary from the GICT Labs staging server (`\\GICT-SRV01\ExamSoft\`). The file, `SEB_KioskGuard.exe`, was planted by TA Piyush Pelaiya disguised as a legitimate Safe Exam Browser kiosk lockdown client.
+
+  This rogue binary contains a covert exam bypass routine protected by multiple anti-debugging layers, process blacklisting, self-integrity checksumming, and encrypted configuration keys.
+
+  Reverse-engineer the binary to extract the embedded proof-of-compromise flag.
+
+  **WARNING:** Naively patching conditional jumps will corrupt the decrypted flag due to the self-integrity checksum trap!
+
+  **Flag Format:** `case{...}`
+
+value: 500
+type: dynamic
+extra:
+  initial: 500
+  decay: 15
+  minimum: 100
+
+flags:
+  - case{seb_win_pe_lockdown_integrity_bypassed}
+
+tags:
+  - reverse_engineering
+  - windows_pe
+  - anti_debug
+  - hard
+  - story_act_2
+
+hints:
+  - content: "Notice how the decryption routine incorporates the checksum of the .text section into the key schedule. Naively flipping conditional jumps will corrupt the decrypted flag!"
+    cost: 50
+  - content: "You don't need to run the binary on Windows to solve it — reverse the rolling XOR / S-box key expansion in Ghidra and extract the ciphertext directly with a Python script."
+    cost: 75
+
+files:
+  - files/SEB_KioskGuard.exe
+
+state: visible
+version: "1.0"

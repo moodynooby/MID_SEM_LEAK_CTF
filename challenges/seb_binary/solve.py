@@ -1,0 +1,148 @@
+#!/usr/bin/env python3
+"""
+solve.py — Automated static solver for SEB_KioskGuard.exe
+
+Extracts the encrypted flag from the PE binary and decrypts it
+using the .text section FNV-1a hash in the key schedule.
+No Windows environment needed — pure Python PE parsing.
+
+Exit code 0 = flag verified, 1 = failure.
+"""
+
+import struct
+import sys
+import os
+
+EXPECTED_FLAG = b"case{seb_win_pe_lockdown_integrity_bypassed}"
+FLAG_LEN = 44
+
+K_BASE = bytes([
+    0xDE, 0xAD, 0xBE, 0xEF, 0xCA, 0xFE, 0xBA, 0xBE,
+    0x13, 0x37, 0x42, 0x00, 0xF0, 0x0D, 0xC0, 0xDE
+])
+
+SBOX = [
+    0x63,0x7c,0x77,0x7b,0xf2,0x6b,0x6f,0xc5,0x30,0x01,0x67,0x2b,0xfe,0xd7,0xab,0x76,
+    0xca,0x82,0xc9,0x7d,0xfa,0x59,0x47,0xf0,0xad,0xd4,0xa2,0xaf,0x9c,0xa4,0x72,0xc0,
+    0xb7,0xfd,0x93,0x26,0x36,0x3f,0xf7,0xcc,0x34,0xa5,0xe5,0xf1,0x71,0xd8,0x31,0x15,
+    0x04,0xc7,0x23,0xc3,0x18,0x96,0x05,0x9a,0x07,0x12,0x80,0xe2,0xeb,0x27,0xb2,0x75,
+    0x09,0x83,0x2c,0x1a,0x1b,0x6e,0x5a,0xa0,0x52,0x3b,0xd6,0xb3,0x29,0xe3,0x2f,0x84,
+    0x53,0xd1,0x00,0xed,0x20,0xfc,0xb1,0x5b,0x6a,0xcb,0xbe,0x39,0x4a,0x4c,0x58,0xcf,
+    0xd0,0xef,0xaa,0xfb,0x43,0x4d,0x33,0x85,0x45,0xf9,0x02,0x7f,0x50,0x3c,0x9f,0xa8,
+    0x51,0xa3,0x40,0x8f,0x92,0x9d,0x38,0xf5,0xbc,0xb6,0xda,0x21,0x10,0xff,0xf3,0xd2,
+    0xcd,0x0c,0x13,0xec,0x5f,0x97,0x44,0x17,0xc4,0xa7,0x7e,0x3d,0x64,0x5d,0x19,0x73,
+    0x60,0x81,0x4f,0xdc,0x22,0x2a,0x90,0x88,0x46,0xee,0xb8,0x14,0xde,0x5e,0x0b,0xdb,
+    0xe0,0x32,0x3a,0x0a,0x49,0x06,0x24,0x5c,0xc2,0xd3,0xac,0x62,0x91,0x95,0xe4,0x79,
+    0xe7,0xc8,0x37,0x6d,0x8d,0xd5,0x4e,0xa9,0x6c,0x56,0xf4,0xea,0x65,0x7a,0xae,0x08,
+    0xba,0x78,0x25,0x2e,0x1c,0xa6,0xb4,0xc6,0xe8,0xdd,0x74,0x1f,0x4b,0xbd,0x8b,0x8a,
+    0x70,0x3e,0xb5,0x66,0x48,0x03,0xf6,0x0e,0x61,0x35,0x57,0xb9,0x86,0xc1,0x1d,0x9e,
+    0xe1,0xf8,0x98,0x11,0x69,0xd9,0x8e,0x94,0x9b,0x1e,0x87,0xe9,0xce,0x55,0x28,0xdf,
+    0x8c,0xa1,0x89,0x0d,0xbf,0xe6,0x42,0x68,0x41,0x99,0x2d,0x0f,0xb0,0x54,0xbb,0x16,
+]
+
+
+def parse_pe_sections(data):
+    """Parse PE and return section dict: name -> (file_offset, raw_size)."""
+    assert data[:2] == b"MZ", "Not a PE file"
+    e_lfanew = struct.unpack_from("<I", data, 0x3C)[0]
+    assert data[e_lfanew:e_lfanew+4] == b"PE\x00\x00"
+    num_sec = struct.unpack_from("<H", data, e_lfanew + 6)[0]
+    opt_sz = struct.unpack_from("<H", data, e_lfanew + 20)[0]
+    sec_start = e_lfanew + 24 + opt_sz
+    sections = {}
+    for i in range(num_sec):
+        off = sec_start + i * 40
+        name = data[off:off+8].rstrip(b"\x00").decode("ascii", errors="replace")
+        raw_size = struct.unpack_from("<I", data, off + 16)[0]
+        raw_ptr = struct.unpack_from("<I", data, off + 20)[0]
+        sections[name] = (raw_ptr, raw_size)
+    return sections
+
+
+def fnv1a_32(data_bytes):
+    """FNV-1a 32-bit hash."""
+    h = 0x811c9dc5
+    for b in data_bytes:
+        h ^= b
+        h = (h * 0x01000193) & 0xFFFFFFFF
+    return h
+
+
+def find_ciphertext(data, sections):
+    """
+    Locate the 44-byte ciphertext in .rdata.
+    Strategy: it's the 44 bytes adjacent to the expected hash (which we
+    can find by computing what the hash should be from .text).
+    Fallback: scan .rdata for a 44-byte sequence that, when decrypted
+    with the known hash, produces printable ASCII starting with 'case{'.
+    """
+    text_off, text_size = sections[".text"]
+    h_text = fnv1a_32(data[text_off:text_off + text_size])
+
+    rdata_name = ".rdata" if ".rdata" in sections else ".data"
+    rdata_off, rdata_size = sections[rdata_name]
+    rdata = data[rdata_off:rdata_off + rdata_size]
+
+    # Scan .rdata for any 44-byte window that decrypts to the flag format
+    for i in range(len(rdata) - FLAG_LEN + 1):
+        candidate = rdata[i:i + FLAG_LEN]
+        plaintext = decrypt(candidate, h_text)
+        if plaintext[:5] == b"case{" and plaintext[-1:] == b"}":
+            if all(32 <= b < 127 for b in plaintext):
+                return candidate, h_text
+    return None, h_text
+
+
+def decrypt(ct_bytes, h_text):
+    """Reverse the encryption: plain[i] = (ct[i] - SBOX[(i*7)%256]) ^ K_BASE[(i+h_text)%16]"""
+    pt = bytearray(len(ct_bytes))
+    for i in range(len(ct_bytes)):
+        step1 = (ct_bytes[i] - SBOX[(i * 7) % 256]) & 0xFF
+        step2 = step1 ^ K_BASE[(i + h_text) % 16]
+        pt[i] = step2
+    return bytes(pt)
+
+
+def main():
+    exe_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                            "files", "SEB_KioskGuard.exe")
+    if len(sys.argv) > 1:
+        exe_path = sys.argv[1]
+
+    print(f"[*] Loading: {exe_path}")
+    with open(exe_path, "rb") as f:
+        data = f.read()
+
+    print(f"[*] Size: {len(data)} bytes")
+
+    sections = parse_pe_sections(data)
+    for name, (off, sz) in sections.items():
+        print(f"    {name:8s}  offset=0x{off:04x}  size={sz}")
+
+    # Compute .text FNV-1a hash
+    text_off, text_size = sections[".text"]
+    h_text = fnv1a_32(data[text_off:text_off + text_size])
+    print(f"\n[*] .text FNV-1a hash: 0x{h_text:08x}")
+
+    # Find and decrypt
+    print("[*] Scanning .rdata for encrypted flag...")
+    ct, h = find_ciphertext(data, sections)
+
+    if ct is None:
+        print("[-] Could not locate ciphertext!")
+        sys.exit(1)
+
+    flag = decrypt(ct, h)
+    print(f"[+] Ciphertext: {ct.hex()}")
+    print(f"[+] Decrypted flag: {flag.decode()}")
+
+    if flag == EXPECTED_FLAG:
+        print("[+] FLAG VERIFIED!")
+        sys.exit(0)
+    else:
+        print(f"[-] Flag mismatch! Expected: {EXPECTED_FLAG.decode()}")
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()

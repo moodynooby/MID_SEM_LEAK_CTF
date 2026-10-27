@@ -18,7 +18,7 @@ Welcome challenge authors and testers! Every challenge in this CTF is an evidenc
 | **Web & AI** | [PHP2SHELL: Insecure Faculty Upload](php2shell/) | Web | Hard (500) | File upload filter bypass to web shell execution. |
 | **Reversing** | [APK Reverse Engineer: Companion App](apk_companion_reversing/) | Mobile / Rev | Medium (300-400) | Decompiling campus Android app in JADX. |
 | **Crypto** | [Password Cracking: Faculty Vault](password_cracking/) | Crypto | Hard (500) | Cracking encrypted archive using custom campus wordlist. |
-| **Reversing** | Safe Exam Browser (SEB): Windows Kiosk Reversing | Reverse Eng | Hard (500) | Reversing stripped Windows PE64 lockdown binary (`SEB_KioskGuard.exe`) in Ghidra. |
+| **Reversing** | [Safe Exam Browser (SEB): Windows Kiosk Reversing](seb_binary/) | Reverse Eng | Hard (500) | Reversing stripped Windows PE64 lockdown binary (`SEB_KioskGuard.exe`) with 4-tier anti-debug & self-integrity checksum trap. |
 | **Network** | [DNS / Wi-Fi Logs: 2:13 AM Auto-Sync](wifi_dns_logs/) | Network | Medium (300-400) | Aruba Wi-Fi log revealing professor midnight cloud sync. |
 | **Network** | [Ransomware Infected: Backdoor PCAP](ransomware_pcap/) | Network | Medium (300-400) | Isolate malicious HTTP POST traffic & extract webshell key. |
 | **Forensics** | [Deleted but Not Gone: Erased Draft](deleted_evidence/) | Forensics | Easy (100-200) | Inode / commit recovery of erased exam paper draft. |
