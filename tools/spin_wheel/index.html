@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mid-Sem Leak — Big-Screen Projector Spin Wheel</title>
+  <link rel="stylesheet" href="wheel.css" />
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="header-bar">
+    <div class="brand-title">
+      <span class="brand-badge">Live Ops</span>
+      <span class="brand-name">🎡 Case File: The Mid-Sem Leak — Projector Wheel</span>
+    </div>
+
+    <nav class="nav-links">
+      <button id="open-hotsauce-btn" class="nav-btn">🌶️ Hot Sauce Station</button>
+      <button id="open-config-btn" class="nav-btn">⚙️ Configure Wheel</button>
+      <button id="mute-btn" class="nav-btn">🔊 Audio: ON</button>
+      <button id="fullscreen-btn" class="nav-btn">⛶ Fullscreen</button>
+      <a href="/av-console/countdown.html" class="nav-btn">⏱️ Countdown</a>
+      <a href="/av-console/soundboard.html" class="nav-btn">🔊 Soundboard</a>
+      <a href="/av-console/siren.html" class="nav-btn" style="border-color: var(--accent-red); color: var(--accent-red);">🚨 Siren Monitor</a>
+    </nav>
+  </header>
+
+  <!-- Main Stage -->
+  <main class="main-stage">
+    
+    <!-- Left: Canvas Wheel Stage -->
+    <section class="wheel-container">
+      <div class="canvas-wrapper">
+        
+        <!-- Glowing Needle / Ticker at Top -->
+        <div id="wheel-pointer" class="wheel-pointer">
+          <svg viewBox="0 0 32 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 44L2 12C-1.5 5 3.5 0 11 0H21C28.5 0 33.5 5 30 12L16 44Z" fill="#ef4444" stroke="#ffffff" stroke-width="2.5" />
+            <circle cx="16" cy="12" r="5" fill="#ffffff" />
+          </svg>
+        </div>
+
+        <!-- HTML5 Canvas -->
+        <canvas id="wheel-canvas" width="620" height="620"></canvas>
+
+        <!-- Center Hub Spin Button -->
+        <div id="center-hub" class="center-hub" title="Click or Press Space to Spin">
+          <span>SPIN</span>
+          <small>PRESS SPACE</small>
+        </div>
+
+      </div>
+
+      <!-- Quick Action Buttons -->
+      <div class="wheel-quick-actions">
+        <button id="spin-btn" class="action-btn spin-large">
+          <span>🎡 Trigger Spin</span>
+          <kbd style="background: rgba(0,0,0,0.3); padding: 0.1rem 0.4rem; border-radius: 4px; font-size: 0.75rem;">SPACE</kbd>
+        </button>
+      </div>
+    </section>
+
+    <!-- Right: Sidebar Operations Dashboard -->
+    <aside class="sidebar-panel">
+      
+      <!-- Target Team Selection Card -->
+      <div class="control-card">
+        <div class="card-title">
+          <span>🎯 Active Target Team</span>
+        </div>
+        <div class="form-group">
+          <label for="team-select">Select team for current spin cycle:</label>
+          <select id="team-select" class="form-select"></select>
+        </div>
+        <div style="font-size: 0.8rem; color: var(--text-muted);">
+          Outcome will be assigned to this workstation on the live scoreboard.
+        </div>
+      </div>
+
+      <!-- Live Spin History Card -->
+      <div class="control-card" style="flex: 1;">
+        <div class="card-title">
+          <span>📜 Spin History & Audit</span>
+        </div>
+        <ul id="history-list" class="history-list">
+          <li class="history-item"><span style="color:var(--text-muted)">No spins recorded yet.</span></li>
+        </ul>
+      </div>
+
+      <!-- Segment Quick Legend Card -->
+      <div class="control-card">
+        <div class="card-title">
+          <span>⚖️ Live Segments & Probabilities</span>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; font-size: 0.75rem;">
+          <div>🌶️ Hot Sauce (20%)</div>
+          <div>💡 Intel Drop (15%)</div>
+          <div>⚡ 5-Min Speed (15%)</div>
+          <div>🛑 Keyboard Freeze (10%)</div>
+          <div>🎭 Eliminate Decoy (15%)</div>
+          <div>🔄 Role Swap (10%)</div>
+          <div>🍬 Sweet Relief (10%)</div>
+          <div>🚨 Alarm Siren (5%)</div>
+        </div>
+      </div>
+
+    </aside>
+  </main>
+
+  <!-- Keyboard Hint Footer -->
+  <footer class="keyboard-bar">
+    Shortcuts: <kbd>SPACE</kbd> Spin &nbsp;|&nbsp; <kbd>R</kbd> Reset / Dismiss &nbsp;|&nbsp; <kbd>M</kbd> Mute &nbsp;|&nbsp; <kbd>F</kbd> Fullscreen Projector
+  </footer>
+
+  <!-- Modal 1: Winner Announcement Banner -->
+  <div id="winner-modal" class="modal-backdrop">
+    <div class="winner-card">
+      <div id="winner-icon" class="winner-icon">🎉</div>
+      <div id="winner-title" class="winner-title">Outcome</div>
+      <div id="winner-team" class="winner-team">Station 1</div>
+      <div id="winner-description" class="winner-description">Description of action</div>
+      <div class="winner-actions">
+        <button id="close-winner-btn" class="action-btn" style="background: var(--accent-cyan); color: #05070d; font-weight: 700;">
+          Dismiss / Continue (<kbd style="font-size: 0.8rem;">R</kbd>)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2: Configuration & Probability Editor -->
+  <div id="config-modal" class="modal-backdrop">
+    <div class="settings-modal">
+      <div class="modal-header">
+        <h2>⚙️ Configure Wheel Segments & Durations</h2>
+        <button id="close-config-btn" class="close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group" style="margin-bottom: 1.25rem;">
+          <label for="cfg-duration">Spin Animation Duration (seconds):</label>
+          <input type="number" id="cfg-duration" class="form-input" style="width: 120px;" min="2" max="15" value="6">
+        </div>
+        <label>Segments, Icons, Probabilities (% Weight), Colors, and Descriptions:</label>
+        <table class="segments-table">
+          <thead>
+            <tr>
+              <th style="width: 50px;">Icon</th>
+              <th>Name</th>
+              <th style="width: 80px;">Weight</th>
+              <th style="width: 60px;">Color</th>
+              <th>Description / Rules</th>
+            </tr>
+          </thead>
+          <tbody id="config-segments-body"></tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button id="reset-config-btn" class="action-btn" style="border-color: var(--accent-red); color: var(--accent-red);">Reset Defaults</button>
+        <button id="save-config-btn" class="action-btn" style="background: var(--accent-green); color: #000000; font-weight: 700;">Save & Apply</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 3: Hot Sauce Roulette & Safety Protocols -->
+  <div id="hotsauce-modal" class="modal-backdrop">
+    <div class="settings-modal">
+      <div class="modal-header">
+        <h2>🌶️ Hot Sauce Roulette Station & Hint Lifelines</h2>
+        <button id="close-hotsauce-btn" class="close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="background: rgba(239, 68, 68, 0.15); border: 1px solid var(--accent-red); padding: 1rem; border-radius: 8px; margin-bottom: 1.25rem;">
+          <h3 style="color: var(--accent-red); font-size: 1rem; margin-bottom: 0.5rem;">⚠️ Safety & Volunteer Protocols</h3>
+          <ul style="font-size: 0.85rem; line-height: 1.6; padding-left: 1.2rem; color: var(--text-main);">
+            <li><strong>Sanitary Station:</strong> Single-use wooden spoons, paper napkins, water cups, and cold whole milk / yogurt ready at Lab 207 front desk.</li>
+            <li><strong>Food Safety:</strong> Commercial mild-to-medium hot sauce (5,000–10,000 SHU).</li>
+            <li><strong>Allergy & Medical Alternative:</strong> Opt-in only. Wasabi peas or ultra-sour candy for participants with dietary restrictions.</li>
+            <li><strong>Reward Rule:</strong> Verified consumption unlocks 1 requested challenge hint docket with <strong>0 point deduction</strong>.</li>
+          </ul>
+        </div>
+
+        <h3 style="font-size: 0.95rem; color: var(--accent-cyan); margin-bottom: 0.75rem;">Award Unpenalized Hint Docket</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 0.75rem; align-items: flex-end; margin-bottom: 1.5rem;">
+          <div>
+            <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.35rem;">Team:</label>
+            <select id="hs-team-select" class="form-select"></select>
+          </div>
+          <div>
+            <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.35rem;">Challenge Name:</label>
+            <input type="text" id="hs-challenge-input" class="form-input" placeholder="e.g. WiFi DNS Logs or AI Proctor">
+          </div>
+          <button id="hs-award-btn" class="action-btn" style="background: var(--accent-red); color: #ffffff; font-weight: 700; height: 42px;">
+            🌶️ Record Lifeline
+          </button>
+        </div>
+
+        <h3 style="font-size: 0.95rem; color: var(--accent-cyan); margin-bottom: 0.5rem;">Awarded Hot Sauce Lifelines Log</h3>
+        <ul id="hs-history-list" class="history-list" style="max-height: 180px;">
+          <li class="history-item"><span style="color:var(--text-muted)">No hot sauce lifelines claimed yet.</span></li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button id="close-hotsauce-footer-btn" class="action-btn" onclick="document.getElementById('hotsauce-modal').classList.remove('show');">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="wheel.js"></script>
+</body>
+</html>

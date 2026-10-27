@@ -1,0 +1,11 @@
+{
+  "active": true,
+  "team_id": 4,
+  "team_name": "Station 2 - CipherSquad",
+  "reason": "AI Proctor Honeyflag Trapped",
+  "lockout_seconds": 120,
+  "triggered_at": 1793090538,
+  "expires_at": 1793090658,
+  "alert_message": "\ud83d\udea8 [TEST SIMULATION] INTRUSION DETECTED: Station 2 - CipherSquad trapped in honeypot!",
+  "sound_siren": true
+}

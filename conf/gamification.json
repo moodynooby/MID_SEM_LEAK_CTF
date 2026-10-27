@@ -1,0 +1,183 @@
+{
+  "spin_wheel": {
+    "title": "GICT Live Projector Spin Wheel",
+    "spin_duration_ms": 6000,
+    "min_rotations": 5,
+    "max_rotations": 8,
+    "audio_enabled": true,
+    "segments": [
+      {
+        "id": "hot_sauce",
+        "name": "Hot Sauce Shot",
+        "weight": 20,
+        "icon": "🌶️",
+        "color": "#ef4444",
+        "textColor": "#ffffff",
+        "description": "One teammate eats 1 spoonful of hot sauce ➔ 1 free unpenalized hint docket awarded from Tech Leads.",
+        "type": "physical_challenge"
+      },
+      {
+        "id": "public_intel",
+        "name": "Public Intel Drop",
+        "weight": 15,
+        "icon": "💡",
+        "color": "#3b82f6",
+        "textColor": "#ffffff",
+        "description": "Host broadcasts an overarching 1-sentence clue on the projector screen for all teams.",
+        "type": "cooperative"
+      },
+      {
+        "id": "speed_window",
+        "name": "5-Min Speed Window",
+        "weight": 15,
+        "icon": "⚡",
+        "color": "#eab308",
+        "textColor": "#000000",
+        "description": "If the spinning team solves any challenge within the next 5 minutes, they earn +50 bonus points.",
+        "type": "bonus"
+      },
+      {
+        "id": "keyboard_freeze",
+        "name": "2-Min Keyboard Freeze",
+        "weight": 10,
+        "icon": "🛑",
+        "color": "#dc2626",
+        "textColor": "#ffffff",
+        "description": "The entire spinning team must step back from computers for 120 seconds.",
+        "type": "penalty"
+      },
+      {
+        "id": "eliminate_decoy",
+        "name": "Eliminate a Decoy",
+        "weight": 15,
+        "icon": "🎭",
+        "color": "#8b5cf6",
+        "textColor": "#ffffff",
+        "description": "Host publicly eliminates one innocent suspect profile from the case dossier board.",
+        "type": "intel"
+      },
+      {
+        "id": "teammate_swap",
+        "name": "Teammate Role Swap",
+        "weight": 10,
+        "icon": "🔄",
+        "color": "#06b6d4",
+        "textColor": "#000000",
+        "description": "Teammates swap seats and workstations for the next 10 minutes.",
+        "type": "chaotic"
+      },
+      {
+        "id": "sweet_relief",
+        "name": "Sweet Relief",
+        "weight": 10,
+        "icon": "🍬",
+        "color": "#10b981",
+        "textColor": "#ffffff",
+        "description": "A bowl of chocolates / candy delivered directly to the team's workstation.",
+        "type": "reward"
+      },
+      {
+        "id": "sound_alarm",
+        "name": "Sound the Alarm",
+        "weight": 5,
+        "icon": "🚨",
+        "color": "#f97316",
+        "textColor": "#ffffff",
+        "description": "Lab PA system sounds the intrusion alarm siren for 5 seconds.",
+        "type": "chaos"
+      }
+    ]
+  },
+  "hot_sauce_roulette": {
+    "enabled": true,
+    "scoville_rating": "5,000 - 10,000 SHU (Sriracha / Mild Tabasco)",
+    "safe_alternatives": ["Wasabi Peas", "Ultra-Sour Candy"],
+    "active_windows": ["4:45 PM", "5:00 PM"],
+    "station_location": "Front table of Lab 207",
+    "require_volunteer_verification": true,
+    "award_free_hint": true,
+    "zero_point_penalty": true
+  },
+  "intrusion_punishments": {
+    "enabled": true,
+    "fails_threshold": 5,
+    "fails_lockout_seconds": 60,
+    "decoy_lockout_seconds": 120,
+    "point_deduction_on_decoy": 0,
+    "sound_siren": true,
+    "siren_duration_seconds": 5,
+    "broadcast_to_ctfd": true,
+    "decoy_flags": [
+      {
+        "flag": "case{proctor_emergency_override_lockout_token}",
+        "name": "AI Proctor Bot Honeyflag",
+        "lockout_seconds": 120,
+        "penalty_points": 0,
+        "alert_message": "🚨 HONEYPOT TRAP TRIGGERED: Proctor Bot emergency token entered!"
+      },
+      {
+        "flag": "case{decoy_plaintext_login_honeyflag}",
+        "name": "PCAP Plaintext Login Decoy",
+        "lockout_seconds": 120,
+        "penalty_points": 0,
+        "alert_message": "🚨 HONEYPOT TRAP TRIGGERED: Plaintext PCAP login decoy entered!"
+      },
+      {
+        "flag": "case{decoy_telemetry_post_pcap}",
+        "name": "PCAP Telemetry Decoy",
+        "lockout_seconds": 120,
+        "penalty_points": 0,
+        "alert_message": "🚨 HONEYPOT TRAP TRIGGERED: Telemetry beacon honeyflag entered!"
+      },
+      {
+        "flag": "case{decoy_student_mac_address}",
+        "name": "Wi-Fi DHCP MAC Decoy",
+        "lockout_seconds": 120,
+        "penalty_points": 0,
+        "alert_message": "🚨 HONEYPOT TRAP TRIGGERED: Wi-Fi DHCP spoofed MAC decoy entered!"
+      },
+      {
+        "flag": "case{sansh_vhah_library_ap_decoy}",
+        "name": "Wi-Fi Library AP Decoy",
+        "lockout_seconds": 120,
+        "penalty_points": 0,
+        "alert_message": "🚨 HONEYPOT TRAP TRIGGERED: Sansh Vhah innocent alibi decoy entered!"
+      },
+      {
+        "flag": "case{staging_lab207_workstation_setup_key}",
+        "name": "CheatSheet Staging Comment Decoy",
+        "lockout_seconds": 120,
+        "penalty_points": 0,
+        "alert_message": "🚨 HONEYPOT TRAP TRIGGERED: Staging workstation setup decoy entered!"
+      },
+      {
+        "flag": "case{decoy_superficial_lead_check_source}",
+        "name": "CheatSheet Superficial Lead Decoy",
+        "lockout_seconds": 120,
+        "penalty_points": 0,
+        "alert_message": "🚨 HONEYPOT TRAP TRIGGERED: Superficial lead honeyflag entered!"
+      },
+      {
+        "flag": "case{decoy_git_log_superficial_commit}",
+        "name": "Git Commit Red Herring Decoy",
+        "lockout_seconds": 120,
+        "penalty_points": 0,
+        "alert_message": "🚨 HONEYPOT TRAP TRIGGERED: Superficial Git commit red herring entered!"
+      },
+      {
+        "flag": "case{decoy_superficial_html_comment}",
+        "name": "HTML Comment Red Herring Decoy",
+        "lockout_seconds": 120,
+        "penalty_points": 0,
+        "alert_message": "🚨 HONEYPOT TRAP TRIGGERED: HTML Comment red herring entered!"
+      },
+      {
+        "flag": "case{nice_try_blind_ai_wifi_grep}",
+        "name": "Blind AI Wi-Fi Scraper Trap",
+        "lockout_seconds": 120,
+        "penalty_points": 0,
+        "alert_message": "🚨 HONEYPOT TRAP TRIGGERED: Blind AI scraping pattern trapped!"
+      }
+    ]
+  }
+}

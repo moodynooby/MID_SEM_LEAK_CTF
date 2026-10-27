@@ -384,6 +384,35 @@ def cmd_setup():
     cmd_theme()
     console.print("[bold green][+] CTFd stack fully configured, challenges seeded, and themes bound![/bold green]")
 
+def cmd_wheel():
+    """Display and launch Big-Screen Projector Spin Wheel."""
+    lan_ip = detect_lan_ip()
+    port = os.getenv("HOST_PORT", "80")
+    wheel_url = f"http://{lan_ip}:{port}/spin-wheel/"
+    local_url = f"http://localhost:{port}/spin-wheel/"
+    file_path = ROOT_DIR / "tools" / "spin_wheel" / "index.html"
+
+    table = Table(title="Interactive Projector Spin Wheel (Issue #25)", style="bold cyan")
+    table.add_column("Display Mode", style="cyan")
+    table.add_column("Location / URL", style="bold white")
+    table.add_row("Lab Projector LAN URL", wheel_url)
+    table.add_row("Local Browser URL", local_url)
+    table.add_row("Standalone File", str(file_path))
+    console.print(table)
+    console.print("[green][+] Controls:[/green] [white]SPACE = Spin | R = Reset | M = Mute | F = Fullscreen[/white]")
+
+def cmd_siren(once=False, test_team=None, reason=None):
+    """Run real-time intrusion & decoy honeyflag monitor or trigger test alert."""
+    script = ROOT_DIR / "ops" / "siren_alert" / "monitor.py"
+    cmd = [sys.executable, str(script)]
+    if test_team:
+        cmd.extend(["--test", test_team])
+        if reason:
+            cmd.extend(["--reason", reason])
+    elif once:
+        cmd.append("--once")
+    subprocess.run(cmd, cwd=str(ROOT_DIR))
+
 def main():
     parser = argparse.ArgumentParser(
         description="IEEE AUSB Multiplatform CTF Manager",
@@ -425,6 +454,12 @@ def main():
 
     subparsers.add_parser("setup", help="One-shot full setup: configure DB, seed challenges, apply themes")
     subparsers.add_parser("ollama", help="Ensure local Ollama service and neural LLM model are ready")
+    subparsers.add_parser("wheel", aliases=["spin"], help="Display Big-Screen Projector Spin Wheel URLs and controls")
+
+    siren_p = subparsers.add_parser("siren", aliases=["monitor"], help="Run live intrusion & decoy honeyflag monitor daemon, or test alert")
+    siren_p.add_argument("--once", action="store_true", help="Run single audit pass and exit")
+    siren_p.add_argument("--test", nargs="?", const="Station 4 - HashCrashers", help="Trigger test siren alert for station")
+    siren_p.add_argument("--reason", default="Decoy Honeyflag Triggered", help="Reason string for test alert")
 
     args = parser.parse_args()
 
@@ -450,6 +485,10 @@ def main():
         cmd_theme()
     elif args.command == "seed":
         cmd_seed()
+    elif args.command in ["wheel", "spin"]:
+        cmd_wheel()
+    elif args.command in ["siren", "monitor"]:
+        cmd_siren(once=args.once, test_team=args.test, reason=args.reason)
     elif args.command in ["import", "import-participants"]:
         cmd_import(
             csv_path=args.csv,

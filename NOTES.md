@@ -154,19 +154,16 @@ At 5:15 PM (15 minutes before the competition ends), the live scoreboard is plac
 
 ---
 
-## 5. Audio-Visual Soundboard Design & Cue Timing ([ops/soundboard/](ops/soundboard/))
+## 5. Audio-Visual Soundboard Design, Projector Wheel & Intrusion Siren ([av-console/](av-console/), [tools/spin_wheel/](tools/spin_wheel/), [ops/siren_alert/](ops/siren_alert/))
 
-The competition room experience relies on synchronized acoustic triggers delivered over the AU Lab PA / HDMI audio system:
-- **4:30 PM (Kickoff):** `01_start_fanfare.mp3` — Heavy sub-bass drop and cyber fanfare to establish urgency.
-- **4:35 PM (Vanishing Challenge):** `02_radar_ping.mp3` — Sonar sweep and ticking clock to emphasize time sensitivity.
-- **4:45 PM & 5:00 PM (Spin Wheel Lifeline):** `03_wheel_spin.mp3` — Mechanical clicking wheel followed by celebratory chime or buzzer.
-- **4:50 PM (Vanishing Challenge Purge):** `04_evidence_purge.mp3` — High-frequency digital vaporize sweep.
-- **5:00 PM (Lightning Round):** `05_lightning_alert.mp3` — Industrial klaxon signaling double point multipliers.
-- **5:15 PM (Scoreboard Blackout):** `06_blackout_glitch.mp3` — Substation transformer power-down glitch.
-- **5:30 PM (Competition Over):** `07_times_up_siren.mp3` — Sustained emergency incident siren.
-- **5:35 PM (Scoreboard Reveal):** `08_reveal_victory.mp3` — Triumphant orchestral resolution.
-- **Dynamic Solves:** `fx_first_blood.mp3` — Sharp metallic chime alerting the lab to first blood.
-- **Dynamic Lockouts:** `fx_intrusion_alarm.mp3` — Red strobe buzzer indicating a 60-second brute-force cooldown.
+The competition room experience relies on synchronized acoustic triggers delivered over the AU Lab PA / HDMI audio system, synthesized entirely on the fly via the HTML5 Web Audio API (zero external audio binary dependencies):
+- **Countdown Clock & Soundboard Console:** Served at `/av-console/countdown.html` and `/av-console/soundboard.html`.
+- **Interactive Projector Spin Wheel (`/spin-wheel/`):** Standalone HTML5 Canvas app with physical rotational deceleration, peg ticker clicks, and 8 mathematically weighted segments configured via `conf/gamification.json`.
+- **Hot Sauce Lifelines Protocol:** Documented in [docs/HOT_SAUCE_ROULETTE.md](docs/HOT_SAUCE_ROULETTE.md). Opt-in spicy challenge (5,000–10,000 SHU) allowing teams to earn 1 free unpenalized hint docket.
+- **Decoy Honeyflag Intrusion Monitor (`ops/siren_alert/monitor.py`):**
+  - Live watcher scanning CTFd `submissions` table in real-time.
+  - Detects known decoy honeyflags (e.g. `case{proctor_emergency_override_lockout_token}`) or 5 consecutive incorrect attempts.
+  - Automatically activates projector lockdown strobe at `/av-console/siren.html` with synchronized emergency siren audio, CTFd notification broadcast, and 120s/60s station lockouts.
 
 ---
 

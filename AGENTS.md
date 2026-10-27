@@ -107,13 +107,15 @@ All 14 challenges must adhere to the 5-step authoring standard defined in [chall
 | `uv run ctf seed` | Seed challenges | Idempotently populates challenges, flags, files, and dynamic scoring |
 | `uv run ctf import [csv]` | Import teams & users | Parses registration Google Forms CSV, seeds CTFd teams & exports credentials dossier |
 | `uv run ctf setup` | Full auto-setup | One-shot stack bootstrap, challenge seeder, theme & API bindings |
+| `uv run ctf wheel` | Launch spin wheel | Displays HTML5/Canvas projector spin wheel URL and controls (`/spin-wheel/`) |
+| `uv run ctf siren` | Intrusion monitor | Real-time decoy honeyflag & bruteforce lockout monitor (`ops/siren_alert/`) |
 
 ---
 
 ## 6. Subsystem References & Pre-Flight Checklist
 - **Live Event Master Dossier & Operations Plan:** See [EVENT.md](EVENT.md).
 - **Live Event Timeline & Ops Playbook (4:30–5:30 PM):** See [docs/TECH_LEAD_RUNBOOK.md](docs/TECH_LEAD_RUNBOOK.md) and [ops/](ops/).
-- **Big-Screen AV Experience:** See [ctfd-theme/](ctfd-theme/) (scoreboard projector styling, applied via `uv run ctf theme`) and [av-console/](av-console/) (countdown clock + sound cue board, served at `/av-console/`).
+- **Big-Screen AV Experience & Gamification:** See [ctfd-theme/](ctfd-theme/), [av-console/](av-console/) (countdown clock, soundboard, siren overlay), [tools/spin_wheel/](tools/spin_wheel/) (interactive wheel), and [docs/HOT_SAUCE_ROULETTE.md](docs/HOT_SAUCE_ROULETTE.md).
 - **Challenge Authoring & Scaffolding:** See [challenges/README.md](challenges/README.md) and template in [challenges/template/](challenges/template/).
 - **Proxy & MariaDB Engine Tuning:** See [conf/nginx/default.conf](conf/nginx/default.conf) and [conf/mysql/my.cnf](conf/mysql/my.cnf).
 - **Handoff Documentation:** See [HANDOFF.md](HANDOFF.md).

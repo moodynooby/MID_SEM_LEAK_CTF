@@ -73,11 +73,15 @@ When started, CTFd will be accessible at:
 ├── conf/
 │   ├── nginx/default.conf          # Nginx proxy (Port 80, SSE websocket streaming, 100MB body)
 │   ├── anubis/botPolicy.yaml       # Anubis anti-bot & Proof-of-Work rules (blocks AI scrapers)
-│   └── mysql/my.cnf                # MariaDB tuning (250 connections, UTF-8 MB4, buffer pools)
+│   ├── mysql/my.cnf                # MariaDB tuning (250 connections, UTF-8 MB4, buffer pools)
+│   └── gamification.json           # Live gamification rules, wheel segments, weights & decoy trap policies
+│
+├── tools/
+│   └── spin_wheel/                 # Big-screen HTML5/Canvas Projector Spin Wheel (Issue #25)
 │
 ├── ctfd-theme/                     # Big-screen /scoreboard styling (applied via `uv run ctf theme`)
 ├── themes/                         # Declaratively mounted CTFd themes (m0xblood dark cyberpunk theme)
-├── av-console/                     # Projector countdown clock & Tech Lead sound cue board
+├── av-console/                     # Projector countdown clock, soundboard & siren alert console
 │
 ├── challenges/                     # Challenge Scaffolding & Active Tracks (Private)
 │   ├── README.md                   # Challenge authoring and solve-testing standard
@@ -89,10 +93,12 @@ When started, CTFd will be accessible at:
 │   ├── freeze_scoreboard.py        # 5:15 PM suspense scoreboard blackout
 │   ├── unfreeze_scoreboard.py      # 5:30 PM closing ceremony scoreboard reveal
 │   ├── manage_timed_events.py      # Interactive console for clue drops and timed rounds
+│   ├── siren_alert/                # Decoy honeyflag trap & intrusion monitor daemon (Issue #16 & #25)
 │   └── requirements.txt            # Python dependencies (requests, python-dotenv, rich)
 │
 └── docs/                           # Documentation, Runbook & Participant Materials
     ├── TECH_LEAD_RUNBOOK.md        # Playbook for setup, dry-run, and event execution
+    ├── HOT_SAUCE_ROULETTE.md       # Volunteer station safety guide & hint lifeline protocols
     └── participant_kit/
         ├── CTF_101_CheatSheet.md   # Printable investigator toolkit for student kits
         ├── Rules_and_Guidelines.md # Fair play, dynamic scoring, first blood, tie-breakers
@@ -139,6 +145,29 @@ Or trigger specific moments directly:
   ```bash
   uv run ctf reveal
   ```
+
+---
+
+## 🎡 Big-Screen Projector Gamification & AV Suite
+
+- **Interactive Projector Spin Wheel (Issue #25):**
+  ```bash
+  uv run ctf wheel
+  ```
+  Accessible on LAN at `http://<LAN_IP>/spin-wheel/` or standalone at `tools/spin_wheel/index.html`. Controls: `Space` = Spin, `R` = Reset, `M` = Mute, `F` = Fullscreen.
+
+- **Intrusion Punishments & Decoy Honeyflag Monitor (Issue #16 & #25):**
+  ```bash
+  # Run live monitor daemon watching CTFd submissions
+  uv run ctf siren
+
+  # Or test projector siren strobe simulation
+  uv run ctf siren --test "Station 4 - HashCrashers"
+  ```
+  Projector alert screen: `http://<LAN_IP>/av-console/siren.html`. All rules, decoy lists, and lockout durations are configurable in [`conf/gamification.json`](conf/gamification.json).
+
+- **Hot Sauce Roulette & Lifelines Guide:**
+  See full protocols and volunteer checklists in [`docs/HOT_SAUCE_ROULETTE.md`](docs/HOT_SAUCE_ROULETTE.md).
 
 ---
 

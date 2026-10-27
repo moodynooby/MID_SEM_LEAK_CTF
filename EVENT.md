@@ -232,9 +232,10 @@ Participants are advised during pre-event communications to have the following t
 ## 7. Interactive Gamification Mechanics & Protocols
 
 ### A. The Big-Screen Projector Spin Wheel
-- **Software Architecture:** Standalone offline HTML5 Canvas + TailwindCSS app running on `192.168.1.102` (`tools/spin_wheel/index.html`).
-- **Display Mode:** Fullscreen on 1080p projectors with high-contrast glowing segment borders and neon ticker needle.
-- **Controls:** `Space` = Trigger Spin; `R` = Reset to initial state; `M` = Toggle Mute.
+- **Software Architecture:** Standalone offline HTML5 Canvas + Tailwind/Cyber CSS app served via Nginx on LAN at `http://<LAN_IP>/spin-wheel/` and located in `tools/spin_wheel/index.html`.
+- **Display Mode:** Optimized for 1080p projectors in fullscreen with high-contrast glowing segment borders and neon ticker needle.
+- **Controls:** `Space` = Trigger Spin; `R` = Reset to initial state; `M` = Toggle Mute; `F` = Fullscreen; `H` = Hot Sauce Station; `C` = Live Configuration Modal.
+- **Configurability:** Fully configurable segments, weights, colors, spin physics, and team lists via `conf/gamification.json` and in-browser interactive settings editor with LocalStorage persistence.
 
 #### Segment Probability & Distribution Table
 
@@ -254,10 +255,20 @@ Participants are advised during pre-event communications to have the following t
 2. **Sauce Specification:** Certified commercial mild-to-medium hot sauce (approx. 5,000–10,000 Scoville Heat Units, e.g. Sriracha or mild Tabasco). Completely food-safe.
 3. **Allergy & Medical Screening:** Purely voluntary opt-in. Participants with gastric sensitivity, spice intolerance, or allergies are provided with ultra-sour candy or spicy wasabi peas as safe alternatives.
 4. **Hint Delivery:** Upon verified consumption by an IEEE volunteer marshal, the Tech Lead enters the team's number into CTFd admin and unlocks their requested hint docket with zero score deduction.
+5. **Reference Manual:** Detailed volunteer operating guidelines and claim tracking are version-controlled in [docs/HOT_SAUCE_ROULETTE.md](docs/HOT_SAUCE_ROULETTE.md).
 
-### C. Intrusion Punishments & Siren Alerts (Anti-Bruteforce)
-- **Automatic Trigger:** If any team submits **5 consecutive incorrect flags**, CTFd enforces an automatic 60-second submission lockout.
-- **AV Reaction:** The projector flashes an intrusion warning banner (`INTRUSION DETECTED: STATION COOLDOWN ACTIVE`) accompanied by a short 3-second audio buzzer.
+### C. Intrusion Punishments & Siren Alerts (Decoy Traps & Anti-Bruteforce)
+- **Real-Time Monitor Daemon:** Managed via `uv run ctf siren` (`ops/siren_alert/monitor.py`).
+- **Decoy Honeyflag Punishment:**
+  - If any team submits a known decoy honeyflag (e.g., `case{proctor_emergency_override_lockout_token}`, `case{decoy_plaintext_login_honeyflag}`, `case{decoy_student_mac_address}`, etc.):
+    - **Station Lockout:** Automatic 120-second submission freeze applied to that team's station.
+    - **AV Intrusion Strobe:** Lab projector instantly switches to full-screen flashing alert at `http://<LAN_IP>/av-console/siren.html`.
+    - **Audio Siren:** 5-second emergency warble siren blares over PA system.
+    - **Global Notification:** CTFd notification dispatched across all participant interfaces: `🚨 HONEYPOT TRAP TRIGGERED: [Team] station cooldown engaged!`.
+    - **Configurable Penalty:** Optional point deduction (default 0 or configurable in `conf/gamification.json`).
+- **Anti-Bruteforce Rate-Limit:**
+  - If any team logs **5 consecutive incorrect flags**, an automatic 60-second cooldown is enforced and flashed on the projector.
+- **Configurability:** All thresholds, lockout durations, decoy flag mappings, and penalty points are version-controlled in [conf/gamification.json](conf/gamification.json).
 
 ---
 
