@@ -33,11 +33,12 @@ services:
     restart: unless-stopped
     ports:
       - "${HOST_PORT:-80}:80"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     volumes:
       - ./conf/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
       - ctfd_data:/var/uploads:ro
       - ./av-console:/usr/share/nginx/av-console:ro
-      - ./tools/spin_wheel:/usr/share/nginx/spin-wheel:ro
     networks:
       - proxy_net
     depends_on:

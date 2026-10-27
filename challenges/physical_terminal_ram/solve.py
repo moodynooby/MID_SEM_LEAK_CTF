@@ -1,15 +1,13 @@
 #!/usr/bin/env python3
 """
-solve.py — Automated Solver for 'Physical Forensics: Lab 207 Terminal RAM Dump'
-Track: Forensics & Physical | Case File: The Mid-Sem Leak (IEEE AUSB CTF 2026)
+solve.py — Automated Solver for 'Memory Forensics: Lab 207 Terminal RAM Dump'
+Track: Forensics & Memory | Case File: The Mid-Sem Leak (IEEE AUSB CTF 2026)
 Author: Yesha (Forensics Track Lead)
 
 Walkthrough Solution:
-    1. Physical Acquisition Path:
-       - Participant walks to Lab 207 PC-04, copies `/dev/shm/lab207_terminal_ram.raw` to USB.
-    2. CTFd Failover Path:
+    1. CTFd Artifact Download:
        - Download `lab207_terminal_ram.raw` directly from the CTFd challenge page.
-    3. Forensic Analysis:
+    2. Forensic Analysis:
        - Memory String Carving:
          `strings -a files/lab207_terminal_ram.raw | grep -i "case{"`
        - Volatility 3 Analysis:

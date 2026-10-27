@@ -144,35 +144,25 @@ def interactive_menu():
         print(" [IEEE AUSB] Live Event Timeline Control Console")
         print(" Event: Case File: The Mid-Sem Leak")
         print("==========================================================")
-        print(" 1) [4:35 PM] Unlock 15-Min Vanishing Challenge")
-        print(" 2) [4:45 PM] Clue Drop #1 Broadcast")
-        print(" 3) [4:50 PM] Close/Hide Vanishing Challenge")
-        print(" 4) [5:00 PM] Start 10-Min Lightning Round (Double Points)")
-        print(" 5) [5:10 PM] Close Lightning Round & Clue Drop #2")
-        print(" 6) [5:15 PM] Trigger Scoreboard Blackout (Freeze)")
-        print(" 7) [5:30 PM] Reveal Scoreboard (Closing Ceremony)")
-        print(" 8) Create Live Snapshot Backup")
+        print(" 1) [4:45 PM] Broadcast Clue Drop #1 (Act II Hints)")
+        print(" 2) [5:10 PM] Broadcast Clue Drop #2 (Act III Hints)")
+        print(" 3) [5:15 PM] Trigger Scoreboard Blackout (Freeze)")
+        print(" 4) [5:30 PM] Reveal Scoreboard (Closing Ceremony)")
+        print(" 5) Create Live Snapshot Backup")
         print(" 0) Exit")
         print("==========================================================")
-        choice = input("Select action [0-8]: ").strip()
+        choice = input("Select action [0-5]: ").strip()
 
         if choice == "1":
-            trigger_event("vanishing_start")
-        elif choice == "2":
             trigger_event("clue_drop_1")
-        elif choice == "3":
-            trigger_event("vanishing_end")
-        elif choice == "4":
-            trigger_event("lightning_start")
-        elif choice == "5":
-            trigger_event("lightning_end")
+        elif choice == "2":
             trigger_event("clue_drop_2")
-        elif choice == "6":
+        elif choice == "3":
             trigger_event("blackout")
-        elif choice == "7":
+        elif choice == "4":
             trigger_event("reveal")
-        elif choice == "8":
-            subprocess.run([str(ROOT_DIR / "ops" / "backup.sh")])
+        elif choice == "5":
+            subprocess.run([sys.executable, str(ROOT_DIR / "ctf.py"), "backup"])
         elif choice == "0":
             break
         else:

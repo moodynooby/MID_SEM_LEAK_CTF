@@ -28,8 +28,8 @@ hints:
   - content: "Check the EXIF metadata using exiftool or inspect the hex header."
     cost: 25
 
-files:
-  - files/evidence_artifact.bin
+# files:
+#   - files/evidence_artifact.bin
 
 state: visible
 version: "0.1"

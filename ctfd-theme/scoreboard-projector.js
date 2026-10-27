@@ -55,11 +55,24 @@
     setInterval(snapshot, 3000);
   }
 
+  function addProjectorHudBtn() {
+    if (document.getElementById("projector-ops-hud-btn")) return;
+    var btn = document.createElement("a");
+    btn.id = "projector-ops-hud-btn";
+    btn.href = "/av-console/";
+    btn.target = "_blank";
+    btn.rel = "noopener noreferrer";
+    btn.innerHTML = "⚡ Live Ops &amp; Wheel";
+    btn.className = "projector-ops-hud";
+    document.body.appendChild(btn);
+  }
+
   function init() {
     if (!isScoreboardPage()) {
       return;
     }
     document.body.classList.add("projector-mode");
+    addProjectorHudBtn();
     watchScoreboard();
   }
 

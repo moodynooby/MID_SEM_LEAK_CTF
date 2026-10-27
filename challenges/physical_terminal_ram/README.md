@@ -1,6 +1,6 @@
-# Physical Forensics: Lab 207 Terminal RAM Dump
+# Memory Forensics: Lab 207 Terminal RAM Dump
 
-**Track:** Forensics & Physical Evidence  
+**Track:** Forensics & Volatile Memory  
 **Difficulty:** Medium (Dynamic 500 $\rightarrow$ 100)  
 **Author:** Yesha (Forensics Track Lead)  
 **Flag:** `case{volatility3_lab207_terminal_ram}`
@@ -8,7 +8,7 @@
 ---
 
 ## 1. Challenge Overview & Canon Storyline
-At 02:14 AM on 28 October 2026, campus security quarantined Workstation PC-04 in AU Lab 207 after TA Piyush Pelaiya fled the room. To prevent loss of volatile artifacts before power-off, first responders dumped the active memory of the machine to `/dev/shm/lab207_terminal_ram.raw`.
+At 02:14 AM on 28 October 2026, campus security quarantined Workstation PC-04 in AU Lab 207 after TA Piyush Pelaiya fled the room. To prevent loss of volatile artifacts before power-off, first responders captured the active memory of the machine to `lab207_terminal_ram.raw`. The raw memory dump is provided directly to participants via CTFd for digital forensics triage.
 
 ---
 

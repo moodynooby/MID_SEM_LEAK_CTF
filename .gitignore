@@ -58,6 +58,7 @@ logs/
 *.log
 !challenges/**/*.log
 ctfd_data/
+*recent_intrusions.json
 db_data/
 redis_data/
 

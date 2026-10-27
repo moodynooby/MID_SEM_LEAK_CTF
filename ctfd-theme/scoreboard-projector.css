@@ -97,3 +97,31 @@ body.projector-mode tbody tr.score-flash {
     background: #0d1120 !important;
   }
 }
+
+/* Floating Projector HUD button for Tech Lead & AV Operator */
+a.projector-ops-hud {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  background: rgba(13, 17, 32, 0.85);
+  border: 1px solid rgba(125, 211, 252, 0.4);
+  color: #7dd3fc !important;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  text-decoration: none !important;
+  backdrop-filter: blur(8px);
+  z-index: 9999;
+  opacity: 0.4;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+a.projector-ops-hud:hover {
+  opacity: 1;
+  border-color: #38bdf8;
+  color: #ffffff !important;
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+  transform: translateY(-2px);
+}

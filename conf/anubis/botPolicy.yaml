@@ -34,4 +34,5 @@ bots:
 
   # Challenge regular browsers with lightweight proof-of-work (difficulty 3)
   - name: browser-challenge
+    path_regex: ".*"
     action: CHALLENGE

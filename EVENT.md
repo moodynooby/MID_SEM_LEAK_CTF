@@ -30,7 +30,7 @@
 │   [Audio/Visual Console] ── 12-Track Live Soundboard + PA   │
 │   [Primary Server Desk] ─── Host PC (CTFd Stack Port 80)    │
 │   [Hot Sauce Station] ───── Sanitary Lifeline Table         │
-│   [Crime Scene Station] ─── Lab 207 Physical Forensics PC   │
+│   [Mentor Station] ──────── Floor Support & Marshals Desk   │
 │                                                             │
 │   Stations 01 – 10: Teams 01 through 10 (2–4 players/team)  │
 └──────────────────────────────┬──────────────────────────────┘
@@ -53,7 +53,7 @@
   - **Primary Server (CTFd Stack):** `192.168.1.100` (Port 80 HTTP).
   - **Hot-Standby Host:** `192.168.1.101` (Pre-configured to adopt `.100` on failover).
   - **AV Console Station:** `192.168.1.102`.
-  - **Crime Scene Workstation:** `192.168.1.105` (Physical Lab 207 PC).
+  - **Floor Mentor Station:** `192.168.1.105`.
   - **Participant DHCP Pool:** `192.168.1.110` – `192.168.1.190`.
 - **Local DNS & Host Aliasing:**
   - Primary URL: `http://192.168.1.100`
@@ -71,7 +71,7 @@
 | **Core Event Lead & Emcee** | **Vansh Shah** | Event Stage / Lab 207 | Opening remarks, participant welcome, speaker session coordination, prize distribution. |
 | **Co-Tech Lead (Infrastructure)** | **Manas Doshi** | `@moodynooby` (Lab 207) | MariaDB engine, Nginx tuning, CLI operations, blackout trigger, scoreboard reveal. |
 | **Co-Tech Lead (Ops & Standby)** | **Krish** | `@Krish-452` (Lab 208) | Hot-standby sync, timed event triggers, scoreboard projector feed, volunteer hints liaison. |
-| **Track Lead: Forensics & Stego** | **Yesha** | Reserved (Lab 207) | Audio spectrogram challenge, PDF hidden text, fragmented Base64, physical RAM dump. |
+| **Track Lead: Forensics & Stego** | **Yesha** | Reserved (Lab 207) | Audio spectrogram challenge, PDF hidden text, fragmented Base64, terminal RAM dump. |
 | **Track Lead: Web & AI** | **Tanish Shah** | `@tanishshahh` (Lab 207) | Proctor bot prompt jailbreak, cookie tampering, PHP webshell, AV soundboard operator. |
 | **Track Lead: Binary & Crypto** | **Vidit** | `@viditd1-eng` (Lab 208) | Android APK reversing, password hash cracking, Safe Exam Browser reversing, UI theme. |
 | **Track Lead: Network & Logs** | **Vatsal Pandya** | `@VP1107` (Lab 208) | Wi-Fi logs auto-sync twist, ransomware PCAP, angry TA emails, Spin Wheel web app operator. |
@@ -116,13 +116,10 @@ Participants are advised during pre-event communications to have the following t
 02:30 PM ─── Participant Check-in & Station Seating (Labs 207 & 208)
 03:00 PM ─── 🎙️ Expert Talk: Modern Cyber Forensics & Incident Response
 04:00 PM ─── 📋 Case Briefing, Canon Lore Presentation & Rules Q&A
-04:30 PM ─── 🚀 ACTIVE COMPETITION WINDOW BEGINS (1 Hour)
-04:35 PM ─── ⏳ Milestone 1: 15-Minute Vanishing Bonus Challenge Unlocked
-04:45 PM ─── 📂 Milestone 2: Intel Clue Drop #1 & Spin Wheel Round 1
-04:50 PM ─── 🔒 Milestone 3: Vanishing Bonus Challenge Expires
-05:00 PM ─── ⚡ Milestone 4: 10-Minute Lightning Round (2x Points) & Spin Wheel Round 2
-05:10 PM ─── ⚡ Milestone 5: Lightning Round Closes & Intel Clue Drop #2
-05:15 PM ─── 🌑 Milestone 6: Scoreboard Blackout (Suspense Mode on Projectors)
+04:30 PM ─── 🚀 ACTIVE COMPETITION WINDOW BEGINS (1 Hour - All 15 Challenges Live)
+04:45 PM ─── 📂 Milestone 1: Intel Clue Drop #1 & Spin Wheel Round 1
+05:10 PM ─── 📂 Milestone 2: Intel Clue Drop #2 & Spin Wheel Round 2
+05:15 PM ─── 🌑 Milestone 3: Scoreboard Blackout (Suspense Mode on Projectors)
 05:30 PM ─── 🏁 COMPETITION TERMINATION (Submissions Locked)
 05:35 PM ─── 🏆 Master Scoreboard Reveal & Fictional Culprit Unmasked
 05:45 PM ─── 🎁 Awards Ceremony, Trophies & Closing Vote of Thanks
@@ -165,39 +162,18 @@ Participants are advised during pre-event communications to have the following t
 - **Emcee Script:**
   > *"The investigation is officially live! Your terminals are active. Review your dossiers, access the evidence files at 192.168.1.100, and claim First Blood!"*
 
-#### 4:35 PM: Milestone 1 — 15-Minute Vanishing Bonus Challenge Unlocked
-- **CLI Command:** `uv run ctf events --event vanishing_start`
-- **Sound Cue:** `02_radar_ping.mp3`
-- **System Action:** CTFd notification broadcasts: *"⏳ TIME-SENSITIVE EVIDENCE DETECTED! Temporary cache trace discovered on lab share. Self-destructs at 4:50 PM!"*
-- **Emcee Script:**
-  > *"Attention investigators! A volatile evidence docket has appeared in CTFd. You have exactly 15 minutes before the memory trace is purged permanently at 4:50 PM!"*
-
-#### 4:45 PM: Milestone 2 — Intel Clue Drop #1 & Spin Wheel Round 1
+#### 4:45 PM: Milestone 1 — Intel Clue Drop #1 & Spin Wheel Round 1
 - **CLI Command:** `uv run ctf events --event clue_drop_1`
 - **Sound Cue:** `03_wheel_spin.mp3`
 - **System Action:** Clue broadcast: *"Forensics recovered deleted syslog timestamps. Check Act II portal traces."*
 - **Gamification:** The live Projector Spin Wheel activates! Teams currently with zero solves or stuck on a challenge can volunteer a teammate to spin the wheel or take a Hot Sauce shot for an unpenalized hint.
 
-#### 4:50 PM: Milestone 3 — Vanishing Bonus Challenge Purged
-- **CLI Command:** `uv run ctf events --event vanishing_end`
-- **Sound Cue:** `04_evidence_purge.mp3`
-- **System Action:** Unsolved vanishing challenge hidden from CTFd view.
-- **Emcee Script:**
-  > *"The vanishing cache trace has been overwritten. The investigation moves forward!"*
-
-#### 5:00 PM: Milestone 4 — 10-Minute Lightning Round (2x Points) & Spin Wheel Round 2
-- **CLI Command:** `uv run ctf events --event lightning_start`
-- **Sound Cue:** `05_lightning_alert.mp3`
-- **System Action:** CTFd notification: *"⚡ 10-MINUTE LIGHTNING ROUND ACTIVE! Double points awarded for solving within the next 10 minutes!"*
-- **Emcee Script:**
-  > *"Investigators! The 10-minute Lightning Round has officially started! Double points on the table until 5:10 PM! High-intensity speed run!"*
+#### 5:10 PM: Milestone 2 — Intel Clue Drop #2 & Spin Wheel Round 2
+- **CLI Command:** `uv run ctf events --event clue_drop_2`
+- **System Action:** Clue broadcast: *"Key derivation function identified. Cross-reference campus dossier names!"*
 - Spin Wheel activates for the final round of lifelines.
 
-#### 5:10 PM: Milestone 5 — Lightning Round Closes & Intel Clue Drop #2
-- **CLI Command:** `uv run ctf events --event lightning_end` followed by `uv run ctf events --event clue_drop_2`
-- **System Action:** Clue broadcast: *"Key derivation function identified. Cross-reference campus dossier names!"*
-
-#### 5:15 PM: Milestone 6 — Scoreboard Blackout (Suspense Mode)
+#### 5:15 PM: Milestone 3 — Scoreboard Blackout (Suspense Mode)
 - **CLI Command:** `uv run ctf blackout`
 - **Sound Cue:** `06_blackout_glitch.mp3` (heavy power down / electrical glitch sound)
 - **System Action:** MariaDB updates config `freeze=true`. Projectors switch to full-screen **'LOCKDOWN ACTIVE — SCOREBOARD FROZEN'** graphic.

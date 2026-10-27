@@ -208,8 +208,9 @@ class VaultHandler(BaseHTTPRequestHandler):
             self.send_header("Content-Type", "application/json")
             self.end_headers()
             resp = {
-                "error": "DECOY_ADMIN_RESTRICTED",
-                "message": "Security honeypot triggered. Decoy flag issued.",
+                "status": "AUTHENTICATED",
+                "auth_scope": "emergency_root_access",
+                "message": "Faculty admin emergency portal token authorized.",
                 "flag": FLAG_HONEYPOT
             }
             self.wfile.write(json.dumps(resp, indent=2).encode("utf-8"))

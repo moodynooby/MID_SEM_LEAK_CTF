@@ -36,6 +36,8 @@ ALERT_FILE = ROOT_DIR / "av-console" / "active_alert.json"
 OPS_ALERT_FILE = ROOT_DIR / "ops" / "siren_alert" / "active_alert.json"
 AUDIT_LOG_FILE = ROOT_DIR / "ops" / "siren_alert" / "intrusion_audit.log"
 LOCKOUTS_FILE = ROOT_DIR / "ops" / "siren_alert" / "active_lockouts.json"
+INTRUSIONS_FILE = ROOT_DIR / "av-console" / "recent_intrusions.json"
+OPS_INTRUSIONS_FILE = ROOT_DIR / "ops" / "siren_alert" / "recent_intrusions.json"
 
 DEFAULT_GAMIFICATION = {
     "intrusion_punishments": {
@@ -49,74 +51,88 @@ DEFAULT_GAMIFICATION = {
         "broadcast_to_ctfd": True,
         "decoy_flags": [
             {
+                "flag": "case{faculty_admin_portal_root_auth_2026}",
+                "name": "Faculty Vault Emergency Root Token",
+                "lockout_seconds": 120,
+                "penalty_points": 0,
+                "alert_message": "🚨 SECURITY VIOLATION: Unauthorized faculty admin token entered!"
+            },
+            {
                 "flag": "case{proctor_emergency_override_lockout_token}",
-                "name": "AI Proctor Bot Honeyflag",
+                "name": "ProctorBot Emergency Restriction Token",
                 "lockout_seconds": 120,
                 "penalty_points": 0,
-                "alert_message": "🚨 HONEYPOT TRAP TRIGGERED: Proctor Bot emergency override token entered!"
+                "alert_message": "🚨 SECURITY VIOLATION: ProctorBot restriction override token entered!"
             },
             {
-                "flag": "case{decoy_plaintext_login_honeyflag}",
-                "name": "PCAP Plaintext Login Decoy",
+                "flag": "case{student_sansh_portal_session_cookie}",
+                "name": "Sansh Portal Session Cookie",
                 "lockout_seconds": 120,
                 "penalty_points": 0,
-                "alert_message": "🚨 HONEYPOT TRAP TRIGGERED: Plaintext PCAP login decoy entered!"
+                "alert_message": "🚨 SECURITY VIOLATION: Student portal session cookie entered!"
             },
             {
-                "flag": "case{decoy_telemetry_post_pcap}",
-                "name": "PCAP Telemetry Decoy",
+                "flag": "case{au_campus_syslog_telemetry_token}",
+                "name": "Campus Syslog Telemetry Token",
                 "lockout_seconds": 120,
                 "penalty_points": 0,
-                "alert_message": "🚨 HONEYPOT TRAP TRIGGERED: Telemetry beacon honeyflag entered!"
+                "alert_message": "🚨 SECURITY VIOLATION: Syslog telemetry beacon token entered!"
             },
             {
-                "flag": "case{decoy_student_mac_address}",
-                "name": "Wi-Fi DHCP MAC Decoy",
+                "flag": "case{sansh_laptop_dhcp_lease_vlan100}",
+                "name": "Sansh Laptop DHCP Lease Token",
                 "lockout_seconds": 120,
                 "penalty_points": 0,
-                "alert_message": "🚨 HONEYPOT TRAP TRIGGERED: Wi-Fi DHCP spoofed MAC decoy entered!"
+                "alert_message": "🚨 SECURITY VIOLATION: Suspicious DHCP lease token entered!"
             },
             {
-                "flag": "case{sansh_vhah_library_ap_decoy}",
-                "name": "Wi-Fi Library AP Decoy",
+                "flag": "case{tryan_guest_mobile_dhcp_auth_0213}",
+                "name": "Tryan Guest Mobile DHCP Auth Token",
                 "lockout_seconds": 120,
                 "penalty_points": 0,
-                "alert_message": "🚨 HONEYPOT TRAP TRIGGERED: Sansh Vhah innocent alibi decoy entered!"
+                "alert_message": "🚨 SECURITY VIOLATION: Guest Wi-Fi authentication token entered!"
             },
             {
                 "flag": "case{staging_lab207_workstation_setup_key}",
-                "name": "CheatSheet Staging Comment Decoy",
+                "name": "Lab 207 Staging Setup Key",
                 "lockout_seconds": 120,
                 "penalty_points": 0,
-                "alert_message": "🚨 HONEYPOT TRAP TRIGGERED: Staging workstation setup decoy entered!"
+                "alert_message": "🚨 SECURITY VIOLATION: Staging workstation setup key entered!"
             },
             {
-                "flag": "case{decoy_superficial_lead_check_source}",
-                "name": "CheatSheet Superficial Lead Decoy",
+                "flag": "case{sansh_lab208_checkin_token}",
+                "name": "Sansh Lab 208 Check-in Token",
                 "lockout_seconds": 120,
                 "penalty_points": 0,
-                "alert_message": "🚨 HONEYPOT TRAP TRIGGERED: Superficial lead honeyflag entered!"
+                "alert_message": "🚨 SECURITY VIOLATION: Lab check-in attendance token entered!"
             },
             {
-                "flag": "case{decoy_git_log_superficial_commit}",
-                "name": "Git Commit Red Herring Decoy",
+                "flag": "case{danas_terminal_footprint_auth}",
+                "name": "Danas Terminal Footprint Token",
                 "lockout_seconds": 120,
                 "penalty_points": 0,
-                "alert_message": "🚨 HONEYPOT TRAP TRIGGERED: Superficial Git commit red herring entered!"
+                "alert_message": "🚨 SECURITY VIOLATION: Terminal footprint token entered!"
             },
             {
-                "flag": "case{decoy_superficial_html_comment}",
-                "name": "HTML Comment Red Herring Decoy",
+                "flag": "case{os101_assignment2_grading_rubric_official}",
+                "name": "OS 101 Assignment Grading Rubric Token",
                 "lockout_seconds": 120,
                 "penalty_points": 0,
-                "alert_message": "🚨 HONEYPOT TRAP TRIGGERED: HTML Comment red herring entered!"
+                "alert_message": "🚨 SECURITY VIOLATION: Assignment grading rubric token entered!"
             },
             {
-                "flag": "case{nice_try_blind_ai_wifi_grep}",
-                "name": "Blind AI Wi-Fi Scraper Trap",
+                "flag": "case{student_sansh_lab_extension_request_auth}",
+                "name": "Sansh Lab Extension Request Token",
                 "lockout_seconds": 120,
                 "penalty_points": 0,
-                "alert_message": "🚨 HONEYPOT TRAP TRIGGERED: Blind AI scraping pattern trapped!"
+                "alert_message": "🚨 SECURITY VIOLATION: Student extension request token entered!"
+            },
+            {
+                "flag": "case{dean_academic_integrity_protocol_2026}",
+                "name": "Dean Academic Integrity Protocol Token",
+                "lockout_seconds": 120,
+                "penalty_points": 0,
+                "alert_message": "🚨 SECURITY VIOLATION: Dean circular protocol token entered!"
             }
         ]
     }
@@ -184,6 +200,25 @@ def write_active_alert(alert_data):
         except Exception as e:
             print(f"[!] Alert write error for {p}: {e}")
 
+def record_recent_intrusion(entry):
+    """Records history log entry to recent_intrusions.json for UI monitoring."""
+    for p in [INTRUSIONS_FILE, OPS_INTRUSIONS_FILE]:
+        try:
+            p.parent.mkdir(parents=True, exist_ok=True)
+            records = []
+            if p.exists():
+                try:
+                    with open(p, "r") as f:
+                        records = json.load(f)
+                except Exception:
+                    records = []
+            records.insert(0, entry)
+            records = records[:30]
+            with open(p, "w") as f:
+                json.dump(records, f, indent=2)
+        except Exception as e:
+            print(f"[!] Intrusion log write error for {p}: {e}")
+
 def log_audit(event_type, team, details):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     msg = f"[{timestamp}] [{event_type}] Team: {team} | Details: {details}\n"
@@ -194,7 +229,7 @@ def log_audit(event_type, team, details):
         pass
     print(msg.strip())
 
-def trigger_punishment(team_id, team_name, reason, lockout_seconds, penalty_points=0, alert_msg=None):
+def trigger_punishment(team_id, team_name, reason, lockout_seconds, penalty_points=0, alert_msg=None, submitted_flag=""):
     now_ts = int(time.time())
     expires_ts = now_ts + lockout_seconds
 
@@ -206,6 +241,7 @@ def trigger_punishment(team_id, team_name, reason, lockout_seconds, penalty_poin
         "team_id": team_id,
         "team_name": team_name,
         "reason": reason,
+        "submitted_flag": submitted_flag,
         "lockout_seconds": lockout_seconds,
         "triggered_at": now_ts,
         "expires_at": expires_ts,
@@ -213,6 +249,16 @@ def trigger_punishment(team_id, team_name, reason, lockout_seconds, penalty_poin
         "sound_siren": True
     }
     write_active_alert(alert_payload)
+
+    # Record intrusion history for UI dashboard
+    record_recent_intrusion({
+        "time": datetime.now().strftime("%H:%M:%S"),
+        "team_name": team_name,
+        "reason": reason,
+        "flag": submitted_flag,
+        "lockout_seconds": lockout_seconds,
+        "expires_at": expires_ts
+    })
 
     # Record active lockout
     lockouts = {}
@@ -324,7 +370,8 @@ def run_monitor(once=False):
                         reason=f"Decoy Honeyflag Triggered: {dec.get('name', 'Honeypot')}",
                         lockout_seconds=lockout,
                         penalty_points=penalty,
-                        alert_msg=msg
+                        alert_msg=msg,
+                        submitted_flag=provided
                     )
                     consecutive_fails[team_id] = 0
                     continue
@@ -345,7 +392,8 @@ def run_monitor(once=False):
                             reason=f"Bruteforce Lockout: {fails_count} consecutive incorrect flags",
                             lockout_seconds=lockout,
                             penalty_points=0,
-                            alert_msg=msg
+                            alert_msg=msg,
+                            submitted_flag=provided
                         )
                         consecutive_fails[team_id] = 0
 

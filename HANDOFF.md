@@ -76,7 +76,7 @@ This repository contains the complete offline-first containerized infrastructure
 | **#9** | Liam's Idea: Fragmented Exfiltration | Forensics | Easy | Yesha | `challenges/fragmented_exfiltration/` | Completed (Verified) |
 | **#10** | PDF Hidden Text: The Redacted Exam Paper | Forensics | Easy | Yesha | `challenges/pdf_hidden_text/` | Completed (Verified) |
 | **#11** | Audio Spectrogram: Lab Microphone Wiretap | Stego | Medium | Yesha | `challenges/audio_spectrogram/` | Completed (Verified) |
-| **#12** | Physical Forensics: Lab 207 Terminal RAM Dump | Forensics | Medium | Yesha | `challenges/physical_terminal_ram/` | Completed (Verified) |
+| **#12** | Memory Forensics: Lab 207 Terminal RAM Dump | Forensics | Medium | Yesha | `challenges/physical_terminal_ram/` | Completed (Verified) |
 | **#13** | Cookie / API: Faculty Exam Vault | Web | Easy | @tanishshahh | `challenges/cookie_api/` | Completed (Verified) |
 | **#14** | AI Model Prompt: Proctor Bot Jailbreak | AI | Easy/Med | @tanishshahh | `challenges/ai_prompt_injection/` | Completed (Verified - SmolLM2 Local LLM) |
 | **#15** | PHP2SHELL: Faculty Upload Bypass | Web | Hard | @tanishshahh | `challenges/php2shell/` | Completed (Verified - Multi-Team Isolated) |
@@ -127,13 +127,12 @@ uv run ctf backup         # Dump DB + uploads into backups/ctfd_backup_<timestam
 uv run ctf sync <IP>      # Push backup archive to secondary laptop over LAN (SCP/SSH)
 uv run ctf restore        # Restore DB and uploads from latest backup archive
 
-# === LIVE EVENT MILESTONES (28 OCT) ===
-uv run ctf events                    # Open interactive CLI control panel
-uv run ctf events --event vanishing_start   # 4:35 PM: Release 15-min bonus challenge
+# === LIVE EVENT MILESTONES & MASTER COCKPIT ===
+uv run ctf console                          # Launch Unified Master Live Ops Cockpit & AV Deck (/av-console/)
+uv run ctf wheel                            # Display Big-Screen Projector Spin Wheel URL & controls
+uv run ctf siren                            # Run decoy honeyflag & rate-limit intrusion monitor daemon
+uv run ctf events                           # Open interactive CLI control panel
 uv run ctf events --event clue_drop_1       # 4:45 PM: Broadcast Intel Clue #1
-uv run ctf events --event vanishing_end     # 4:50 PM: Hide vanishing challenge
-uv run ctf events --event lightning_start   # 5:00 PM: Unlock 10-min Lightning Round (2x pts)
-uv run ctf events --event lightning_end     # 5:10 PM: Lock Lightning Round
 uv run ctf events --event clue_drop_2       # 5:10 PM: Broadcast Intel Clue #2
 uv run ctf blackout                         # 5:15 PM: Freeze scoreboard into suspense mode
 uv run ctf reveal                           # 5:30 PM: Unfreeze scoreboard for ceremony

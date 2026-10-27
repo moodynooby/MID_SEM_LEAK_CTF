@@ -14,11 +14,11 @@ Tips to maximize your team's score and solve the case efficiently:
 
 ---
 
-### 2. Time Management & Timed Events
+### 2. Time Management & Competition Milestones
 - **Keep an eye on the clock:**
-  - **4:35 PM:** The 15-minute Vanishing Bonus challenge will pop up. Have one person immediately download and inspect it while others continue the main acts.
-  - **5:00 PM:** The 10-minute Lightning Round is worth double points! Drop non-urgent tasks for 5 minutes to grab those quick points.
-  - **5:15 PM:** Don't panic when the scoreboard goes dark. Keep submitting flags right up until 5:30 PM.
+  - **4:30 PM:** All challenge tracks unlock simultaneously. Start with quick warmup challenges (cheatsheet, PDF, fragmented chunks) to get on the scoreboard early!
+  - **4:45 PM & 5:10 PM:** Watch for Intel Clue Drops broadcasted on the live projector screen. Stuck teams can utilize Spin Wheel lifelines or hints.
+  - **5:15 PM:** Scoreboard Blackout! The public scoreboard freezes for the final 15 minutes of suspense. Keep submitting flags right up until 5:30 PM.
 
 ---
 

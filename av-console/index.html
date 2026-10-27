@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Master Live Ops Cockpit — Case File: The Mid-Sem Leak</title>
+  <link rel="stylesheet" href="shared/console.css" />
+</head>
+<body>
+
+  <!-- Restricted Access Authentication Gate -->
+  <div id="auth-gate">
+    <div class="auth-card">
+      <span class="auth-badge">Restricted Access</span>
+      <h2 class="auth-title">Mission Control Deck</h2>
+      <p class="auth-subtitle">
+        Case File: The Mid-Sem Leak — IEEE AUSB CTF<br>
+        Tech Lead and live operator authorization required.
+      </p>
+
+      <div class="auth-input-group">
+        <label for="auth-pass-input">CTFd Administrator Password or Token:</label>
+        <input type="password" id="auth-pass-input" class="auth-input" placeholder="Enter CTFd admin password or access token" autofocus />
+      </div>
+
+      <button id="auth-submit-btn" class="auth-btn">Unlock Cockpit</button>
+      <div id="auth-error-msg" class="auth-error">Invalid authorization credentials.</div>
+
+      <div style="margin-top: 1.5rem; font-size: 0.8rem; color: var(--text-muted);">
+        Already logged in as CTFd Admin? <a href="/admin" target="_blank" style="color:var(--accent-cyan)">Open CTFd Session</a> then refresh.
+      </div>
+    </div>
+  </div>
+
+  <!-- Real-Time Intrusion Alert Banner -->
+  <div id="siren-banner">
+    <div style="display: flex; align-items: center; gap: 0.75rem;">
+      <span style="font-size: 1.5rem;">🚨</span>
+      <span id="siren-banner-text">INTRUSION DETECTED: Decoy Honeyflag Triggered!</span>
+    </div>
+    <div style="display: flex; gap: 0.5rem;">
+      <button onclick="triggerEventAction('siren')" style="background: rgba(0,0,0,0.4); color:#fff; border:1px solid #fff; padding:0.3rem 0.7rem; border-radius:6px; cursor:pointer;">Simulate Alert</button>
+      <button onclick="document.getElementById('siren-banner').style.display='none'" style="background: rgba(0,0,0,0.6); color:#fff; border:1px solid #fff; padding:0.3rem 0.7rem; border-radius:6px; cursor:pointer;">Dismiss</button>
+    </div>
+  </div>
+
+  <!-- Global Cockpit Header -->
+  <header class="cockpit-header">
+    <div class="header-brand">
+      <span class="brand-icon">⚡</span>
+      <div class="brand-text">
+        <h1>Case File: The Mid-Sem Leak</h1>
+        <small>Master Live Ops Cockpit & AV Deck (AU Labs 207 & 208)</small>
+      </div>
+    </div>
+
+    <!-- HUD Strip (Time & Next Milestone) -->
+    <div class="hud-strip">
+      <div class="hud-clock">
+        <span>⏱️</span>
+        <span id="hud-clock-time">--:--:--</span>
+      </div>
+      <div class="hud-milestone">
+        <span id="hud-milestone-text">Next: 16:30 Competition Start</span>
+      </div>
+    </div>
+
+    <!-- Mode Selector Tabs -->
+    <nav class="deck-tabs">
+      <button class="deck-tab active" data-tab="wheel">🎡 Spin Wheel</button>
+      <button class="deck-tab" data-tab="countdown">⏱️ Countdown</button>
+      <button class="deck-tab" data-tab="soundboard">🔊 Soundboard</button>
+      <button class="deck-tab" data-tab="events">⚡ Live Events</button>
+      <button class="deck-tab" data-tab="infra">🛠️ System Ops</button>
+    </nav>
+
+    <!-- Global Quick Actions -->
+    <div class="header-actions">
+      <button id="mute-toggle-btn" class="tool-btn">🔊 Audio: ON</button>
+      <button id="fs-toggle-btn" class="tool-btn">⛶ Fullscreen</button>
+      <a href="/scoreboard" target="_blank" class="tool-btn" title="Open Public Scoreboard">📊 Scoreboard</a>
+      <a href="/admin" target="_blank" class="tool-btn" title="Open CTFd Admin">⚙️ CTFd Admin</a>
+    </div>
+  </header>
+
+  <!-- Main Cockpit Panels Stage -->
+  <main class="cockpit-main">
+
+    <!-- PANEL 1: SPIN WHEEL & HOT SAUCE STATION -->
+    <section id="view-wheel" class="view-panel active">
+      <div class="wheel-layout">
+        
+        <!-- Left: Canvas Wheel Stage -->
+        <div class="wheel-stage">
+          <div class="canvas-wrapper">
+            <div id="wheel-pointer" class="wheel-pointer">
+              <svg viewBox="0 0 32 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M16 44L2 12C-1.5 5 3.5 0 11 0H21C28.5 0 33.5 5 30 12L16 44Z" fill="#ef4444" stroke="#ffffff" stroke-width="2.5" />
+                <circle cx="16" cy="12" r="5" fill="#ffffff" />
+              </svg>
+            </div>
+            <canvas id="wheel-canvas" width="580" height="580"></canvas>
+            <div id="center-hub" class="center-hub" title="Click or Press Space to Spin">
+              <span>SPIN</span>
+              <small>PRESS SPACE</small>
+            </div>
+          </div>
+
+          <div class="wheel-actions">
+            <button id="spin-btn" class="spin-btn-large">🎡 Trigger Spin (SPACE)</button>
+          </div>
+        </div>
+
+        <!-- Right: Operations Sidebar -->
+        <aside class="sidebar-deck">
+          <div class="deck-card">
+            <div class="deck-card-title">
+              <span>🎯 Target Workstation</span>
+            </div>
+            <select id="team-select" class="deck-select"></select>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">
+              Outcome is assigned to this team on the big-screen projector.
+            </div>
+          </div>
+
+          <div class="deck-card">
+            <div class="deck-card-title">
+              <span>🌶️ Hot Sauce Lifelines</span>
+            </div>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.75rem;">
+              Opt-in spicy challenge (5,000–10,000 SHU) grants 1 unpenalized hint docket.
+            </p>
+            <button onclick="document.getElementById('hotsauce-modal').style.display='flex'" class="tool-btn" style="width: 100%; justify-content: center; background: rgba(220, 38, 38, 0.2); border-color: var(--accent-red); color: #fca5a5;">
+              Open Hot Sauce Desk
+            </button>
+          </div>
+
+          <div class="deck-card" style="flex: 1;">
+            <div class="deck-card-title">
+              <span>📜 Live Spin History</span>
+            </div>
+            <ul id="history-list" class="history-box">
+              <li class="history-item"><span style="color:var(--text-muted)">Ready for spin round...</span></li>
+            </ul>
+          </div>
+        </aside>
+
+      </div>
+    </section>
+
+    <!-- PANEL 2: BIG-SCREEN COUNTDOWN & TIMELINE -->
+    <section id="view-countdown" class="view-panel">
+      <div class="countdown-container">
+        <div id="countdown-next-label" class="countdown-next-label">Loading Milestone…</div>
+        <div id="big-timer-digits" class="countdown-digits">00:00</div>
+        
+        <div class="countdown-bar-track">
+          <div id="countdown-progress-fill" class="countdown-bar-fill"></div>
+        </div>
+
+        <div class="timeline-grid">
+          <div id="timeline-card-0" class="timeline-card">
+            <div class="timeline-card-time">16:30</div>
+            <div class="timeline-card-title">Competition Start</div>
+          </div>
+          <div id="timeline-card-1" class="timeline-card">
+            <div class="timeline-card-time">16:35</div>
+            <div class="timeline-card-title">Vanishing Opens (15m)</div>
+          </div>
+          <div id="timeline-card-2" class="timeline-card">
+            <div class="timeline-card-time">16:45</div>
+            <div class="timeline-card-title">Clue Drop #1 & Wheel 1</div>
+          </div>
+          <div id="timeline-card-3" class="timeline-card">
+            <div class="timeline-card-time">16:50</div>
+            <div class="timeline-card-title">Vanishing Closes</div>
+          </div>
+          <div id="timeline-card-4" class="timeline-card">
+            <div class="timeline-card-time">17:00</div>
+            <div class="timeline-card-title">Lightning Round (2x)</div>
+          </div>
+          <div id="timeline-card-5" class="timeline-card">
+            <div class="timeline-card-time">17:10</div>
+            <div class="timeline-card-title">Lightning Ends & Clue #2</div>
+          </div>
+          <div id="timeline-card-6" class="timeline-card">
+            <div class="timeline-card-time">17:15</div>
+            <div class="timeline-card-title">Scoreboard Blackout</div>
+          </div>
+          <div id="timeline-card-7" class="timeline-card">
+            <div class="timeline-card-time">17:30</div>
+            <div class="timeline-card-title">Scoreboard Reveal</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PANEL 3: SYNTHESIZED SOUND CUE BOARD -->
+    <section id="view-soundboard" class="view-panel">
+      <div class="soundboard-grid">
+        <button class="sound-cue-btn" data-cue="start">
+          <span class="cue-icon">🎉</span>
+          <span class="cue-name">Competition Start</span>
+          <span class="cue-key">[1] · 16:30</span>
+        </button>
+        <button class="sound-cue-btn" data-cue="vanishing">
+          <span class="cue-icon">📡</span>
+          <span class="cue-name">Vanishing Ping</span>
+          <span class="cue-key">[2] · 16:35</span>
+        </button>
+        <button class="sound-cue-btn" data-cue="lightning">
+          <span class="cue-icon">⚡</span>
+          <span class="cue-name">Lightning Surge</span>
+          <span class="cue-key">[3] · 17:00</span>
+        </button>
+        <button class="sound-cue-btn" data-cue="blackout">
+          <span class="cue-icon">🌑</span>
+          <span class="cue-name">Blackout Drone</span>
+          <span class="cue-key">[4] · 17:15</span>
+        </button>
+        <button class="sound-cue-btn" data-cue="reveal">
+          <span class="cue-icon">🏆</span>
+          <span class="cue-name">Scoreboard Reveal</span>
+          <span class="cue-key">[5] · 17:30</span>
+        </button>
+      </div>
+
+      <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 1.5rem;">
+        <button onclick="stopAllAudio()" class="tool-btn" style="background: rgba(239, 68, 68, 0.2); border-color: var(--accent-red); padding: 0.6rem 1.5rem;">
+          ⏹️ Stop All Sound Playback
+        </button>
+      </div>
+    </section>
+
+    <!-- PANEL 4: LIVE EVENT ACTIONS (CLI-to-UI) -->
+    <section id="view-events" class="view-panel">
+      <div class="actions-grid">
+        
+        <div class="action-card">
+          <div class="action-card-header">
+            <span class="action-card-title">🌑 Scoreboard Blackout</span>
+            <span class="action-cli-badge">uv run ctf blackout</span>
+          </div>
+          <p class="action-card-desc">Freezes live scoreboard at 5:15 PM into suspense mode before final reveal.</p>
+          <button onclick="triggerEventAction('blackout')" class="action-trigger-btn danger">Freeze Scoreboard (Blackout)</button>
+        </div>
+
+        <div class="action-card">
+          <div class="action-card-header">
+            <span class="action-card-title">🏆 Scoreboard Reveal</span>
+            <span class="action-cli-badge">uv run ctf reveal</span>
+          </div>
+          <p class="action-card-desc">Unfreezes master scoreboard at 5:30 PM for final awards ceremony.</p>
+          <button onclick="triggerEventAction('reveal')" class="action-trigger-btn gold">Reveal Final Scoreboard</button>
+        </div>
+
+        <div class="action-card">
+          <div class="action-card-header">
+            <span class="action-card-title">⏳ Vanishing Challenge (15m)</span>
+            <span class="action-cli-badge">uv run ctf events</span>
+          </div>
+          <p class="action-card-desc">Toggles the temporary 15-minute vanishing bonus challenge state.</p>
+          <div style="display: flex; gap: 0.5rem;">
+            <button onclick="triggerEventAction('vanishing_start')" class="action-trigger-btn" style="flex:1;">Unlock (4:35 PM)</button>
+            <button onclick="triggerEventAction('vanishing_end')" class="action-trigger-btn" style="flex:1;">Expire (4:50 PM)</button>
+          </div>
+        </div>
+
+        <div class="action-card">
+          <div class="action-card-header">
+            <span class="action-card-title">💡 Intel Clue Broadcasts</span>
+            <span class="action-cli-badge">uv run ctf events</span>
+          </div>
+          <p class="action-card-desc">Broadcasts official case dossier clues to all participant terminals.</p>
+          <div style="display: flex; gap: 0.5rem;">
+            <button onclick="triggerEventAction('clue_1')" class="action-trigger-btn" style="flex:1;">Clue #1 (4:45 PM)</button>
+            <button onclick="triggerEventAction('clue_2')" class="action-trigger-btn" style="flex:1;">Clue #2 (5:10 PM)</button>
+          </div>
+        </div>
+
+        <div class="action-card">
+          <div class="action-card-header">
+            <span class="action-card-title">🎨 Scoreboard Projector Theme</span>
+            <span class="action-cli-badge">uv run ctf theme</span>
+          </div>
+          <p class="action-card-desc">Re-pushes the high-contrast projector layout and live solve ticker via CTFd API.</p>
+          <button onclick="triggerEventAction('theme')" class="action-trigger-btn">Re-apply Theme</button>
+        </div>
+
+        <div class="action-card">
+          <div class="action-card-header">
+            <span class="action-card-title">🚨 Decoy Honeyflag Strobe</span>
+            <span class="action-cli-badge">uv run ctf siren</span>
+          </div>
+          <p class="action-card-desc">Triggers emergency siren alert simulation on all connected projector screens.</p>
+          <button onclick="triggerEventAction('siren')" class="action-trigger-btn danger">Test Intrusion Siren</button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- PANEL 5: INFRASTRUCTURE & LIFECYCLE (CLI-to-UI) -->
+    <section id="view-infra" class="view-panel">
+      <div class="actions-grid">
+        
+        <div class="action-card">
+          <div class="action-card-header">
+            <span class="action-card-title">📊 Container Stack Health</span>
+            <span class="action-cli-badge">uv run ctf status</span>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-bottom: 1rem; font-size: 0.85rem;">
+            <div>App: <span id="status-ctfd-app" class="action-cli-badge">checking...</span></div>
+            <div>Proxy: <span id="status-ctfd-proxy" class="action-cli-badge">checking...</span></div>
+            <div>DB: <span id="status-ctfd-db" class="action-cli-badge">checking...</span></div>
+            <div>Cache: <span id="status-ctfd-cache" class="action-cli-badge">checking...</span></div>
+          </div>
+          <button onclick="fetchInfraStatus()" class="action-trigger-btn">Refresh Stack Status</button>
+        </div>
+
+        <div class="action-card">
+          <div class="action-card-header">
+            <span class="action-card-title">💾 Disaster Recovery Snapshot</span>
+            <span class="action-cli-badge">uv run ctf backup</span>
+          </div>
+          <p class="action-card-desc">Dumps MariaDB database and archives /var/uploads into backups/ folder.</p>
+          <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.75rem;">
+            Last Backup: <span id="status-last-backup" style="color:var(--accent-cyan)">None</span>
+          </div>
+          <button onclick="triggerBackup()" class="action-trigger-btn">Create Snapshot Backup</button>
+        </div>
+
+        <div class="action-card">
+          <div class="action-card-header">
+            <span class="action-card-title">🔄 Standby Laptop Sync</span>
+            <span class="action-cli-badge">uv run ctf sync &lt;IP&gt;</span>
+          </div>
+          <p class="action-card-desc">Pushes latest database snapshot over campus LAN to secondary standby laptop.</p>
+          <button onclick="triggerSync()" class="action-trigger-btn">Push Snapshot to Standby</button>
+        </div>
+
+        <div class="action-card">
+          <div class="action-card-header">
+            <span class="action-card-title">📦 Seed Challenges</span>
+            <span class="action-cli-badge">uv run ctf seed</span>
+          </div>
+          <p class="action-card-desc">Idempotently seeds all 14 challenges, flags, and attachments into CTFd.</p>
+          <button onclick="triggerEventAction('seed')" class="action-trigger-btn">Re-seed Challenges</button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Live Execution Output Log Feed -->
+    <div class="console-log-box" id="console-log">
+      <div>[Cockpit Init] Master Live Ops Deck loaded. Standing by...</div>
+    </div>
+
+  </main>
+
+  <!-- Winner Modal -->
+  <div id="winner-modal" class="modal-overlay">
+    <div class="modal-content">
+      <div style="text-align: center;">
+        <span style="font-size: 3rem;">🎉</span>
+        <h2 id="winner-segment-name" style="color: var(--accent-gold); margin: 0.5rem 0;">Spin Result</h2>
+        <div style="font-size: 1.1rem; font-weight: 700; color: var(--fg); margin-bottom: 1rem;">
+          Awarded to: <span id="winner-team-name" style="color: var(--accent-cyan)">Station 1</span>
+        </div>
+        <p id="winner-segment-desc" style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; margin-bottom: 1.5rem;">
+          Description
+        </p>
+        <button class="auth-btn close-modal-btn">Acknowledge & Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hot Sauce Lifeline Modal -->
+  <div id="hotsauce-modal" class="modal-overlay">
+    <div class="modal-content">
+      <h3 style="color: var(--accent-red); margin-bottom: 0.5rem;">🌶️ Hot Sauce Lifeline Voucher Desk</h3>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+        Volunteer logs completion of spicy challenge for free unpenalized hint docket.
+      </p>
+      <div class="auth-input-group">
+        <label>Participant Station:</label>
+        <input type="text" id="hs-team-input" class="auth-input" placeholder="e.g. Station 4 - HashCrashers" />
+      </div>
+      <div class="auth-input-group">
+        <label>Target Challenge Name:</label>
+        <input type="text" id="hs-chal-input" class="auth-input" placeholder="e.g. Safe Exam Browser Reversing" />
+      </div>
+      <button onclick="alert('Hot Sauce Lifeline Voucher Approved! Unlock hint on CTFd Admin.'); document.getElementById('hotsauce-modal').style.display='none';" class="auth-btn" style="background: linear-gradient(135deg, #ef4444, #b91c1c);">
+        Issue Free Hint Voucher
+      </button>
+      <button class="tool-btn close-modal-btn" style="width: 100%; margin-top: 0.5rem; justify-content: center;">Cancel</button>
+    </div>
+  </div>
+
+  <script src="shared/console.js"></script>
+</body>
+</html>

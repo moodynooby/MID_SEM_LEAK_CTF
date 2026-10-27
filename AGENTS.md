@@ -107,6 +107,7 @@ All 14 challenges must adhere to the 5-step authoring standard defined in [chall
 | `uv run ctf seed` | Seed challenges | Idempotently populates challenges, flags, files, and dynamic scoring |
 | `uv run ctf import [csv]` | Import teams & users | Parses registration Google Forms CSV, seeds CTFd teams & exports credentials dossier |
 | `uv run ctf setup` | Full auto-setup | One-shot stack bootstrap, challenge seeder, theme & API bindings |
+| `uv run ctf console`| Master Cockpit | Unified AV Console, Spin Wheel, Soundboard & CLI-to-UI live ops (/av-console/) |
 | `uv run ctf wheel` | Launch spin wheel | Displays HTML5/Canvas projector spin wheel URL and controls (`/spin-wheel/`) |
 | `uv run ctf siren` | Intrusion monitor | Real-time decoy honeyflag & bruteforce lockout monitor (`ops/siren_alert/`) |
 

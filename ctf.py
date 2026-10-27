@@ -173,6 +173,7 @@ def cmd_start():
     cmd = compose + ["up", "-d"]
     subprocess.run(cmd, cwd=str(ROOT_DIR))
 
+    ensure_ops_server()
     lan_ip = detect_lan_ip()
     port = os.getenv("HOST_PORT", "80")
 
@@ -181,6 +182,7 @@ def cmd_start():
     table.add_column("URL", style="bold white")
     table.add_row("Local Machine", f"http://localhost:{port}")
     table.add_row("Participant LAN URL", f"http://{lan_ip}:{port}")
+    table.add_row("Master Live Ops Cockpit", f"http://{lan_ip}:{port}/av-console/")
     console.print(table)
 
 def cmd_stop():
@@ -384,20 +386,52 @@ def cmd_setup():
     cmd_theme()
     console.print("[bold green][+] CTFd stack fully configured, challenges seeded, and themes bound![/bold green]")
 
-def cmd_wheel():
-    """Display and launch Big-Screen Projector Spin Wheel."""
+def is_port_in_use(port):
+    import socket
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        return s.connect_ex(("127.0.0.1", port)) == 0
+
+def ensure_ops_server():
+    """Ensure background Ops Control API is running on localhost:8088."""
+    if not is_port_in_use(8088):
+        script = ROOT_DIR / "ops" / "control_server.py"
+        subprocess.Popen(
+            [sys.executable, str(script)],
+            cwd=str(ROOT_DIR),
+            start_new_session=True,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL
+        )
+
+def cmd_console():
+    """Display and launch Master Live Ops Cockpit & AV Console."""
+    ensure_ops_server()
     lan_ip = detect_lan_ip()
     port = os.getenv("HOST_PORT", "80")
-    wheel_url = f"http://{lan_ip}:{port}/spin-wheel/"
-    local_url = f"http://localhost:{port}/spin-wheel/"
-    file_path = ROOT_DIR / "tools" / "spin_wheel" / "index.html"
+    console_url = f"http://{lan_ip}:{port}/av-console/"
+    local_url = f"http://localhost:{port}/av-console/"
 
-    table = Table(title="Interactive Projector Spin Wheel (Issue #25)", style="bold cyan")
+    table = Table(title="Master Live Ops Cockpit & AV Console (Merged Ops Center)", style="bold magenta")
+    table.add_column("Display Mode", style="cyan")
+    table.add_column("Location / URL", style="bold white")
+    table.add_row("Lab Projector & Ops LAN URL", console_url)
+    table.add_row("Local Browser URL", local_url)
+    console.print(table)
+    console.print("[green][+] Integrated Tools:[/green] [white]Countdown | Wheel | Soundboard | Siren | CLI-to-UI Controls[/white]")
+
+def cmd_wheel():
+    """Display and launch Big-Screen Projector Spin Wheel."""
+    ensure_ops_server()
+    lan_ip = detect_lan_ip()
+    port = os.getenv("HOST_PORT", "80")
+    wheel_url = f"http://{lan_ip}:{port}/av-console/#wheel"
+    local_url = f"http://localhost:{port}/av-console/#wheel"
+
+    table = Table(title="Interactive Projector Spin Wheel (Master Cockpit)", style="bold cyan")
     table.add_column("Display Mode", style="cyan")
     table.add_column("Location / URL", style="bold white")
     table.add_row("Lab Projector LAN URL", wheel_url)
     table.add_row("Local Browser URL", local_url)
-    table.add_row("Standalone File", str(file_path))
     console.print(table)
     console.print("[green][+] Controls:[/green] [white]SPACE = Spin | R = Reset | M = Mute | F = Fullscreen[/white]")
 
@@ -454,6 +488,7 @@ def main():
 
     subparsers.add_parser("setup", help="One-shot full setup: configure DB, seed challenges, apply themes")
     subparsers.add_parser("ollama", help="Ensure local Ollama service and neural LLM model are ready")
+    subparsers.add_parser("console", aliases=["ui", "deck", "cockpit"], help="Launch Master Live Ops Cockpit & AV Console")
     subparsers.add_parser("wheel", aliases=["spin"], help="Display Big-Screen Projector Spin Wheel URLs and controls")
 
     siren_p = subparsers.add_parser("siren", aliases=["monitor"], help="Run live intrusion & decoy honeyflag monitor daemon, or test alert")
@@ -501,6 +536,8 @@ def main():
         cmd_setup()
     elif args.command == "ollama":
         ensure_ollama("smollm2")
+    elif args.command in ["console", "ui", "deck", "cockpit"]:
+        cmd_console()
     else:
         parser.print_help()
 

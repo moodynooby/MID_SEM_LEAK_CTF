@@ -1,19 +1,13 @@
-name: "Physical Forensics: Lab 207 Terminal RAM Dump"
+name: "Memory Forensics: Lab 207 Terminal RAM Dump"
 author: "Yesha (Forensics Track Lead)"
 category: "Forensics"
 description: |
   **Case File Briefing:**
   Following the midnight breach, campus incident responders cordoned off workstation **PC-04** in **AU Lab 207**.
 
-  Before fleeing the scene, the intruder abruptly logged out, leaving the terminal session uncommitted. First responders preserved the volatile physical memory state by creating a live memory capture (`lab207_terminal_ram.raw`).
+  Before fleeing the scene, the intruder abruptly logged out, leaving the terminal session uncommitted. First responders preserved the volatile physical memory state by capturing a live LiME memory snapshot (`lab207_terminal_ram.raw`), attached below for forensic triage.
 
-  **Crime Scene Workstation Access:**
-  Participants physically stationed in Lab 207 can walk to designated **PC-04** to acquire the memory capture directly from volatile storage (`/dev/shm/lab207_terminal_ram.raw`) via USB drive or perform live triage.
-
-  **Backup / Failover Access:**
-  An identical forensic snapshot (`lab207_terminal_ram.raw`) is also provided directly below as a downloadable offline mirror to prevent physical bottlenecks.
-
-  Analyze the memory dump using **Volatility 3** (inspect bash processes, command history, and environment variables) or forensic memory carving tools, and recover the leaked authorization token flag.
+  Analyze the memory dump using **Volatility 3** (inspect bash processes, command history, and environment variables) or forensic memory carving tools (such as `strings`). Correlate the session history to isolate the genuine exfiltration token used by the aggrieved teaching assistant (TA Piyush Pelaiya).
 
   **Flag Format:** `case{...}`
 
@@ -29,7 +23,6 @@ flags:
 
 tags:
   - forensics
-  - physical
   - memory
   - volatility
   - medium

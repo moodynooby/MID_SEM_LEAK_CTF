@@ -7,9 +7,15 @@ description: |
 
   Investigators believe this archive contains Prof. Hasmukh Chelaiya's master examination draft and grading key for **OOP 99**. However, the archive is protected by a strong passphrase.
 
-  Standard wordlists like `rockyou.txt` will fail completely. Department security interviews reveal the password was synthesized using campus lore entities: the lab number, course code, suspect name, and year.
+  Standard wordlists like `rockyou.txt` will fail completely. Campus Security interviews reveal that the culprit (TA Piyush Pelaiya) constructed the vault password using department identifiers:
+  - The crime scene laboratory: `AU207`
+  - The aggrieved course where Piyush was graded harshly: `OS101`
+  - The suspect's first name: `Piyush`
+  - The current competition year with special character punctuation: `2026!`
 
-  Generate a targeted dictionary based on your Case Briefing Dossier, crack the archive hash using Hashcat or John the Ripper, and extract the confidential vault flag!
+  Components are concatenated with underscores (e.g., `[Lab]_[Course]_[Suspect][Year]!`).
+
+  Generate a targeted dictionary or use Hashcat/John mask attack to crack the archive hash and extract the confidential vault flag!
 
   **Flag Format:** `case{...}`
 
@@ -32,8 +38,10 @@ tags:
   - story_act_2
 
 hints:
-  - content: "Standard dictionaries won't work. The password combines the lab number, course code, suspect name, and year."
-    cost: 50
+  - content: "Standard dictionaries like rockyou won't work. Campus Security reveals the password combines the lab number, course code, suspect name, and year separated by underscores (e.g. [Lab]_[Course]_[Suspect][Year]!)."
+    cost: 25
+  - content: "The exact components are 'AU207', 'OS101', 'Piyush', and '2026!'. Combine them as: AU207_OS101_Piyush2026!"
+    cost: 75
 
 files:
   - files/confidential_vault.zip

@@ -13,11 +13,9 @@ As the Tech Leads, your duties are:
 3. Manage the live scoreboard projection on the lab screen.
 4. Assist volunteers and teams with local network connectivity or login issues.
 5. Trigger timed moments:
-   - **4:35 PM:** 15-Minute Vanishing Challenge release.
-   - **4:45 PM:** Clue Drop #1 broadcast.
-   - **4:50 PM:** Vanishing Challenge expiration / hide.
-   - **5:00 PM:** 10-Minute Lightning Round activation (double points).
-   - **5:10 PM:** Lightning Round expiration & Clue Drop #2 broadcast.
+   - **4:30 PM:** Competition start (all 15 challenges live).
+   - **4:45 PM:** Clue Drop #1 broadcast & Spin Wheel Round 1.
+   - **5:10 PM:** Clue Drop #2 broadcast & Spin Wheel Round 2.
    - **5:15 PM:** Scoreboard Blackout trigger (Suspense mode).
    - **5:30 PM:** Scoreboard Reveal for the closing ceremony.
 
@@ -84,11 +82,8 @@ uv run ctf start
 | **3:00 - 4:00 PM** | Expert Talk | Monitor server load. Run `uv run ctf backup` once teams finish creating accounts. | Tech Team |
 | **4:00 - 4:30 PM** | Briefing & Rules | Verify all 20 teams can log in and see Act I challenges. | Volunteers / Tech |
 | **4:30 PM** | **COMPETITION START** | Announce competition live! Verify live solves stream on scoreboard. | Host & Tech Team |
-| **4:35 PM** | **Vanishing Clue** | Run `uv run ctf events --event vanishing_start` | Krish |
-| **4:45 PM** | **Clue Drop #1** | Run `uv run ctf events --event clue_drop_1` | Manas |
-| **4:50 PM** | **Vanishing Clue Closes**| Run `uv run ctf events --event vanishing_end` | Krish |
-| **5:00 PM** | **Lightning Round** | Run `uv run ctf events --event lightning_start` | Krish |
-| **5:10 PM** | **Lightning Ends & Clue #2**| Run `uv run ctf events --event lightning_end` then `--event clue_drop_2` | Krish |
+| **4:45 PM** | **Clue Drop #1 & Spin Wheel 1** | Run `uv run ctf events --event clue_drop_1` | Manas |
+| **5:10 PM** | **Clue Drop #2 & Spin Wheel 2** | Run `uv run ctf events --event clue_drop_2` | Krish |
 | **5:15 PM** | **Scoreboard Blackout** | Run `uv run ctf blackout`. Scoreboard freezes on projector! | Manas |
 | **5:15 - 5:30 PM**| Final 15 Mins | Watch backend solves for First Blood on the Final Culprit flag. Run `uv run ctf backup`. | Tech Team |
 | **5:30 PM** | **COMPETITION END** | Competition closes. Prepare final rankings. | Tech Team |
