@@ -1,13 +1,121 @@
 <!DOCTYPE html>
-<html>
+<html data-bs-theme="dark">
 <head>
   <title>{{ Configs.ctf_name }}</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="shortcut icon" href="{% if Configs.ctf_small_icon %}{{ url_for('views.files', path=Configs.ctf_small_icon) }}{% else %}{{ url_for('views.themes', path='img/favicon.ico') }}{% endif %}" type="image/x-icon">
+  <link rel="shortcut icon" href="{{ Configs.ctf_small_icon }}" type="image/x-icon">
 
   {% block stylesheets %}
     {{ Assets.css("assets/scss/main.scss") }}
+    <style>
+      :root, [data-bs-theme=dark] {
+        --bs-body-bg: #0d1117;
+        --bs-body-color: #dee2e6;
+        --bs-primary: #b5e853;
+        --bs-link-color: #b5e853;
+        --bs-link-hover-color: #d3f198;
+      }
+      body {
+        background-color: #0d1117 !important;
+        color: #dee2e6 !important;
+      }
+      /* Dark Terminal Table Styling */
+      table, .table {
+        --bs-table-bg: #161b22 !important;
+        --bs-table-striped-bg: #1c2128 !important;
+        --bs-table-hover-bg: #22272e !important;
+        --bs-table-color: #dee2e6 !important;
+        --bs-table-border-color: #30363d !important;
+        color: #dee2e6 !important;
+        border-color: #30363d !important;
+      }
+      .table > :not(caption) > * > * {
+        background-color: transparent;
+        border-bottom-color: #30363d !important;
+      }
+      .table-striped > tbody > tr:nth-of-type(odd) > * {
+        background-color: #1c2128 !important;
+        color: #dee2e6 !important;
+      }
+      .table-striped > tbody > tr:nth-of-type(even) > * {
+        background-color: #161b22 !important;
+        color: #dee2e6 !important;
+      }
+      .table-hover > tbody > tr:hover > * {
+        background-color: #22272e !important;
+      }
+      table thead th, .table thead th, thead td {
+        background-color: #212529 !important;
+        color: #b5e853 !important;
+        border-bottom: 2px solid #30363d !important;
+        font-family: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+      table a, .table a {
+        color: #b5e853 !important;
+        text-decoration: none;
+        font-weight: 600;
+        font-family: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      }
+      table a:hover, .table a:hover {
+        color: #d3f198 !important;
+        text-shadow: 0 0 8px rgba(181, 232, 83, 0.5);
+      }
+      /* Cards, Modals, Forms, and Pagination */
+      .card, .modal-content {
+        background-color: #161b22 !important;
+        border-color: #30363d !important;
+        color: #dee2e6 !important;
+      }
+      .form-control, .form-select {
+        background-color: #090d12 !important;
+        border-color: #30363d !important;
+        color: #dee2e6 !important;
+      }
+      .form-control:focus, .form-select:focus {
+        border-color: #b5e853 !important;
+        box-shadow: 0 0 10px rgba(181, 232, 83, 0.3) !important;
+        color: #fff !important;
+      }
+      .pagination .page-link {
+        background-color: #161b22 !important;
+        border-color: #30363d !important;
+        color: #b5e853 !important;
+      }
+      .pagination .page-item.active .page-link {
+        background-color: #b5e853 !important;
+        border-color: #b5e853 !important;
+        color: #0d1117 !important;
+      }
+      .jumbotron {
+        background: transparent !important;
+      }
+      .nav-tabs .nav-link {
+        color: #8b949e !important;
+        border-color: transparent !important;
+      }
+      /* Sticky Layout & Terminal Footer */
+      html, body {
+        min-height: 100vh;
+      }
+      body {
+        display: flex;
+        flex-direction: column;
+      }
+      main[role="main"] {
+        flex: 1 0 auto;
+        padding-bottom: 2rem;
+      }
+      footer.footer {
+        flex-shrink: 0;
+        border-top: 1px solid #30363d;
+        background: #161b22;
+        padding: 1.5rem 0;
+        margin-top: auto;
+      }
+    </style>
   {% endblock %}
 
   {{ Plugins.styles }}
@@ -41,6 +149,25 @@
   {% block content %}
   {% endblock %}
 </main>
+
+<footer class="footer">
+  <div class="container text-center">
+    <div class="mb-1">
+      <span style="color: #b5e853; font-family: var(--bs-font-monospace); font-size: 0.85rem; font-weight: 700; letter-spacing: 0.08em;">
+        CASE FILE: THE MID-SEM LEAK
+      </span>
+      <span class="text-muted mx-2">&bull;</span>
+      <span class="text-muted" style="font-family: var(--bs-font-monospace); font-size: 0.85rem;">
+        IEEE AUSB CTF 2026
+      </span>
+    </div>
+    <div style="font-size: 0.75rem; color: #8b949e; font-family: var(--bs-font-monospace);">
+      <span>Offline Campus LAN (Port 80) &bull; AU Labs 207 & 208</span>
+      <span class="mx-2">&bull;</span>
+      <a href="https://ctfd.io" target="_blank" rel="noopener noreferrer" style="color: #8b949e; text-decoration: none;">Powered by CTFd</a>
+    </div>
+  </div>
+</footer>
 
 {% include "components/notifications.html" %}
 
