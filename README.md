@@ -40,10 +40,13 @@ uv run ctf start
 # 2. Complete setup: seed all challenges, flags, files & themes
 uv run ctf setup
 
-# 3. Check container status & health
+# 3. Import teams and participants from Google Form registration CSV
+uv run ctf import [registration.csv]
+
+# 4. Check container status & health
 uv run ctf status
 
-# 4. Stop containers gracefully
+# 5. Stop containers gracefully
 uv run ctf stop
 ```
 
@@ -69,6 +72,7 @@ When started, CTFd will be accessible at:
 │
 ├── conf/
 │   ├── nginx/default.conf          # Nginx proxy (Port 80, SSE websocket streaming, 100MB body)
+│   ├── anubis/botPolicy.yaml       # Anubis anti-bot & Proof-of-Work rules (blocks AI scrapers)
 │   └── mysql/my.cnf                # MariaDB tuning (250 connections, UTF-8 MB4, buffer pools)
 │
 ├── ctfd-theme/                     # Big-screen /scoreboard styling (applied via `uv run ctf theme`)
@@ -80,6 +84,8 @@ When started, CTFd will be accessible at:
 │   └── template/                   # ctfcli-compatible challenge template
 │
 ├── ops/                            # Automation & Tech Lead Tooling (Manas, Krish)
+│   ├── import_participants.py      # Google Forms CSV participant & team importer
+│   ├── seed_challenges.py          # Offline challenge, dynamic scoring & theme seeder
 │   ├── freeze_scoreboard.py        # 5:15 PM suspense scoreboard blackout
 │   ├── unfreeze_scoreboard.py      # 5:30 PM closing ceremony scoreboard reveal
 │   ├── manage_timed_events.py      # Interactive console for clue drops and timed rounds

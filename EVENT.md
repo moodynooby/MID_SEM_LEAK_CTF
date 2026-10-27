@@ -1,7 +1,7 @@
 # EVENT.md — Master Event Dossier & Comprehensive Operations Plan
 > **Case File: The Mid-Sem Leak** | IEEE AUSB Annual Cybersecurity CTF  
 > **Date:** Wednesday, 28 October 2026 | **Time:** 2:00 PM – 6:00 PM IST  
-> **Venues:** Computer Labs 207 & 208, GICT Building, Ahmedabad University  
+> **Venues:** Computer Labs 207 & 208, AU Campus, Ahmedabad University  
 > **Deployment Architecture:** 100% Offline Campus LAN (Port 80) | Standby Failover Target: `< 2 min`  
 > **Target Audience:** 20 Teams (40–80 Undergraduate Engineering & Computing Students)  
 
@@ -20,11 +20,11 @@
 
 ## 2. Venues, Physical Staging & Network Topology
 
-### A. Laboratory Room Allocations (GICT Building)
+### A. Laboratory Room Allocations (AU Campus)
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                    GICT LAB 207 (COMMAND WING)              │
+│                      AU LAB 207 (COMMAND WING)              │
 │                                                             │
 │   [Ceiling Projector 1] ─── Fullscreen Live Scoreboard      │
 │   [Audio/Visual Console] ── 12-Track Live Soundboard + PA   │
@@ -36,7 +36,7 @@
 └──────────────────────────────┬──────────────────────────────┘
                                │ Gigabit Trunk Cable
 ┌──────────────────────────────┴──────────────────────────────┐
-│                  GICT LAB 208 (INVESTIGATION WING)          │
+│                    AU LAB 208 (INVESTIGATION WING)          │
 │                                                             │
 │   [Ceiling Projector 2] ─── Synchronized Scoreboard Feed    │
 │   [Standby Server Desk] ─── Hot-Standby Laptop (Live Sync)  │
@@ -82,15 +82,18 @@
 ## 4. Participant Ingress, Kit Distribution & Software Toolkit
 
 ### A. Team Onboarding Workflow (2:30 PM – 3:00 PM)
-1. **Welcome Desk (Entrance of Lab 207):**
+1. **Automated Registration Ingestion:**
+   - Registrations from Google Forms are ingested directly into CTFd via `uv run ctf import "Case Files - Registration Form Responses - Form Responses 1.csv"`.
+   - Generates `participants_credentials.csv` containing pre-seeded credentials for all teams, captains, and members.
+2. **Welcome Desk (Entrance of Lab 207):**
    - Verification of student ID cards and event registration confirmation.
    - Assignment of physical Team Number (Team 01 to Team 20) and Lab Station.
-2. **Physical Investigation Kit Distribution:**
+3. **Physical Investigation Kit Distribution:**
    - **Classified Incident Briefing Dossier:** Multi-page printed booklet with suspect dossiers, timeline diagram, floor plans, and notes from Prof. Chelaiya.
    - **Station Credential Card:** Pre-printed badge containing:
      - Team Name & Number.
      - Assigned Station (e.g. `Lab 207 - Station 04`).
-     - Pre-seeded CTFd credentials (Username: `team04`, Temporary Password: `ctf_investigator_2026`).
+     - Pre-seeded CTFd credentials (from `participants_credentials.csv`).
      - Access URL: `http://192.168.1.100`.
    - **Investigator Scratchpad & Pen:** For manual cipher calculations and timeline correlation.
 
@@ -149,7 +152,7 @@ Participants are advised during pre-event communications to have the following t
 
 #### 4:00 PM – 4:30 PM: Case Briefing & Rules Review
 - Organizer Vansh Shah takes the podium in Lab 207 (projected to Lab 208):
-  > *"Investigators, welcome to GICT. Last night at 21:14 IST, a confidential draft of Prof. Hasmukh Chelaiya's upcoming OOP 99 mid-sem examination was illicitly downloaded and leaked from the faculty share. Department records show high tension and grievances surrounding harsh grading in OS 101. Administration has convened your teams to trace the digital breadcrumbs, analyze the evidence dockets, and unmask the mastermind before the exam paper circulates campus. You have exactly one hour. Good luck!"*
+  > *"Investigators, welcome to Ahmedabad University. Last night at 21:14 IST, a confidential draft of Prof. Hasmukh Chelaiya's upcoming OOP 99 mid-sem examination was illicitly downloaded and leaked from the faculty share. Department records show high tension and grievances surrounding harsh grading in OS 101. Administration has convened your teams to trace the digital breadcrumbs, analyze the evidence dockets, and unmask the mastermind before the exam paper circulates campus. You have exactly one hour. Good luck!"*
 - Rules explained: `case{...}` flag syntax, dynamic scoring formula, 5-fail rate limit policy, Spin Wheel and Hot Sauce lifeline rules.
 
 ---
@@ -327,4 +330,4 @@ flowchart TD
 | **Vansh Shah** | Lab 207 Podium | Core Organizer (Logistics, Venue & Faculty Disputes) | Desk Phone / Ch 1 |
 | **Manas Doshi** | Lab 207 Server Desk | Co-Tech Lead (Primary Infrastructure & Database) | Desk Phone / Ch 1 |
 | **Krish** | Lab 208 Standby Desk| Co-Tech Lead (Standby Host & Live Automation) | Desk Phone / Ch 2 |
-| **GICT Lab In-charge** | GICT Facilities 1st Fl| Electrical Power, Air Conditioning & Hardware Switches| Ext. 2071 |
+| **AU Lab In-charge** | AU Facilities 1st Fl| Electrical Power, Air Conditioning & Hardware Switches| Ext. 2071 |

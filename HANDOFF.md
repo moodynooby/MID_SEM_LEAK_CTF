@@ -1,5 +1,5 @@
 # HANDOFF.md — Engineering & Operations Handoff Document
-> **Case File: The Mid-Sem Leak** | IEEE AUSB CTF (28 Oct 2026, GICT Labs 207 & 208)  
+> **Case File: The Mid-Sem Leak** | IEEE AUSB CTF (28 Oct 2026, AU Labs 207 & 208)  
 > **Tech Leads:** Manas Doshi (@moodynooby) & Krish (@Krish-452) | **Core Organizer:** Vansh Shah  
 > **Active Contributors:** Vidit (@viditd1-eng), Tanish (@tanishshahh), Vatsal (@VP1107), Yesha  
 
@@ -13,7 +13,7 @@ This repository contains the complete offline-first containerized infrastructure
 - **Target Audience:** 20 teams (40–80 undergraduate students).
 - **Core Engine:** Pinned CTFd 3.7.0 with MariaDB 10.11, Redis 7-Alpine, and custom tuned Nginx proxy on Port 80.
 - **Unified Tooling:** Single cross-platform CLI runner powered by `uv`: `uv run ctf <command>`.
-- **Zero Cloud LAN:** Engineered to operate completely disconnected from external internet on GICT Lab switches.
+- **Zero Cloud LAN:** Engineered to operate completely disconnected from external internet on AU Lab switches.
 - **Failover Target:** Standby laptop synchronization mechanism with `< 2-minute` Recovery Time Objective (RTO).
 
 ---
@@ -27,8 +27,18 @@ This repository contains the complete offline-first containerized infrastructure
        ┌────────────────────────────────────────────────────────┐
        │             Nginx Reverse Proxy (conf/nginx/)          │
        │    - Port 80 binding (HTTP)                            │
-       │    - SSE / Websocket proxy buffering disabled          │
-       │    - 100 MB client max body size (evidence uploads)    │
+       │    - SSE proxy buffering disabled (/events -> CTFd)    │
+       │    - Static evidence files (/files/ -> /var/uploads/)  │
+       │    - Big-screen AV Console (/av-console/)              │
+       │    - App traffic routed through Anubis PoW proxy       │
+       └────────────────────────────┬───────────────────────────┘
+                                    │
+                                    ▼
+       ┌────────────────────────────────────────────────────────┐
+       │           Anubis Anti-Bot / Anti-AI Proxy              │
+       │    - ghcr.io/techarohq/anubis (Port 8080)              │
+       │    - Proof-of-Work (PoW Difficulty 3) Challenge        │
+       │    - Denies automated AI scrapers and aggressive bots   │
        └────────────────────────────┬───────────────────────────┘
                                     │
                   ┌─────────────────┴─────────────────┐
@@ -68,8 +78,8 @@ This repository contains the complete offline-first containerized infrastructure
 | **#11** | Audio Spectrogram: Lab Microphone Wiretap | Stego | Medium | Yesha | `challenges/audio_spectrogram/` | Completed (Verified) |
 | **#12** | Physical Forensics: Lab 207 Terminal RAM Dump | Forensics | Medium | Yesha | `challenges/physical_terminal_ram/` | Completed (Verified) |
 | **#13** | Cookie / API: Faculty Exam Vault | Web | Easy | @tanishshahh | `challenges/cookie_api/` | Completed (Verified) |
-| **#14** | AI Model Prompt: Proctor Bot Jailbreak | AI | Easy/Med | @tanishshahh | `challenges/ai_prompt_injection/` | Completed (Verified) |
-| **#15** | PHP2SHELL: Faculty Upload Bypass | Web | Hard | @tanishshahh | `challenges/php2shell/` | Completed (Verified) |
+| **#14** | AI Model Prompt: Proctor Bot Jailbreak | AI | Easy/Med | @tanishshahh | `challenges/ai_prompt_injection/` | Completed (Verified - SmolLM2 Local LLM) |
+| **#15** | PHP2SHELL: Faculty Upload Bypass | Web | Hard | @tanishshahh | `challenges/php2shell/` | Completed (Verified - Multi-Team Isolated) |
 | **#16** | Intrusion Punishments & Siren Alerts | Live Ops | — | @tanishshahh | `ops/siren_alert/` | Scaffolding |
 | **#17** | APK Reverse Engineer: Suspect's App | Reversing | Medium | @viditd1-eng | `challenges/apk_companion_reversing/` | Completed (Verified) |
 | **#18** | Password Cracking: Faculty Vault | Crypto | Hard | @viditd1-eng | `challenges/password_cracking/` | Completed (Verified) |
@@ -129,6 +139,7 @@ uv run ctf blackout                         # 5:15 PM: Freeze scoreboard into su
 uv run ctf reveal                           # 5:30 PM: Unfreeze scoreboard for ceremony
 uv run ctf theme                            # Apply m0xblood theme and scoreboard projector styling
 uv run ctf seed                             # Seed all challenges, flags, attachments into CTFd
+uv run ctf import [CSV]                     # Ingest registration form CSV & generate credentials dossier
 uv run ctf setup                            # One-shot stack bootstrap, challenge seeder & bindings
 ```
 

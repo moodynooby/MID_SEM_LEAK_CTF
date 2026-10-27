@@ -2,7 +2,7 @@
 ## Case File: The Mid-Sem Leak — IEEE AUSB
 **Tech Lead Team:** Manas (@moodynooby) & Krish (@Krish-452)  
 **Event Date:** 28 October 2026 (Competition 4:30–5:30 PM)  
-**Venues:** Computer Labs 207 & 208, GICT
+**Venues:** Computer Labs 207 & 208, AU
 
 ---
 
@@ -58,7 +58,15 @@ uv run ctf start
 5. Paste this token into `.env` under `CTFD_ADMIN_TOKEN`.
 6. Apply the big-screen scoreboard styling: `uv run ctf theme` (see `ctfd-theme/README.md`).
 
-### Step 5: Test Backup & Standby Laptop
+### Step 5: Import Registrations & Generate Credentials
+1. Run participant intake from the latest Google Form responses CSV:
+   ```bash
+   uv run ctf import "Case Files - Registration Form Responses - Form Responses 1.csv"
+   ```
+2. Confirm all teams and competitors are pre-seeded in CTFd with verified accounts.
+3. Review or print the generated `participants_credentials.csv` for the check-in desk.
+
+### Step 6: Test Backup & Standby Laptop
 1. Run `uv run ctf backup` on the primary PC.
 2. Run `uv run ctf sync <BACKUP_IP>` or copy the `.tar.gz` to the backup laptop via USB.
 3. Run `uv run ctf restore` on the backup laptop and confirm CTFd loads with all data intact.

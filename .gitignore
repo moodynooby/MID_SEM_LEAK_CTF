@@ -11,6 +11,7 @@
 *.pem
 *.cert
 *.crt
+*credentials.csv
 # Allow example environment file
 !.env.example
 
@@ -47,10 +48,14 @@ backups/
 *.vmdk
 # Allow challenge artifacts in challenges/
 !challenges/**
+challenges/**/__pycache__/
+challenges/**/.pytest_cache/
+challenges/**/.temp_*
 
 # --- Container Volumes & Runtime Logs ---
 logs/
 *.log
+!challenges/**/*.log
 ctfd_data/
 db_data/
 redis_data/

@@ -16,6 +16,7 @@ Usage:
   uv run ctf reveal            - 5:30 PM Scoreboard Reveal (Awards ceremony)
   uv run ctf theme             - Apply big-screen scoreboard projector theme
   uv run ctf seed              - Seed all challenges, flags, attachments & dynamic scoring into CTFd
+  uv run ctf import [csv]      - Import teams & participants from registration responses CSV
   uv run ctf setup             - One-shot full setup (DB, challenges, themes, and bindings)
 """
 
@@ -30,6 +31,9 @@ import tempfile
 import subprocess
 from pathlib import Path
 from datetime import datetime
+import json
+import urllib.request
+import urllib.error
 from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
@@ -89,6 +93,67 @@ def load_env():
                     env_vars[k.strip()] = v.strip().strip('"').strip("'")
     return env_vars
 
+def ensure_ollama(model="smollm2"):
+    """Ensure Ollama daemon is running and required local model is pulled."""
+    console.print(f"[bold cyan][*] Checking Ollama AI service and model '{model}'...[/bold cyan]")
+    ollama_bin = shutil.which("ollama")
+    if not ollama_bin:
+        console.print("[yellow][!] Ollama binary not found on PATH. Attempting install...[/yellow]")
+        try:
+            res = subprocess.run("curl -fsSL https://ollama.com/install.sh | sh", shell=True)
+            if res.returncode != 0:
+                console.print("[bold red][!] Ollama installation failed. Please install from https://ollama.com[/bold red]")
+                return False
+            ollama_bin = shutil.which("ollama")
+        except Exception as e:
+            console.print(f"[bold red][!] Ollama auto-install failed: {e}[/bold red]")
+            return False
+
+    daemon_running = False
+    data = {}
+    try:
+        req = urllib.request.Request("http://127.0.0.1:11434/api/tags")
+        with urllib.request.urlopen(req, timeout=3) as resp:
+            data = json.loads(resp.read().decode())
+            daemon_running = True
+    except Exception:
+        daemon_running = False
+
+    if not daemon_running:
+        console.print("[yellow][*] Ollama daemon not reachable. Attempting to start daemon...[/yellow]")
+        if shutil.which("systemctl"):
+            subprocess.run(["sudo", "systemctl", "start", "ollama"], capture_output=True)
+        time.sleep(2)
+        try:
+            req = urllib.request.Request("http://127.0.0.1:11434/api/tags")
+            with urllib.request.urlopen(req, timeout=3) as resp:
+                data = json.loads(resp.read().decode())
+                daemon_running = True
+        except Exception:
+            try:
+                subprocess.Popen(["ollama", "serve"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                time.sleep(3)
+                req = urllib.request.Request("http://127.0.0.1:11434/api/tags")
+                with urllib.request.urlopen(req, timeout=3) as resp:
+                    data = json.loads(resp.read().decode())
+                    daemon_running = True
+            except Exception as e:
+                console.print(f"[bold red][!] Could not start Ollama daemon: {e}[/bold red]")
+                return False
+
+    existing_models = [m.get("name", "") for m in data.get("models", [])]
+    has_model = any(m == model or m.startswith(f"{model}:") for m in existing_models)
+    if not has_model:
+        console.print(f"[yellow][*] Model '{model}' not found in Ollama. Pulling model...[/yellow]")
+        res = subprocess.run(["ollama", "pull", model])
+        if res.returncode != 0:
+            console.print(f"[bold red][!] Failed to pull '{model}'.[/bold red]")
+            return False
+        console.print(f"[bold green][+] Model '{model}' successfully pulled![/bold green]")
+    else:
+        console.print(f"[bold green][+] Ollama daemon active and model '{model}' is verified.[/bold green]")
+    return True
+
 def cmd_start():
     compose = detect_compose_cmd()
     if not compose:
@@ -99,6 +164,7 @@ def cmd_start():
         sys.exit(1)
 
     load_env()
+    ensure_ollama("smollm2")
     console.print(Panel.fit(
         f"[bold blue]Starting CTFd Container Stack[/bold blue]\nEngine: [green]{' '.join(compose)}[/green]",
         title="IEEE AUSB — Case File: The Mid-Sem Leak"
@@ -296,8 +362,24 @@ def cmd_seed():
     script = ROOT_DIR / "ops" / "seed_challenges.py"
     subprocess.run([sys.executable, str(script)], cwd=str(ROOT_DIR))
 
+def cmd_import(csv_path=None, dry_run=False, include_talk_only=False, default_password="case2026!", export_credentials=None):
+    script = ROOT_DIR / "ops" / "import_participants.py"
+    cmd = [sys.executable, str(script)]
+    if csv_path:
+        cmd.extend(["--csv", str(csv_path)])
+    if dry_run:
+        cmd.append("--dry-run")
+    if include_talk_only:
+        cmd.append("--include-talk-only")
+    if default_password:
+        cmd.extend(["--default-password", default_password])
+    if export_credentials:
+        cmd.extend(["--export-credentials", str(export_credentials)])
+    subprocess.run(cmd, cwd=str(ROOT_DIR))
+
 def cmd_setup():
     console.print(Panel.fit("[bold cyan]Executing Complete Automated CTF Setup...[/bold cyan]"))
+    ensure_ollama("smollm2")
     cmd_seed()
     cmd_theme()
     console.print("[bold green][+] CTFd stack fully configured, challenges seeded, and themes bound![/bold green]")
@@ -333,7 +415,16 @@ def main():
     subparsers.add_parser("reveal", help="Trigger 5:30 PM closing reveal")
     subparsers.add_parser("theme", help="Apply big-screen scoreboard projector theme")
     subparsers.add_parser("seed", help="Seed challenges, flags, files, and theme into CTFd")
+
+    import_p = subparsers.add_parser("import", aliases=["import-participants"], help="Import teams & participants from registration responses CSV")
+    import_p.add_argument("csv", nargs="?", default=None, help="Path to registration CSV (optional)")
+    import_p.add_argument("--dry-run", action="store_true", help="Preview import without touching database")
+    import_p.add_argument("--include-talk-only", action="store_true", help="Also import talk-only participants")
+    import_p.add_argument("--default-password", default="case2026!", help="Default password (default: case2026!)")
+    import_p.add_argument("--export", dest="export_credentials", default=None, help="Export path for credentials dossier CSV")
+
     subparsers.add_parser("setup", help="One-shot full setup: configure DB, seed challenges, apply themes")
+    subparsers.add_parser("ollama", help="Ensure local Ollama service and neural LLM model are ready")
 
     args = parser.parse_args()
 
@@ -359,8 +450,18 @@ def main():
         cmd_theme()
     elif args.command == "seed":
         cmd_seed()
+    elif args.command in ["import", "import-participants"]:
+        cmd_import(
+            csv_path=args.csv,
+            dry_run=args.dry_run,
+            include_talk_only=args.include_talk_only,
+            default_password=args.default_password,
+            export_credentials=args.export_credentials
+        )
     elif args.command == "setup":
         cmd_setup()
+    elif args.command == "ollama":
+        ensure_ollama("smollm2")
     else:
         parser.print_help()
 
