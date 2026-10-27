@@ -24,7 +24,6 @@ from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
 CHALLENGES_DIR = ROOT_DIR / "challenges"
-THEME_DIR = ROOT_DIR / "ctfd-theme"
 ENV_FILE = ROOT_DIR / ".env"
 
 
@@ -69,24 +68,14 @@ def configure_ctfd_site():
     """Sets initial CTFd configurations in config table."""
     print("[*] Configuring CTFd system parameters & themes...")
 
-    css_file = THEME_DIR / "scoreboard-projector.css"
-    js_file = THEME_DIR / "scoreboard-projector.js"
-
-    theme_header = ""
-    theme_footer = ""
-    if css_file.exists():
-        theme_header = f"<style>\n{css_file.read_text()}\n</style>"
-    if js_file.exists():
-        theme_footer = f"<script>\n{js_file.read_text()}\n</script>"
-
     configs = {
         "ctf_name": "Case File: The Mid-Sem Leak",
         "ctf_description": "IEEE AUSB Annual Cybersecurity Incident Triage CTF — AU Labs 207 & 208",
-        "ctf_theme": "m0xblood",
+        "ctf_theme": "hacker-theme",
         "setup": "1",
         "user_mode": "teams",
-        "theme_header": theme_header,
-        "theme_footer": theme_footer,
+        "theme_header": "",
+        "theme_footer": "",
     }
 
     sql = ""
@@ -96,7 +85,7 @@ def configure_ctfd_site():
         INSERT INTO config (`key`, `value`) VALUES ({escape_sql(k)}, {escape_sql(v)});
         """
     run_sql(sql)
-    print("  [+] Core site settings and 'm0xblood' theme bindings applied successfully.")
+    print("  [+] Core site settings and 'hacker-theme' bindings applied successfully.")
 
 
 def upload_file_to_ctfd(file_path: Path, challenge_id: int):

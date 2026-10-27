@@ -1,27 +1,27 @@
 /*
  * Master Live Ops Cockpit & AV Console Styling
  * Case File: The Mid-Sem Leak — IEEE AUSB CTF (28/10/2026)
- * High-Contrast Dark Cyberpunk Theme (Optimized for Lab Projectors & Workstations)
+ * CTFd Hacker Theme Standard (Phosphor Lime Green #b5e853 & Terminal #0d1117)
  */
 
 :root {
-  --bg: #05070d;
-  --bg-card: #0d1120;
-  --bg-card-hover: #151a30;
-  --bg-input: #11162b;
-  --fg: #f5f7ff;
-  --text-muted: #94a3b8;
-  --border: #1f2740;
-  --border-focus: #38bdf8;
+  --bg: #0d1117;
+  --bg-card: #161b22;
+  --bg-card-hover: #212529;
+  --bg-input: #090d12;
+  --fg: #dee2e6;
+  --text-muted: #8b949e;
+  --border: #30363d;
+  --border-focus: #b5e853;
   
-  --accent-cyan: #7dd3fc;
-  --accent-blue: #38bdf8;
-  --accent-gold: #f5c842;
-  --accent-red: #ef4444;
-  --accent-green: #22c55e;
-  --accent-purple: #a855f7;
+  --accent-cyan: #b5e853;    /* Primary Hacker Lime Green */
+  --accent-blue: #91ba42;    /* Secondary Lime Green */
+  --accent-gold: #ffc107;
+  --accent-red: #e04b59;
+  --accent-green: #b5e853;
+  --accent-purple: #79c0ff;
   
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-mono: "SFMono-Regular", "Menlo", "Monaco", "Consolas", "Liberation Mono", "Courier New", monospace;
 }
 
 * {
@@ -33,18 +33,34 @@
 body {
   background: var(--bg);
   color: var(--fg);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--font-mono);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
 }
 
+/* CRT Scanlines Effect */
+.scanlines {
+  position: relative;
+}
+.scanlines::before {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+  background-size: 100% 4px;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
 /* --- Authentication Lock Screen Overlay --- */
 #auth-gate {
   position: fixed;
   inset: 0;
-  background: rgba(5, 7, 13, 0.96);
+  background: rgba(13, 17, 23, 0.96);
   backdrop-filter: blur(12px);
   z-index: 9999;
   display: flex;
@@ -56,33 +72,36 @@ body {
 .auth-card {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 16px;
+  border-radius: 12px;
   padding: 2.5rem 2rem;
   max-width: 480px;
   width: 100%;
   text-align: center;
-  box-shadow: 0 0 50px rgba(0, 0, 0, 0.8), 0 0 20px rgba(125, 211, 252, 0.15);
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.9), 0 0 25px rgba(181, 232, 83, 0.15);
 }
 
 .auth-badge {
   display: inline-block;
-  background: rgba(239, 68, 68, 0.2);
+  background: rgba(224, 75, 89, 0.15);
   color: var(--accent-red);
-  border: 1px solid rgba(239, 68, 68, 0.4);
+  border: 1px solid rgba(224, 75, 89, 0.35);
   padding: 0.35rem 0.85rem;
-  border-radius: 999px;
+  border-radius: 4px;
   font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   margin-bottom: 1.25rem;
+  font-family: var(--font-mono);
 }
 
 .auth-title {
   font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
-  color: var(--fg);
+  color: var(--accent-green);
+  font-family: var(--font-mono);
+  letter-spacing: 1px;
 }
 
 .auth-subtitle {
@@ -109,34 +128,40 @@ body {
   width: 100%;
   background: var(--bg-input);
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: 6px;
   padding: 0.75rem 1rem;
   color: var(--fg);
   font-family: var(--font-mono);
   font-size: 1rem;
   outline: none;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .auth-input:focus {
   border-color: var(--border-focus);
+  box-shadow: 0 0 10px rgba(181, 232, 83, 0.3);
 }
 
 .auth-btn {
   width: 100%;
-  background: linear-gradient(135deg, var(--accent-blue), #0284c7);
-  color: #fff;
+  background: var(--accent-green);
+  color: #0d1117;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   padding: 0.85rem;
   font-size: 1rem;
   font-weight: 700;
+  font-family: var(--font-mono);
+  letter-spacing: 0.05em;
   cursor: pointer;
-  transition: opacity 0.2s;
+  transition: opacity 0.2s, transform 0.1s, box-shadow 0.2s;
+  box-shadow: 0 0 15px rgba(181, 232, 83, 0.4);
 }
 
 .auth-btn:hover {
-  opacity: 0.9;
+  background: var(--accent-blue);
+  box-shadow: 0 0 25px rgba(181, 232, 83, 0.6);
+  transform: translateY(-1px);
 }
 
 .auth-error {
@@ -148,7 +173,7 @@ body {
 
 /* --- Global Cockpit Header --- */
 .cockpit-header {
-  background: #090c17;
+  background: #161b22;
   border-bottom: 1px solid var(--border);
   padding: 0.75rem 1.5rem;
   display: flex;
@@ -171,16 +196,18 @@ body {
 }
 
 .brand-text h1 {
-  font-size: 1rem;
+  font-size: 1.05rem;
   font-weight: 700;
-  color: var(--fg);
-  letter-spacing: 0.02em;
+  color: var(--accent-green);
+  letter-spacing: 0.05em;
+  font-family: var(--font-mono);
 }
 
 .brand-text small {
   display: block;
   color: var(--text-muted);
   font-size: 0.75rem;
+  font-family: var(--font-mono);
 }
 
 /* HUD Pill (Clock & Countdown) */
@@ -191,14 +218,15 @@ body {
   background: var(--bg-card);
   border: 1px solid var(--border);
   padding: 0.4rem 1rem;
-  border-radius: 999px;
+  border-radius: 6px;
   font-variant-numeric: tabular-nums;
 }
 
 .hud-clock {
   font-family: var(--font-mono);
   font-size: 0.95rem;
-  color: var(--accent-cyan);
+  font-weight: 700;
+  color: var(--accent-green);
   display: flex;
   align-items: center;
   gap: 0.4rem;
@@ -212,15 +240,16 @@ body {
   display: flex;
   align-items: center;
   gap: 0.4rem;
+  font-family: var(--font-mono);
 }
 
 /* Navigation Tabs */
 .deck-tabs {
   display: flex;
   gap: 0.35rem;
-  background: var(--bg-card);
+  background: var(--bg);
   padding: 0.25rem;
-  border-radius: 8px;
+  border-radius: 6px;
   border: 1px solid var(--border);
 }
 
@@ -229,9 +258,10 @@ body {
   border: none;
   color: var(--text-muted);
   padding: 0.5rem 0.85rem;
-  border-radius: 6px;
+  border-radius: 4px;
   font-size: 0.85rem;
   font-weight: 600;
+  font-family: var(--font-mono);
   cursor: pointer;
   transition: all 0.15s ease;
   display: flex;
@@ -244,9 +274,10 @@ body {
 }
 
 .deck-tab.active {
-  background: var(--accent-blue);
-  color: #fff;
-  box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+  background: var(--accent-green);
+  color: #0d1117;
+  font-weight: 700;
+  box-shadow: 0 0 15px rgba(181, 232, 83, 0.4);
 }
 
 /* Quick Tools */
@@ -263,6 +294,7 @@ body {
   padding: 0.5rem 0.75rem;
   border-radius: 6px;
   font-size: 0.8rem;
+  font-family: var(--font-mono);
   cursor: pointer;
   text-decoration: none;
   transition: all 0.15s;
@@ -273,7 +305,8 @@ body {
 
 .tool-btn:hover {
   background: var(--bg-card-hover);
-  border-color: var(--accent-cyan);
+  border-color: var(--accent-green);
+  color: var(--accent-green);
 }
 
 /* --- Intrusion Alert Banner --- */
@@ -288,6 +321,7 @@ body {
   animation: bannerPulse 1s infinite alternate;
   font-weight: 700;
   z-index: 90;
+  font-family: var(--font-mono);
 }
 
 @keyframes bannerPulse {
@@ -329,7 +363,7 @@ body {
 .wheel-stage {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 16px;
+  border-radius: 12px;
   padding: 2rem;
   display: flex;
   flex-direction: column;
@@ -350,7 +384,7 @@ body {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  box-shadow: 0 0 50px rgba(0, 0, 0, 0.8), 0 0 25px rgba(125, 211, 252, 0.2);
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(181, 232, 83, 0.25);
 }
 
 .wheel-pointer {
@@ -372,9 +406,9 @@ body {
   width: 110px;
   height: 110px;
   border-radius: 50%;
-  background: radial-gradient(circle, #1e293b, #090d16);
-  border: 4px solid #ffffff;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.9), inset 0 0 15px rgba(255, 255, 255, 0.2);
+  background: radial-gradient(circle, #212529, #0d1117);
+  border: 4px solid var(--accent-green);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.9), 0 0 20px rgba(181, 232, 83, 0.4);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -392,14 +426,16 @@ body {
 .center-hub span {
   font-size: 1.1rem;
   font-weight: 900;
-  color: #fff;
+  color: var(--accent-green);
   letter-spacing: 0.05em;
+  font-family: var(--font-mono);
 }
 
 .center-hub small {
   font-size: 0.6rem;
-  color: var(--accent-gold);
+  color: var(--text-muted);
   font-weight: 700;
+  font-family: var(--font-mono);
 }
 
 .wheel-actions {
@@ -409,22 +445,24 @@ body {
 }
 
 .spin-btn-large {
-  background: linear-gradient(135deg, #ef4444, #b91c1c);
-  color: #fff;
+  background: var(--accent-green);
+  color: #0d1117;
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
   padding: 0.9rem 2.5rem;
   font-size: 1.2rem;
   font-weight: 800;
+  font-family: var(--font-mono);
   letter-spacing: 0.05em;
   cursor: pointer;
-  box-shadow: 0 0 25px rgba(239, 68, 68, 0.4);
+  box-shadow: 0 0 25px rgba(181, 232, 83, 0.4);
   transition: all 0.15s;
 }
 
 .spin-btn-large:hover {
   transform: translateY(-2px);
-  box-shadow: 0 0 35px rgba(239, 68, 68, 0.6);
+  background: var(--accent-blue);
+  box-shadow: 0 0 35px rgba(181, 232, 83, 0.6);
 }
 
 /* Sidebar Cards */
@@ -437,30 +475,36 @@ body {
 .deck-card {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 10px;
   padding: 1.25rem;
 }
 
 .deck-card-title {
   font-size: 0.95rem;
   font-weight: 700;
-  color: var(--fg);
+  color: var(--accent-green);
   margin-bottom: 0.75rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  font-family: var(--font-mono);
 }
 
 .deck-select {
   width: 100%;
   background: var(--bg-input);
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: 6px;
   padding: 0.6rem 0.75rem;
   color: var(--fg);
   font-size: 0.9rem;
+  font-family: var(--font-mono);
   outline: none;
   margin-bottom: 0.5rem;
+}
+
+.deck-select:focus {
+  border-color: var(--border-focus);
 }
 
 .history-box {
@@ -475,23 +519,26 @@ body {
   font-size: 0.85rem;
   display: flex;
   justify-content: space-between;
+  font-family: var(--font-mono);
 }
 
 /* --- View: Countdown & Timeline Panel --- */
 .countdown-container {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 16px;
+  border-radius: 12px;
   padding: 3rem 2rem;
   text-align: center;
+  position: relative;
 }
 
 .countdown-next-label {
   font-size: 1.4rem;
-  color: var(--accent-cyan);
+  color: var(--accent-green);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
   margin-bottom: 0.5rem;
+  font-family: var(--font-mono);
 }
 
 .countdown-digits {
@@ -499,8 +546,8 @@ body {
   font-family: var(--font-mono);
   font-weight: 800;
   font-variant-numeric: tabular-nums;
-  color: #fff;
-  text-shadow: 0 0 40px rgba(125, 211, 252, 0.35);
+  color: var(--accent-green);
+  text-shadow: 0 0 40px rgba(181, 232, 83, 0.45);
   margin-bottom: 1.5rem;
   line-height: 1;
 }
@@ -508,16 +555,18 @@ body {
 .countdown-bar-track {
   width: min(80vw, 800px);
   height: 10px;
-  background: #11162b;
+  background: #090d12;
   border-radius: 999px;
   margin: 0 auto 2.5rem;
   overflow: hidden;
+  border: 1px solid var(--border);
 }
 
 .countdown-bar-fill {
   height: 100%;
   width: 0%;
   background: linear-gradient(90deg, var(--accent-blue), var(--accent-green));
+  box-shadow: 0 0 10px rgba(181, 232, 83, 0.5);
   transition: width 1s linear;
 }
 
@@ -533,7 +582,7 @@ body {
 .timeline-card {
   background: var(--bg-input);
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: 6px;
   padding: 0.75rem 1rem;
   display: flex;
   align-items: center;
@@ -544,25 +593,27 @@ body {
 
 .timeline-card.active {
   opacity: 1;
-  border-color: var(--accent-gold);
-  background: rgba(245, 200, 66, 0.08);
+  border-color: var(--accent-green);
+  background: rgba(181, 232, 83, 0.08);
+  box-shadow: 0 0 15px rgba(181, 232, 83, 0.15);
 }
 
 .timeline-card.done {
   opacity: 0.85;
-  border-color: var(--accent-green);
+  border-color: #238636;
 }
 
 .timeline-card-time {
   font-family: var(--font-mono);
   font-weight: 700;
-  color: var(--accent-cyan);
+  color: var(--accent-green);
   font-size: 0.9rem;
 }
 
 .timeline-card-title {
   font-size: 0.85rem;
   font-weight: 600;
+  font-family: var(--font-mono);
 }
 
 /* --- View: Soundboard Panel --- */
@@ -576,7 +627,7 @@ body {
 .sound-cue-btn {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 8px;
   padding: 1.75rem 1rem;
   color: var(--fg);
   cursor: pointer;
@@ -586,12 +637,13 @@ body {
   gap: 0.5rem;
   transition: all 0.15s ease;
   user-select: none;
+  font-family: var(--font-mono);
 }
 
 .sound-cue-btn:hover {
   transform: translateY(-3px);
-  border-color: var(--accent-cyan);
-  box-shadow: 0 0 20px rgba(125, 211, 252, 0.2);
+  border-color: var(--accent-green);
+  box-shadow: 0 0 20px rgba(181, 232, 83, 0.25);
 }
 
 .sound-cue-btn:active {
@@ -605,15 +657,17 @@ body {
 .cue-name {
   font-weight: 700;
   font-size: 1rem;
+  color: var(--fg);
 }
 
 .cue-key {
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  color: var(--accent-gold);
-  background: rgba(0, 0, 0, 0.3);
+  color: var(--accent-green);
+  background: rgba(0, 0, 0, 0.4);
   padding: 0.2rem 0.5rem;
   border-radius: 4px;
+  border: 1px solid rgba(181, 232, 83, 0.3);
 }
 
 /* --- View: Timed Event Actions (CLI-to-UI) --- */
@@ -626,7 +680,7 @@ body {
 .action-card {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 8px;
   padding: 1.5rem;
 }
 
@@ -640,15 +694,18 @@ body {
 .action-card-title {
   font-size: 1.05rem;
   font-weight: 700;
+  font-family: var(--font-mono);
+  color: var(--accent-green);
 }
 
 .action-cli-badge {
   font-family: var(--font-mono);
   font-size: 0.7rem;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(181, 232, 83, 0.1);
   padding: 0.2rem 0.5rem;
   border-radius: 4px;
-  color: var(--accent-cyan);
+  color: var(--accent-green);
+  border: 1px solid rgba(181, 232, 83, 0.3);
 }
 
 .action-card-desc {
@@ -656,51 +713,54 @@ body {
   color: var(--text-muted);
   margin-bottom: 1.25rem;
   line-height: 1.4;
+  font-family: var(--font-mono);
 }
 
 .action-trigger-btn {
   width: 100%;
   padding: 0.75rem;
-  border-radius: 8px;
+  border-radius: 6px;
   border: 1px solid var(--border);
   background: var(--bg-input);
   color: var(--fg);
   font-weight: 700;
   font-size: 0.9rem;
+  font-family: var(--font-mono);
   cursor: pointer;
   transition: all 0.15s;
 }
 
 .action-trigger-btn:hover {
   background: var(--bg-card-hover);
-  border-color: var(--accent-blue);
+  border-color: var(--accent-green);
+  color: var(--accent-green);
 }
 
 .action-trigger-btn.danger {
-  background: rgba(239, 68, 68, 0.15);
+  background: rgba(224, 75, 89, 0.15);
   border-color: var(--accent-red);
   color: #fca5a5;
 }
 
 .action-trigger-btn.danger:hover {
-  background: rgba(239, 68, 68, 0.3);
+  background: rgba(224, 75, 89, 0.3);
 }
 
 .action-trigger-btn.gold {
-  background: rgba(245, 200, 66, 0.15);
+  background: rgba(255, 193, 7, 0.15);
   border-color: var(--accent-gold);
   color: #fef08a;
 }
 
 /* Console Execution Output Feed */
 .console-log-box {
-  background: #020408;
+  background: #090d12;
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: 8px;
   padding: 1rem;
   font-family: var(--font-mono);
   font-size: 0.8rem;
-  color: #38bdf8;
+  color: var(--accent-green);
   max-height: 160px;
   overflow-y: auto;
   margin-top: 1.5rem;
@@ -710,7 +770,7 @@ body {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.85);
+  background: rgba(0, 0, 0, 0.88);
   backdrop-filter: blur(8px);
   z-index: 1000;
   display: none;
@@ -722,8 +782,9 @@ body {
 .modal-content {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 16px;
+  border-radius: 12px;
   padding: 2rem;
   max-width: 520px;
   width: 100%;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.9), 0 0 20px rgba(181, 232, 83, 0.2);
 }

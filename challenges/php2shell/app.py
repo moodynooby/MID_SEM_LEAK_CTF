@@ -41,18 +41,18 @@ INDEX_HTML = """<!DOCTYPE html>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     :root {
-      --bg: #0b0f19;
-      --card-bg: #111827;
-      --border: #1f2937;
-      --accent: #38bdf8;
-      --danger: #ef4444;
-      --success: #10b981;
-      --text: #f3f4f6;
-      --muted: #9ca3af;
+      --bg: #0d1117;
+      --card-bg: #161b22;
+      --border: #30363d;
+      --accent: #b5e853;
+      --danger: #e04b59;
+      --success: #b5e853;
+      --text: #dee2e6;
+      --muted: #8b949e;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'SFMono-Regular', Menlo, Monaco, Consolas, 'Liberation Mono', monospace; }
     body {
-      background: radial-gradient(circle at top, #1e293b 0%, var(--bg) 100%);
+      background: var(--bg);
       color: var(--text);
       min-height: 100vh;
       display: flex;
@@ -74,23 +74,23 @@ INDEX_HTML = """<!DOCTYPE html>
       font-size: 11px;
       letter-spacing: 1px;
       text-transform: uppercase;
-      border-radius: 999px;
-      background: rgba(56, 189, 248, 0.1);
+      border-radius: 4px;
+      background: rgba(181, 232, 83, 0.1);
       color: var(--accent);
-      border: 1px solid rgba(56, 189, 248, 0.3);
+      border: 1px solid rgba(181, 232, 83, 0.35);
       margin-bottom: 12px;
     }
-    h1 { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
-    .subtitle { color: var(--muted); font-size: 14px; }
+    h1 { font-size: 24px; font-weight: 700; color: var(--accent); margin-bottom: 6px; letter-spacing: 1px; }
+    .subtitle { color: var(--muted); font-size: 13px; }
     .card {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 12px;
+      border-radius: 8px;
       padding: 24px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.6);
     }
     .notice-box {
-      background: rgba(56, 189, 248, 0.05);
+      background: rgba(181, 232, 83, 0.08);
       border-left: 4px solid var(--accent);
       padding: 14px;
       border-radius: 4px;
@@ -99,11 +99,11 @@ INDEX_HTML = """<!DOCTYPE html>
       line-height: 1.5;
     }
     .upload-area {
-      border: 2px dashed #374151;
-      border-radius: 8px;
+      border: 2px dashed var(--border);
+      border-radius: 6px;
       padding: 30px;
       text-align: center;
-      background: rgba(17, 24, 39, 0.6);
+      background: #090d12;
       margin-bottom: 20px;
     }
     input[type="file"] {
@@ -114,7 +114,7 @@ INDEX_HTML = """<!DOCTYPE html>
     }
     button {
       background: var(--accent);
-      color: #0b0f19;
+      color: #0d1117;
       font-weight: 700;
       border: none;
       padding: 12px 24px;
@@ -132,21 +132,22 @@ INDEX_HTML = """<!DOCTYPE html>
       line-height: 1.5;
     }
     .result-box.error {
-      background: rgba(239, 68, 68, 0.1);
+      background: rgba(224, 75, 89, 0.15);
       border: 1px solid var(--danger);
       color: #fca5a5;
     }
     .result-box.success {
-      background: rgba(16, 185, 129, 0.1);
+      background: rgba(181, 232, 83, 0.15);
       border: 1px solid var(--success);
-      color: #6ee7b7;
+      color: #b5e853;
     }
     code {
-      background: #1f2937;
+      background: #212529;
       padding: 2px 6px;
       border-radius: 4px;
       font-family: monospace;
-      color: #7dd3fc;
+      color: var(--accent);
+      border: 1px solid var(--border);
     }
     footer {
       margin-top: auto;

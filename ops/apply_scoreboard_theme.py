@@ -1,21 +1,12 @@
 #!/usr/bin/env python3
 """
-Scoreboard Projector Theme Applier
+Theme Activator & Scoreboard Configurator
 IEEE AUSB: Case File: The Mid-Sem Leak
 
-Pushes ctfd-theme/scoreboard-projector.{css,js} into CTFd's
-`theme_header` / `theme_footer` configs via the REST API, so the
-big-screen /scoreboard styling is version-controlled and reproducible
-instead of a manual, uncommitted Admin UI edit.
-
-CTFd injects `theme_header` into <head> and `theme_footer` just before
-</body> on every page; the CSS/JS themselves are scoped to /scoreboard
-only (see ctfd-theme/README.md), so this is safe to apply site-wide.
-
-Re-run after every fresh CTFd setup (and after any `docker compose
-down -v`, which wipes the config table along with everything else in
-MariaDB) — this script is the single source of truth, not the Admin
-UI.
+Activates `hacker-theme` as the primary CTFd theme via the REST API.
+Scoreboard styling, big-screen typography, medals, and live solve ticker
+are built directly into `themes/hacker-theme/templates/scoreboard.html`,
+eliminating the need for database injection into `theme_header` / `theme_footer`.
 """
 
 import sys
@@ -23,7 +14,6 @@ import requests
 from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
-THEME_DIR = ROOT_DIR / "ctfd-theme"
 
 
 def load_env():
@@ -54,17 +44,8 @@ def set_config(api_url, token, key, value):
 
 def main():
     print("==========================================================")
-    print(" [IEEE AUSB CTF] Applying Scoreboard Projector Theme")
+    print(" [IEEE AUSB CTF] Activating Hacker Theme & Resetting Injections")
     print("==========================================================")
-
-    css_file = THEME_DIR / "scoreboard-projector.css"
-    js_file = THEME_DIR / "scoreboard-projector.js"
-    if not css_file.exists() or not js_file.exists():
-        print(f"[!] Missing theme source files in {THEME_DIR}")
-        sys.exit(1)
-
-    theme_header = f"<style id=\"projector-mode-style\">\n{css_file.read_text()}\n</style>"
-    theme_footer = f"<script>\n{js_file.read_text()}\n</script>"
 
     env = load_env()
     token = env.get("CTFD_ADMIN_TOKEN", "")
@@ -76,16 +57,17 @@ def main():
         print("    add it to .env, then re-run: uv run ctf theme")
         sys.exit(1)
 
-    print("[*] Activating primary theme 'm0xblood' via CTFd API...")
-    theme_ok = set_config(api_url, token, "ctf_theme", "m0xblood")
-    print("[*] Pushing theme_header (CSS) via CTFd API...")
-    header_ok = set_config(api_url, token, "theme_header", theme_header)
-    print("[*] Pushing theme_footer (JS) via CTFd API...")
-    footer_ok = set_config(api_url, token, "theme_footer", theme_footer)
+    print("[*] Activating primary theme 'hacker-theme' via CTFd API...")
+    theme_ok = set_config(api_url, token, "ctf_theme", "hacker-theme")
+
+    # Clear legacy raw HTML/JS injections from DB since styles are native in templates
+    print("[*] Cleaning up legacy database theme_header & theme_footer injections...")
+    header_ok = set_config(api_url, token, "theme_header", "")
+    footer_ok = set_config(api_url, token, "theme_footer", "")
 
     if theme_ok and header_ok and footer_ok:
-        print("[+] Primary theme ('m0xblood') and scoreboard projector theme applied successfully!")
-        print("    Open /scoreboard on the projector and press F11 for fullscreen.")
+        print("[+] Primary theme ('hacker-theme') activated successfully!")
+        print("    All scoreboard projector styling is now natively rendered from templates.")
     else:
         print("[!] Failed to apply one or more configs. Check CTFD_ADMIN_TOKEN and CTFD_API_URL.")
         sys.exit(1)

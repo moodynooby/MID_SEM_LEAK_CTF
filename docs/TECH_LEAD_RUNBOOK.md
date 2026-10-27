@@ -54,7 +54,7 @@ uv run ctf start
 3. Create Admin account (Keep credentials in your private password manager).
 4. Go to **Profile -> Access Tokens -> Generate Token**.
 5. Paste this token into `.env` under `CTFD_ADMIN_TOKEN`.
-6. Apply the big-screen scoreboard styling: `uv run ctf theme` (see `ctfd-theme/README.md`).
+6. Activate the theme: `uv run ctf theme` (hacker-theme with native scoreboard projector styling).
 
 ### Step 5: Import Registrations & Generate Credentials
 1. Run participant intake from the latest Google Form responses CSV:

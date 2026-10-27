@@ -47,7 +47,7 @@
   <!-- Global Cockpit Header -->
   <header class="cockpit-header">
     <div class="header-brand">
-      <span class="brand-icon">⚡</span>
+      <img src="shared/icon.png" alt="Logo" style="height: 32px; width: 32px; border-radius: 4px; border: 1px solid var(--accent-green); object-fit: cover;">
       <div class="brand-text">
         <h1>Case File: The Mid-Sem Leak</h1>
         <small>Master Live Ops Cockpit & AV Deck (AU Labs 207 & 208)</small>
@@ -150,7 +150,7 @@
 
     <!-- PANEL 2: BIG-SCREEN COUNTDOWN & TIMELINE -->
     <section id="view-countdown" class="view-panel">
-      <div class="countdown-container">
+      <div class="countdown-container scanlines">
         <div id="countdown-next-label" class="countdown-next-label">Loading Milestone…</div>
         <div id="big-timer-digits" class="countdown-digits">00:00</div>
         
@@ -294,6 +294,17 @@
           </div>
           <p class="action-card-desc">Triggers emergency siren alert simulation on all connected projector screens.</p>
           <button onclick="triggerEventAction('siren')" class="action-trigger-btn danger">Test Intrusion Siren</button>
+        </div>
+
+        <div class="action-card" style="grid-column: 1 / -1;">
+          <div class="action-card-header">
+            <span class="action-card-title">🛡️ Decoy Honeyflags & Honeypot Trap Sensor Grid</span>
+            <span class="action-cli-badge" id="honeypot-active-count">12 Traps Armed</span>
+          </div>
+          <p class="action-card-desc">Real-time log of teams that tripped decoy honeyflags or hit the 5-strike bruteforce limit.</p>
+          <div id="honeypot-log-container" style="max-height: 220px; overflow-y: auto; font-size: 0.82rem; margin-top: 0.5rem; border: 1px solid var(--border); border-radius: 8px; padding: 0.75rem; background: rgba(0,0,0,0.3);">
+            <div style="color: var(--text-muted); text-align: center; padding: 1rem;">🛡️ Grid armed: No decoy honeyflags triggered yet. Monitoring all participant stations...</div>
+          </div>
         </div>
 
       </div>

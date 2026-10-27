@@ -52,87 +52,87 @@ DEFAULT_GAMIFICATION = {
         "decoy_flags": [
             {
                 "flag": "case{faculty_admin_portal_root_auth_2026}",
-                "name": "Faculty Vault Emergency Root Token",
+                "name": "Faculty Vault Decoy (Honeypot)",
                 "lockout_seconds": 120,
                 "penalty_points": 0,
-                "alert_message": "🚨 SECURITY VIOLATION: Unauthorized faculty admin token entered!"
+                "alert_message": "🚨 HONEYPOT TRAP TRIGGERED: Faculty Vault Decoy Flag entered!"
             },
             {
                 "flag": "case{proctor_emergency_override_lockout_token}",
-                "name": "ProctorBot Emergency Restriction Token",
+                "name": "AI Proctor Bot Decoy (Honeypot)",
                 "lockout_seconds": 120,
                 "penalty_points": 0,
-                "alert_message": "🚨 SECURITY VIOLATION: ProctorBot restriction override token entered!"
+                "alert_message": "🚨 HONEYPOT TRAP TRIGGERED: ProctorBot Decoy Override Token entered!"
             },
             {
                 "flag": "case{student_sansh_portal_session_cookie}",
-                "name": "Sansh Portal Session Cookie",
+                "name": "Sansh Portal Cookie Decoy (Honeypot)",
                 "lockout_seconds": 120,
                 "penalty_points": 0,
-                "alert_message": "🚨 SECURITY VIOLATION: Student portal session cookie entered!"
+                "alert_message": "🚨 HONEYPOT TRAP TRIGGERED: Sansh Portal Decoy Flag entered!"
             },
             {
                 "flag": "case{au_campus_syslog_telemetry_token}",
-                "name": "Campus Syslog Telemetry Token",
+                "name": "Campus Syslog Beacon Decoy (Honeypot)",
                 "lockout_seconds": 120,
                 "penalty_points": 0,
-                "alert_message": "🚨 SECURITY VIOLATION: Syslog telemetry beacon token entered!"
+                "alert_message": "🚨 HONEYPOT TRAP TRIGGERED: Syslog Telemetry Decoy Flag entered!"
             },
             {
                 "flag": "case{sansh_laptop_dhcp_lease_vlan100}",
-                "name": "Sansh Laptop DHCP Lease Token",
+                "name": "Sansh DHCP Lease Decoy (Honeypot)",
                 "lockout_seconds": 120,
                 "penalty_points": 0,
-                "alert_message": "🚨 SECURITY VIOLATION: Suspicious DHCP lease token entered!"
+                "alert_message": "🚨 HONEYPOT TRAP TRIGGERED: Wi-Fi DHCP Decoy Flag entered!"
             },
             {
                 "flag": "case{tryan_guest_mobile_dhcp_auth_0213}",
-                "name": "Tryan Guest Mobile DHCP Auth Token",
+                "name": "Tryan Guest Mobile Decoy (Honeypot)",
                 "lockout_seconds": 120,
                 "penalty_points": 0,
-                "alert_message": "🚨 SECURITY VIOLATION: Guest Wi-Fi authentication token entered!"
+                "alert_message": "🚨 HONEYPOT TRAP TRIGGERED: Guest Mobile Decoy Flag entered!"
             },
             {
                 "flag": "case{staging_lab207_workstation_setup_key}",
-                "name": "Lab 207 Staging Setup Key",
+                "name": "CheatSheet Staging Key Decoy (Honeypot)",
                 "lockout_seconds": 120,
                 "penalty_points": 0,
-                "alert_message": "🚨 SECURITY VIOLATION: Staging workstation setup key entered!"
+                "alert_message": "🚨 HONEYPOT TRAP TRIGGERED: CheatSheet Staging Comment Decoy entered!"
             },
             {
                 "flag": "case{sansh_lab208_checkin_token}",
-                "name": "Sansh Lab 208 Check-in Token",
+                "name": "Sansh Lab 208 Check-in Decoy (Honeypot)",
                 "lockout_seconds": 120,
                 "penalty_points": 0,
-                "alert_message": "🚨 SECURITY VIOLATION: Lab check-in attendance token entered!"
+                "alert_message": "🚨 HONEYPOT TRAP TRIGGERED: Lab 208 Check-in Decoy entered!"
             },
             {
                 "flag": "case{danas_terminal_footprint_auth}",
-                "name": "Danas Terminal Footprint Token",
+                "name": "Danas Terminal Footprint Decoy (Honeypot)",
                 "lockout_seconds": 120,
                 "penalty_points": 0,
-                "alert_message": "🚨 SECURITY VIOLATION: Terminal footprint token entered!"
+                "alert_message": "🚨 HONEYPOT TRAP TRIGGERED: Terminal Footprint Decoy entered!"
             },
             {
                 "flag": "case{os101_assignment2_grading_rubric_official}",
-                "name": "OS 101 Assignment Grading Rubric Token",
+                "name": "OS 101 Rubric Email Decoy (Honeypot)",
                 "lockout_seconds": 120,
                 "penalty_points": 0,
-                "alert_message": "🚨 SECURITY VIOLATION: Assignment grading rubric token entered!"
+                "alert_message": "🚨 HONEYPOT TRAP TRIGGERED: OS 101 Rubric Email Decoy entered!"
             },
             {
                 "flag": "case{student_sansh_lab_extension_request_auth}",
-                "name": "Sansh Lab Extension Request Token",
+                "name": "Sansh Extension Email Decoy (Honeypot)",
                 "lockout_seconds": 120,
                 "penalty_points": 0,
-                "alert_message": "🚨 SECURITY VIOLATION: Student extension request token entered!"
+                "alert_message": "🚨 HONEYPOT TRAP TRIGGERED: Extension Request Email Decoy entered!"
             },
             {
                 "flag": "case{dean_academic_integrity_protocol_2026}",
-                "name": "Dean Academic Integrity Protocol Token",
+                "name": "Dean Protocol Email Decoy (Honeypot)",
                 "lockout_seconds": 120,
                 "penalty_points": 0,
-                "alert_message": "🚨 SECURITY VIOLATION: Dean circular protocol token entered!"
+                "alert_message": "🚨 HONEYPOT TRAP TRIGGERED: Dean Integrity Protocol Email Decoy entered!"
             }
         ]
     }

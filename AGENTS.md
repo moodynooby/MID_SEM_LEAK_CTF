@@ -103,7 +103,7 @@ All 14 challenges must adhere to the 5-step authoring standard defined in [chall
 | `uv run ctf events` | Timeline console| Interactive menu for clue drops, vanishing challenges, and lightning rounds |
 | `uv run ctf blackout`| 5:15 PM freeze | Freezes live scoreboard into suspense mode |
 | `uv run ctf reveal` | 5:30 PM unfreeze| Reveals final scoreboard for closing ceremony |
-| `uv run ctf theme` | Apply theme & projector | Activates primary theme (`m0xblood`) and pushes `ctfd-theme/` projector styling |
+| `uv run ctf theme` | Apply theme & projector | Activates primary theme (`hacker-theme`); scoreboard projector rendered natively via templates |
 | `uv run ctf seed` | Seed challenges | Idempotently populates challenges, flags, files, and dynamic scoring |
 | `uv run ctf import [csv]` | Import teams & users | Parses registration Google Forms CSV, seeds CTFd teams & exports credentials dossier |
 | `uv run ctf setup` | Full auto-setup | One-shot stack bootstrap, challenge seeder, theme & API bindings |
@@ -116,7 +116,7 @@ All 14 challenges must adhere to the 5-step authoring standard defined in [chall
 ## 6. Subsystem References & Pre-Flight Checklist
 - **Live Event Master Dossier & Operations Plan:** See [EVENT.md](EVENT.md).
 - **Live Event Timeline & Ops Playbook (4:30–5:30 PM):** See [docs/TECH_LEAD_RUNBOOK.md](docs/TECH_LEAD_RUNBOOK.md) and [ops/](ops/).
-- **Big-Screen AV Experience & Gamification:** See [ctfd-theme/](ctfd-theme/), [av-console/](av-console/) (countdown clock, soundboard, siren overlay), [tools/spin_wheel/](tools/spin_wheel/) (interactive wheel), and [docs/HOT_SAUCE_ROULETTE.md](docs/HOT_SAUCE_ROULETTE.md).
+- **Big-Screen AV Experience & Gamification:** See [av-console/](av-console/) (countdown clock, soundboard, siren overlay), and [docs/HOT_SAUCE_ROULETTE.md](docs/HOT_SAUCE_ROULETTE.md). Scoreboard styling is natively housed in [themes/hacker-theme/templates/scoreboard.html](themes/hacker-theme/templates/scoreboard.html).
 - **Challenge Authoring & Scaffolding:** See [challenges/README.md](challenges/README.md) and template in [challenges/template/](challenges/template/).
 - **Proxy & MariaDB Engine Tuning:** See [conf/nginx/default.conf](conf/nginx/default.conf) and [conf/mysql/my.cnf](conf/mysql/my.cnf).
 - **Handoff Documentation:** See [HANDOFF.md](HANDOFF.md).

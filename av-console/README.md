@@ -22,6 +22,7 @@ The entire audio-visual experience, spin wheel gamification, intrusion monitorin
 | **⏱️ Big-Screen Countdown** | `/av-console/#countdown` | Real-time countdown to next milestone, 1-hour active window progress bar, 7-phase timeline |
 | **🔊 Sound Cue Board** | `/av-console/#soundboard` | Synthesized Web Audio cues for Competition Start, Vanishing, Lightning, Blackout, and Reveal |
 | **⚡ Live Event Actions** | `/av-console/#events` | One-click triggers for Scoreboard Blackout, Reveal, Clue Drops #1 & #2, Vanishing toggle, Theme |
+| **📊 Scoreboard Projector** | `/scoreboard` | Big-screen high-contrast layout, `#b5e853` phosphor live-solve ticker flashes, medals, and HUD button (native in `themes/hacker-theme/templates/scoreboard.html`) |
 | **🛠️ System Ops & Health** | `/av-console/#infra` | Container health monitor (`app`, `proxy`, `db`, `cache`), disaster recovery snapshot, standby LAN sync |
 
 ## Global Hotkeys

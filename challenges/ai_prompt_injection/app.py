@@ -190,16 +190,16 @@ HTML_PAGE = """<!DOCTYPE html>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     :root {
-      --bg: #0a0e17;
-      --term-bg: #050810;
-      --border: #1a2638;
-      --green: #00ff88;
-      --cyan: #00f0ff;
-      --amber: #ffb703;
-      --red: #ef476f;
-      --text: #cbd5e1;
+      --bg: #0d1117;
+      --term-bg: #090d12;
+      --border: #30363d;
+      --green: #b5e853;
+      --cyan: #91ba42;
+      --amber: #ffc107;
+      --red: #e04b59;
+      --text: #dee2e6;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Consolas', 'Courier New', monospace; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'SFMono-Regular', Menlo, Monaco, Consolas, 'Liberation Mono', monospace; }
     body {
       background: var(--bg);
       color: var(--text);
@@ -221,12 +221,12 @@ HTML_PAGE = """<!DOCTYPE html>
     .title {
       font-size: 20px;
       font-weight: bold;
-      color: var(--cyan);
+      color: var(--green);
       letter-spacing: 1px;
     }
     .subtitle {
       font-size: 13px;
-      color: #64748b;
+      color: #8b949e;
       margin-top: 4px;
     }
     .terminal-window {
@@ -234,20 +234,33 @@ HTML_PAGE = """<!DOCTYPE html>
       border: 1px solid var(--border);
       border-radius: 8px;
       overflow: hidden;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.8), 0 0 20px rgba(181, 232, 83, 0.15);
       display: flex;
       flex-direction: column;
       height: 520px;
+      position: relative;
+    }
+    .terminal-window::before {
+      content: " ";
+      display: block;
+      position: absolute;
+      top: 0; left: 0; bottom: 0; right: 0;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+      background-size: 100% 4px;
+      z-index: 2;
+      pointer-events: none;
+      opacity: 0.5;
     }
     .term-header {
-      background: #0f172a;
+      background: #161b22;
       padding: 8px 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       border-bottom: 1px solid var(--border);
       font-size: 12px;
-      color: #94a3b8;
+      color: #8b949e;
+      z-index: 3;
     }
     .dots { display: flex; gap: 6px; }
     .dot { width: 10px; height: 10px; border-radius: 50%; }
@@ -260,20 +273,22 @@ HTML_PAGE = """<!DOCTYPE html>
       overflow-y: auto;
       font-size: 13px;
       line-height: 1.5;
+      z-index: 3;
     }
     .msg { margin-bottom: 14px; }
     .msg.bot { color: var(--green); }
-    .msg.user { color: var(--cyan); }
+    .msg.user { color: #58a6ff; }
     .msg.alert { color: var(--amber); }
     .msg.error { color: var(--red); }
     .term-input-bar {
       display: flex;
       border-top: 1px solid var(--border);
-      background: #090d16;
+      background: #161b22;
+      z-index: 3;
     }
     .prompt-label {
       padding: 12px 14px;
-      color: var(--cyan);
+      color: var(--green);
       font-weight: bold;
     }
     input {
@@ -286,19 +301,19 @@ HTML_PAGE = """<!DOCTYPE html>
       font-size: 13px;
     }
     button {
-      background: #1e293b;
-      color: var(--cyan);
+      background: var(--green);
+      color: #0d1117;
       border: none;
       padding: 0 20px;
       cursor: pointer;
       font-weight: bold;
       transition: background 0.2s;
     }
-    button:hover { background: #334155; }
+    button:hover { background: var(--cyan); }
     .footer-notes {
       margin-top: 16px;
       font-size: 12px;
-      color: #64748b;
+      color: #8b949e;
       text-align: center;
     }
   </style>

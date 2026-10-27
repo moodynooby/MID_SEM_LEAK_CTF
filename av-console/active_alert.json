@@ -1,12 +1,1 @@
-{
-  "active": false,
-  "team_id": null,
-  "team_name": null,
-  "reason": null,
-  "submitted_flag": "",
-  "lockout_seconds": 0,
-  "triggered_at": 0,
-  "expires_at": 0,
-  "alert_message": "",
-  "sound_siren": false
-}
+{"active": false}

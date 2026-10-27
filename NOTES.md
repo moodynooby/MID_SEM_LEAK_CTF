@@ -147,10 +147,11 @@ At 5:15 PM (15 minutes before the competition ends), the live scoreboard is plac
   2. `tar -czf backups/ctfd_backup_<timestamp>.tar.gz database.sql /var/uploads`
 - The resulting `.tar.gz` bundle contains 100% of the live contest state. Restoring on the standby laptop reconstructs MariaDB tables and static upload assets identically in `< 90 seconds`.
 
-### Visual Styling & Theme Architecture (`themes/m0xblood` & `ctfd-theme/`)
-- **Primary Participant Theme (`m0xblood`):** Built on CTFd 3.7.0 `core-beta` architecture with Bootstrap 5, Alpine.js, and Vite bundling. Styled with high-contrast dark surfaces (`#0a0a0c`), crimson breach accents (`#ff1a40` / `#dc3545`), animated challenge board elements, and zero external CDN/font links for strict offline LAN portability. Mounted declaratively at `./themes/m0xblood:/opt/CTFd/CTFd/themes/m0xblood:ro`.
-- **Scoreboard Projector Styling (`ctfd-theme/`):** Scoped specifically to `/scoreboard` on big screens, with clamp()-scaled typography, medal highlights, and real-time solve flash animations.
-- **Unified Theme Activation:** Executing `uv run ctf theme` configures `ctf_theme = "m0xblood"` and injects the scoreboard styling into `theme_header`/`theme_footer` via the CTFd REST API.
+### Visual Styling & Theme Architecture (`themes/hacker-theme/`)
+- **Primary Participant Theme (`hacker-theme`):** Official CTFd Hacker Theme built on CTFd 3.7.0 `core-beta` architecture with Bootstrap 5, Alpine.js, and Vite bundling. Styled with authentic phosphor lime green (`#b5e853` / `#91ba42`), dark terminal surfaces (`#0d1117` / `#161b22`), Red Hat Mono & FontAwesome fonts, and zero external CDN/font links for strict offline LAN portability. Mounted declaratively at `./themes/hacker-theme:/opt/CTFd/CTFd/themes/hacker-theme:ro`.
+- **Default Branding & Logos:** Default navbar banner (`img/logo.png`) and square icon (`img/icon.png`, `img/favicon.ico`) are bundled directly within the theme, rendering automatically without requiring database asset uploads.
+- **Scoreboard Projector Styling:** Housed natively in `themes/hacker-theme/templates/scoreboard.html`, providing big-screen clamp()-scaled typography, medal highlights, HUD launcher, and `#b5e853` live-solve ticker flashes without database injection (`theme_header`/`theme_footer`).
+- **Unified Theme Activation:** Executing `uv run ctf theme` configures `ctf_theme = "hacker-theme"` and resets any legacy DB injections via the CTFd REST API.
 
 ---
 

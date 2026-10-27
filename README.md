@@ -79,9 +79,8 @@ When started, CTFd will be accessible at:
 ├── tools/
 │   └── spin_wheel/                 # Big-screen HTML5/Canvas Projector Spin Wheel (Issue #25)
 │
-├── ctfd-theme/                     # Big-screen /scoreboard styling (applied via `uv run ctf theme`)
-├── themes/                         # Declaratively mounted CTFd themes (m0xblood dark cyberpunk theme)
-├── av-console/                     # Projector countdown clock, soundboard & siren alert console
+├── themes/                         # Declaratively mounted CTFd themes (themes/hacker-theme/ with native projector scoreboard & logos)
+├── av-console/                     # Master Live Ops Cockpit, projector countdown, soundboard & live controls
 │
 ├── challenges/                     # Challenge Scaffolding & Active Tracks (Private)
 │   ├── README.md                   # Challenge authoring and solve-testing standard

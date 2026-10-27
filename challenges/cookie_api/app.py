@@ -25,18 +25,18 @@ HTML_TEMPLATE = """<!DOCTYPE html>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     :root {{
-      --bg: #090d16;
-      --card-bg: #121826;
-      --border: #1f293d;
-      --accent: #00f0ff;
-      --warning: #ffb703;
-      --danger: #ef476f;
-      --text: #e2e8f0;
-      --muted: #64748b;
+      --bg: #0d1117;
+      --card-bg: #161b22;
+      --border: #30363d;
+      --accent: #b5e853;
+      --warning: #ffc107;
+      --danger: #e04b59;
+      --text: #dee2e6;
+      --muted: #8b949e;
     }}
-    * {{ box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }}
+    * {{ box-sizing: border-box; margin: 0; padding: 0; font-family: 'SFMono-Regular', Menlo, Monaco, Consolas, 'Liberation Mono', monospace; }}
     body {{
-      background: radial-gradient(circle at top, #141c2e 0%, var(--bg) 100%);
+      background: #0d1117;
       color: var(--text);
       min-height: 100vh;
       display: flex;
@@ -58,37 +58,38 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       font-size: 11px;
       letter-spacing: 1px;
       text-transform: uppercase;
-      border-radius: 999px;
-      background: rgba(0, 240, 255, 0.1);
+      border-radius: 4px;
+      background: rgba(181, 232, 83, 0.1);
       color: var(--accent);
-      border: 1px solid rgba(0, 240, 255, 0.3);
+      border: 1px solid rgba(181, 232, 83, 0.35);
       margin-bottom: 12px;
     }}
     h1 {{
-      font-size: 28px;
+      font-size: 26px;
       font-weight: 700;
-      color: #fff;
+      color: var(--accent);
       margin-bottom: 8px;
+      letter-spacing: 1px;
     }}
     .subtitle {{
       color: var(--muted);
-      font-size: 14px;
+      font-size: 13px;
     }}
     .card {{
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 12px;
+      border-radius: 8px;
       padding: 24px;
       margin-bottom: 24px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
     }}
     .status-bar {{
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 12px 16px;
-      background: rgba(0,0,0,0.3);
-      border-radius: 8px;
+      background: #090d12;
+      border-radius: 6px;
       border: 1px solid var(--border);
       margin-bottom: 20px;
       font-size: 13px;
@@ -100,23 +101,23 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     .access-denied {{
       border-left: 4px solid var(--warning);
       padding: 16px;
-      background: rgba(255, 183, 3, 0.05);
+      background: rgba(255, 193, 7, 0.08);
       border-radius: 4px;
       margin-top: 15px;
     }}
     .access-granted {{
-      border-left: 4px solid #10b981;
+      border-left: 4px solid var(--accent);
       padding: 16px;
-      background: rgba(16, 185, 129, 0.08);
+      background: rgba(181, 232, 83, 0.1);
       border-radius: 4px;
       margin-top: 15px;
     }}
     .flag-box {{
       margin-top: 20px;
       padding: 16px;
-      background: #06111e;
+      background: #090d12;
       border: 1px dashed var(--accent);
-      border-radius: 8px;
+      border-radius: 6px;
       text-align: center;
     }}
     .flag-value {{
@@ -136,7 +137,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       text-align: left;
       border-bottom: 1px solid var(--border);
     }}
-    th {{ color: var(--muted); text-transform: uppercase; font-size: 11px; }}
+    th {{ color: var(--accent); text-transform: uppercase; font-size: 11px; }}
     footer {{
       margin-top: auto;
       text-align: center;
@@ -145,11 +146,12 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       padding: 20px 0;
     }}
     code {{
-      background: #1e293b;
+      background: #212529;
       padding: 2px 6px;
       border-radius: 4px;
       font-family: monospace;
-      color: #38bdf8;
+      color: var(--accent);
+      border: 1px solid var(--border);
     }}
   </style>
 </head>

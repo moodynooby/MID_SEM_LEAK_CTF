@@ -498,16 +498,52 @@
     async function checkAlert() {
       try {
         const res = await fetch("/av-console/active_alert.json?t=" + Date.now());
-        if (!res.ok) return;
-        const data = await res.json();
-        const banner = document.getElementById("siren-banner");
-        const sirenText = document.getElementById("siren-banner-text");
+        if (res.ok) {
+          const data = await res.json();
+          const banner = document.getElementById("siren-banner");
+          const sirenText = document.getElementById("siren-banner-text");
 
-        if (data.active && data.sound_siren) {
-          if (banner) banner.style.display = "flex";
-          if (sirenText) sirenText.textContent = `🚨 INTRUSION LOCKOUT: ${data.team_name} — ${data.reason}`;
-        } else {
-          if (banner) banner.style.display = "none";
+          if (data.active && data.sound_siren) {
+            if (banner) banner.style.display = "flex";
+            if (sirenText) sirenText.textContent = `🚨 HONEYPOT INTRUSION LOCKOUT: ${data.team_name} — ${data.reason}`;
+          } else {
+            if (banner) banner.style.display = "none";
+          }
+        }
+      } catch (e) {}
+
+      // Poll Honeypot & Decoy Log Feed for Admin UI
+      try {
+        const iRes = await fetch("/av-console/recent_intrusions.json?t=" + Date.now());
+        if (iRes.ok) {
+          const records = await iRes.json();
+          const container = document.getElementById("honeypot-log-container");
+          if (container) {
+            if (!records || records.length === 0) {
+              container.innerHTML = '<div style="color: var(--text-muted); text-align: center; padding: 1rem;">🛡️ Grid armed: No decoy honeyflags triggered yet. Monitoring all participant stations...</div>';
+            } else {
+              const nowSec = Math.floor(Date.now() / 1000);
+              let html = '<table style="width: 100%; border-collapse: collapse; font-size: 0.82rem;">';
+              html += '<thead><tr style="border-bottom: 1px solid var(--border); color: var(--text-muted); text-align: left;">';
+              html += '<th style="padding: 4px 6px;">Time</th><th style="padding: 4px 6px;">Station / Team</th><th style="padding: 4px 6px;">Decoy Trap Triggered</th><th style="padding: 4px 6px;">Submitted Honeyflag</th><th style="padding: 4px 6px;">Status</th>';
+              html += '</tr></thead><tbody>';
+              for (const r of records) {
+                const isLocked = r.expires_at && r.expires_at > nowSec;
+                const statusPill = isLocked 
+                  ? `<span style="color: var(--accent-red); font-weight: 700;">🔒 Lockout (${r.expires_at - nowSec}s)</span>`
+                  : '<span style="color: var(--text-muted);">Expired</span>';
+                html += `<tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">`;
+                html += `<td style="padding: 6px;">${r.time || "--:--"}</td>`;
+                html += `<td style="padding: 6px; font-weight: 700; color: #fff;">${r.team_name || "Unknown"}</td>`;
+                html += `<td style="padding: 6px; color: var(--accent-yellow);">${r.reason || "Decoy Honeyflag"}</td>`;
+                html += `<td style="padding: 6px;"><code style="background: rgba(0,0,0,0.4); padding: 2px 4px; border-radius: 4px; color: #38bdf8;">${r.flag || "None"}</code></td>`;
+                html += `<td style="padding: 6px;">${statusPill}</td>`;
+                html += `</tr>`;
+              }
+              html += '</tbody></table>';
+              container.innerHTML = html;
+            }
+          }
         }
       } catch (e) {}
     }

@@ -64,8 +64,8 @@ This repository contains the complete offline-first containerized infrastructure
    - `uv run ctf stop` preserves all volumes safely.
    - **WARNING:** Running `docker compose down -v` or `docker volume prune` **will permanently destroy all team accounts, theme configs, and custom markdown pages**. Always run `uv run ctf backup` before touching volume states.
 2. **Theme Mounts:**
-   - Custom Jinja2 themes and stylesheets are mounted declaratively via [docker-compose.yml](docker-compose.yml) (`./themes/m0xblood:/opt/CTFd/CTFd/themes/m0xblood:ro`).
-   - Running `uv run ctf theme` automatically activates `m0xblood` as the primary CTFd theme via the REST API and injects big-screen scoreboard styling into `theme_header`/`theme_footer`. Never manually alter files inside the running container.
+   - Custom Jinja2 themes and stylesheets are mounted declaratively via [docker-compose.yml](docker-compose.yml) (`./themes/hacker-theme:/opt/CTFd/CTFd/themes/hacker-theme:ro`).
+   - Running `uv run ctf theme` automatically activates `hacker-theme` as the primary CTFd theme via the REST API. All scoreboard projector styles, medals, and live solve tickers are natively rendered by theme templates, avoiding fragile database injections. Never manually alter files inside the running container.
 
 ---
 
@@ -90,7 +90,7 @@ This repository contains the complete offline-first containerized infrastructure
 | **#23** | Flag in Cheatsheet: Participant Kit Egg | Forensics | Easy | @VP1107 | `challenges/cheatsheet_egg/` | Completed (Verified) |
 | **#24** | Email Forensics: Angry TA's Leaked Mails| Forensics | Medium | @VP1107 | `challenges/email_forensics/` | Completed (Verified) |
 | **#25** | Projector Spin Wheel & Hot Sauce App | Live Ops | — | @VP1107, @tanishshahh | `tools/spin_wheel/` | Completed (Verified - Canvas & Web Audio) |
-| **#1** | CTFd Theme: Cyber-Forensic Dark Mode | UI/UX | — | @viditd1-eng | `themes/midsem_leak/` | In Flight |
+| **#1** | CTFd Theme: Hacker Theme & Green Terminal | UI/UX | — | Tech Team | `themes/hacker-theme/` | Completed (Verified) |
 | **#2** | Big-Screen Projector & Sound Cue Board | AV/Ops | — | @tanishshahh | `ops/soundboard/` | In Flight |
 | **#4** | Case Dossier Print Kit & Slide Deck | Design | — | Open | `docs/participant_kit/` | In Flight |
 
@@ -136,7 +136,7 @@ uv run ctf events --event clue_drop_1       # 4:45 PM: Broadcast Intel Clue #1
 uv run ctf events --event clue_drop_2       # 5:10 PM: Broadcast Intel Clue #2
 uv run ctf blackout                         # 5:15 PM: Freeze scoreboard into suspense mode
 uv run ctf reveal                           # 5:30 PM: Unfreeze scoreboard for ceremony
-uv run ctf theme                            # Apply m0xblood theme and scoreboard projector styling
+uv run ctf theme                            # Apply hacker-theme (natively bundles scoreboard projector styling)
 uv run ctf seed                             # Seed all challenges, flags, attachments into CTFd
 uv run ctf import [CSV]                     # Ingest registration form CSV & generate credentials dossier
 uv run ctf setup                            # One-shot stack bootstrap, challenge seeder & bindings
