@@ -1,6 +1,7 @@
 name: "Liam's Idea: Fragmented Exfiltration"
 author: "Yesha (Forensics Track Lead)"
 category: "Forensics"
+difficulty: "easy"
 description: |
   **Case File Briefing:**
   During the midnight breach in AU Lab 207, campus Data Loss Prevention (DLP) systems triggered an alert on an outbound HTTP POST sequence originating from workstation **PC-04**.
@@ -11,11 +12,11 @@ description: |
 
   **Flag Format:** `case{...}`
 
-value: 500
+value: 300
 type: dynamic
 extra:
-  initial: 500
-  decay: 15
+  initial: 300
+  decay: 20
   minimum: 100
 
 flags:

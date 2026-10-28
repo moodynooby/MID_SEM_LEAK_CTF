@@ -103,7 +103,7 @@ def build_repo(temp_repo_dir: Path, output_tar: Path):
         "AHMEDABAD UNIVERSITY - OOP 99 MIDSEM DRAFT (CONFIDENTIAL)",
         [
             "COURSE: OOP 99 (Autumn 2026) - EARLY DRAFT V1",
-            "INSTRUCTOR: PROF. HASMUKH CHELAIYA",
+            "INSTRUCTOR: PROF. ManMishra CHELAIYA",
             "----------------------------------------------------------------",
             "CONFIDENTIAL: STAGED FROM PROFESSOR WORKSTATION SHARE",
             "",

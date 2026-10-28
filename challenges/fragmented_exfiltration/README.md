@@ -1,14 +1,14 @@
 # Liam's Idea: Fragmented Exfiltration
 
 **Track:** Forensics & Stego  
-**Difficulty:** Easy (Dynamic 500 $\rightarrow$ 100)  
+**Difficulty:** Easy — 300 → 100 pts (decay 20 solves)  
 **Author:** Yesha (Forensics Track Lead)  
 **Flag:** `case{reconstructed_exfil_chunk_assembly}`
 
 ---
 
 ## 1. Challenge Overview & Canon Storyline
-At 02:13:42 IST on 28 October 2026, teaching assistant Piyush Pelaiya accessed Lab 207 Workstation PC-04 to finalize the theft of Prof. Hasmukh Chelaiya's OOP 99 mid-sem examination draft. To preserve proof of his revenge against Prof. Chelaiya's grading in OS 101, Piyush recorded a short CCTV/terminal feed showing the exam access.
+At 02:13:42 IST on 28 October 2026, teaching assistant Piyush Pelaiya accessed Lab 207 Workstation PC-04 to finalize the theft of Prof. ManMishra Chelaiya's OOP 99 mid-sem examination draft. To preserve proof of his revenge against Prof. Chelaiya's grading in OS 101, Piyush recorded a short CCTV/terminal feed showing the exam access.
 
 When uploading the recording to an external relay, the campus firewall Data Loss Prevention (DLP) system triggered an alert on large outbound Base64 streams. To circumvent the filter, Piyush split the payload into 12 non-standard text chunks (`part01.txt` ... `part12.txt`) preceded by firewall comment headers.
 

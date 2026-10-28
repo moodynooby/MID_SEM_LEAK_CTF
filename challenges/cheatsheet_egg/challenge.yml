@@ -1,6 +1,7 @@
 name: "Flag in Cheatsheet: Participant Kit Easter Egg"
 author: "Vatsal Pandya (@VP1107)"
 category: "Misc"
+difficulty: "easy"
 description: |
   **Case File Briefing:**
   Before diving into complex memory dumps and encrypted network traffic, every experienced cyber-investigator knows the first rule of engagement: always read the documentation!
@@ -11,11 +12,11 @@ description: |
 
   **Flag Format:** `case{...}`
 
-value: 500
+value: 300
 type: dynamic
 extra:
-  initial: 500
-  decay: 15
+  initial: 300
+  decay: 20
   minimum: 100
 
 flags:

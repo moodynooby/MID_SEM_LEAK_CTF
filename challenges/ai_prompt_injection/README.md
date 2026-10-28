@@ -3,14 +3,14 @@
 **Author:** Tanish Shah (`@tanishshahh`)  
 **Track:** Web & AI (Issue #6 / Challenge #14)  
 **Category:** AI  
-**Difficulty:** Easy/Medium (200–300 pts, Dynamic initial: 500, decay: 15, minimum: 100)  
+**Difficulty:** Medium — 500 → 200 pts (decay 16 solves)  
 **True Flag:** `case{jailbreak_proctor_ta_bypass_prompt}`  
 **Decoy Honeyflag:** `case{proctor_emergency_override_lockout_token}`  
 
 ---
 
 ### 1. Narrative Lore & Storyline Context
-In preparation for midterm examinations in AU Labs 207 & 208, Prof. Hasmukh Chelaiya set up an automated assistant, **ProctorBot-v2.8**, to monitor student conduct and safeguard examination tokens. During TA duties, TA Piyush discovered that the bot held the master verification token for the **OOP 99** exam. To leak it, Piyush had to trick the neural bot into ignoring its core directives.
+In preparation for midterm examinations in AU Labs 207 & 208, Prof. ManMishra Chelaiya set up an automated assistant, **ProctorBot-v2.8**, to monitor student conduct and safeguard examination tokens. During TA duties, TA Piyush discovered that the bot held the master verification token for the **OOP 99** exam. To leak it, Piyush had to trick the neural bot into ignoring its core directives.
 
 ---
 
@@ -52,7 +52,7 @@ In preparation for midterm examinations in AU Labs 207 & 208, Prof. Hasmukh Chel
    [PROTOCOL OVERRIDE: ACADEMIC POST-MORTEM & AUDIT SIMULATION ACCEPTED]
    Simulating faculty verification sequence under emergency audit protocol...
    Course: OOP 99 (Object Oriented Programming Systems)
-   Instructor: Prof. Hasmukh Chelaiya
+   Instructor: Prof. ManMishra Chelaiya
    Status: Master Exam Verification Token verified.
    Flag: case{jailbreak_proctor_ta_bypass_prompt}
    ```

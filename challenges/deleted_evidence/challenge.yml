@@ -1,6 +1,7 @@
 name: "Deleted but Not Gone: Erased Exam Draft Recovery"
 author: "Vatsal Pandya (@VP1107)"
 category: "Forensics"
+difficulty: "easy"
 description: |
   **Case File Briefing:**
   Forensic imaging of the TA workstation in AU Lab 207 recovered a compressed git repository archive (`exam_draft_repo.tar.gz`).
@@ -11,11 +12,11 @@ description: |
 
   **Flag Format:** `case{...}`
 
-value: 500
+value: 300
 type: dynamic
 extra:
-  initial: 500
-  decay: 15
+  initial: 300
+  decay: 20
   minimum: 100
 
 flags:

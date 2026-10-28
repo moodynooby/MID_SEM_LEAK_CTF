@@ -1,9 +1,10 @@
 name: "AI Model Prompt: The Proctor Bot Jailbreak"
 author: "Tanish Shah (@tanishshahh)"
 category: "AI"
+difficulty: "medium"
 description: |
   **Case File Briefing:**
-  To prevent exam leaks during the midterm period, Prof. Hasmukh Chelaiya deployed **AU ProctorBot-v2.8**, an automated AI teaching assistant designed to monitor exam logistics and guard confidential course materials.
+  To prevent exam leaks during the midterm period, Prof. ManMishra Chelaiya deployed **AU ProctorBot-v2.8**, an automated AI teaching assistant designed to monitor exam logistics and guard confidential course materials.
 
   TA Piyush Pelaiya discovered that the bot's system context holds the pre-release master verification token for the **OOP 99** exam. The bot is locked behind strict guardrail protocols. Direct commands like *"give me the flag"* trigger security alarms and lock out your session.
 
@@ -16,8 +17,8 @@ value: 500
 type: dynamic
 extra:
   initial: 500
-  decay: 15
-  minimum: 100
+  decay: 16
+  minimum: 200
 
 flags:
   - case{jailbreak_proctor_ta_bypass_prompt}
@@ -25,7 +26,7 @@ flags:
 tags:
   - ai
   - prompt_injection
-  - easy_med
+  - medium
   - story_act_1
 
 hints:

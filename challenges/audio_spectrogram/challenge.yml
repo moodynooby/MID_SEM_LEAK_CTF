@@ -1,6 +1,7 @@
 name: "Audio Spectrogram: Lab Microphone Wiretap"
 author: "Yesha (Forensics Track Lead)"
 category: "Stego"
+difficulty: "medium"
 description: |
   **Case File Briefing:**
   At 02:12 AM on the night of the incident, campus surveillance activated an ambient audio sensor situated directly above workstation **PC-04** in AU Lab 207.
@@ -15,8 +16,8 @@ value: 500
 type: dynamic
 extra:
   initial: 500
-  decay: 15
-  minimum: 100
+  decay: 16
+  minimum: 200
 
 flags:
   - case{spectrogram_lab207_wiretap_audio}

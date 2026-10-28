@@ -8,11 +8,11 @@
 ---
 
 ## 1. Executive Summary & Event Premise
-**Case File: The Mid-Sem Leak** is an immersive digital forensics Capture The Flag (CTF) competition organized by the **IEEE Ahmedabad University Student Branch (IEEE AUSB)**. Designed as a real-time murder-mystery-style incident triage, the competition challenges 20 undergraduate teams to investigate the illicit exfiltration and circulation of the confidential **OOP 99 (Object Oriented Programming Systems)** mid-semester exam paper authored by **Prof. Hasmukh Chelaiya**.
+**Case File: The Mid-Sem Leak** is an immersive digital forensics Capture The Flag (CTF) competition organized by the **IEEE Ahmedabad University Student Branch (IEEE AUSB)**. Designed as a real-time murder-mystery-style incident triage, the competition challenges 20 undergraduate teams to investigate the illicit exfiltration and circulation of the confidential **OOP 99 (Object Oriented Programming Systems)** mid-semester exam paper authored by **Prof. ManMishra Chelaiya**.
 
 ### Distinctive Pillars:
 - **100% Offline LAN Architecture:** The entire CTFd platform, reverse proxy, database, challenge assets, and scoreboards run locally on Gigabit Lab switches on Port 80, completely immune to external internet disruptions.
-- **Narrative-Driven Forensic Evidence:** 14 challenges structured across 4 specialized forensic tracks simulating real-world digital triage (network packet streams, Wi-Fi AP association logs, deleted filesystem inodes, stripped Safe Exam Browser binaries, and audio wiretaps).
+- **Narrative-Driven Forensic Evidence:** 15 challenges structured across 4 specialized forensic tracks simulating real-world digital triage (network packet streams, Wi-Fi AP association logs, deleted filesystem inodes, stripped Safe Exam Browser binaries, and audio wiretaps).
 - **Anti-AI Hardened Puzzles:** Every challenge incorporates multimodal, sensory, volatile, or custom corpus defenses that cannot be solved by generic online Large Language Models.
 - **High-Voltage Gamification:** A live big-screen projector dashboard, synchronized audio soundboard, rate-limit intrusion sirens, an interactive 8-segment Spin Wheel, physical Hot Sauce lifelines, a 15-minute vanishing bonus challenge, a 10-minute lightning round, and a climactic 15-minute scoreboard blackout.
 
@@ -60,6 +60,7 @@
   - Fallback local DNS / hosts entry: `http://ctf.local` mapped via local dnsmasq on primary host.
 - **Firewall Policy:**
   - Incoming TCP Port 80 allowed from lab subnet.
+  - Incoming TCP Ports 5001, 5002, 5003 allowed from lab subnet (hosted Web & AI challenge services — they are published directly and do **not** go through the port-80 proxy).
   - External WAN routing disabled or isolated to ensure pure offline reliability.
 
 ---
@@ -149,8 +150,8 @@ Participants are advised during pre-event communications to have the following t
 
 #### 4:00 PM – 4:30 PM: Case Briefing & Rules Review
 - Organizer Vansh Shah takes the podium in Lab 207 (projected to Lab 208):
-  > *"Investigators, welcome to Ahmedabad University. Last night at 21:14 IST, a confidential draft of Prof. Hasmukh Chelaiya's upcoming OOP 99 mid-sem examination was illicitly downloaded and leaked from the faculty share. Department records show high tension and grievances surrounding harsh grading in OS 101. Administration has convened your teams to trace the digital breadcrumbs, analyze the evidence dockets, and unmask the mastermind before the exam paper circulates campus. You have exactly one hour. Good luck!"*
-- Rules explained: `case{...}` flag syntax, dynamic scoring formula, 5-fail rate limit policy, Spin Wheel and Hot Sauce lifeline rules.
+  > *"Investigators, welcome to Ahmedabad University. Last night at 21:14 IST, a confidential draft of Prof. ManMishra Chelaiya's upcoming OOP 99 mid-sem examination was illicitly downloaded and leaked from the faculty share. Department records show high tension and grievances surrounding harsh grading in OS 101. Administration has convened your teams to trace the digital breadcrumbs, analyze the evidence dockets, and unmask the mastermind before the exam paper circulates campus. You have exactly one hour. Good luck!"*
+- Rules explained: `case{...}` flag syntax, difficulty-tiered dynamic scoring (easy 300 / medium 500 / hard 700, decaying to 100/200/350), 5-fail rate limit policy, Spin Wheel and Hot Sauce lifeline rules.
 
 ---
 
@@ -162,18 +163,41 @@ Participants are advised during pre-event communications to have the following t
 - **Emcee Script:**
   > *"The investigation is officially live! Your terminals are active. Review your dossiers, access the evidence files at 192.168.1.100, and claim First Blood!"*
 
-#### 4:45 PM: Milestone 1 — Intel Clue Drop #1 & Spin Wheel Round 1
+#### 4:35 PM: Milestone 1 — 15-Minute Vanishing Bonus Challenge Unlocked
+- **CLI Command:** `uv run ctf events --event vanishing_start`
+- **Sound Cue:** `02_radar_ping.mp3`
+- **System Action:** CTFd notification broadcasts: *"⏳ TIME-SENSITIVE EVIDENCE DETECTED! Temporary cache trace discovered on lab share. Self-destructs at 4:50 PM!"*
+- **Pre-flight:** the script resolves the challenge named by `BONUS_VANISHING_CHALLENGE` (default `Vanishing`). If no such challenge exists it prints an ERROR, **refuses to broadcast**, and exits — never announce a drop that isn't on the board.
+- **Emcee Script:**
+  > *"Attention investigators! A volatile evidence docket has appeared in CTFd. You have exactly 15 minutes before the memory trace is purged permanently at 4:50 PM!"*
+
+#### 4:45 PM: Milestone 2 — Intel Clue Drop #1 & Spin Wheel Round 1
 - **CLI Command:** `uv run ctf events --event clue_drop_1`
 - **Sound Cue:** `03_wheel_spin.mp3`
 - **System Action:** Clue broadcast: *"Forensics recovered deleted syslog timestamps. Check Act II portal traces."*
 - **Gamification:** The live Projector Spin Wheel activates! Teams currently with zero solves or stuck on a challenge can volunteer a teammate to spin the wheel or take a Hot Sauce shot for an unpenalized hint.
 
-#### 5:10 PM: Milestone 2 — Intel Clue Drop #2 & Spin Wheel Round 2
-- **CLI Command:** `uv run ctf events --event clue_drop_2`
-- **System Action:** Clue broadcast: *"Key derivation function identified. Cross-reference campus dossier names!"*
+#### 4:50 PM: Milestone 3 — Vanishing Bonus Challenge Purged
+- **CLI Command:** `uv run ctf events --event vanishing_end`
+- **Sound Cue:** `04_evidence_purge.mp3`
+- **System Action:** Unsolved vanishing challenge hidden from CTFd view.
+- **Emcee Script:**
+  > *"The vanishing cache trace has been overwritten. The investigation moves forward!"*
+
+#### 5:00 PM: Milestone 4 — 10-Minute Lightning Round (2x Points) & Spin Wheel Round 2
+- **CLI Command:** `uv run ctf events --event lightning_start`
+- **Sound Cue:** `05_lightning_alert.mp3`
+- **System Action:** records the window start in CTFd `config` (`lightning_window_start`) and broadcasts: *"⚡ 10-MINUTE LIGHTNING ROUND ACTIVE! Double points awarded for solving within the next 10 minutes!"*
+- **Why it works this way:** CTFd re-prices dynamic challenges retroactively, so doubling `initial` would also inflate every earlier solve. At `lightning_end` the script instead scans `submissions` for correct answers inside the window and credits each team a **discrete bonus award equal to the current value** of every challenge solved inside it — a true 2x, for that window only.
+- **Emcee Script:**
+  > *"Investigators! The 10-minute Lightning Round has officially started! Double points on the table until 5:10 PM! High-intensity speed run!"*
 - Spin Wheel activates for the final round of lifelines.
 
-#### 5:15 PM: Milestone 3 — Scoreboard Blackout (Suspense Mode)
+#### 5:10 PM: Milestone 5 — Lightning Round Closes & Intel Clue Drop #2
+- **CLI Command:** `uv run ctf events --event lightning_end` followed by `uv run ctf events --event clue_drop_2`
+- **System Action:** pays the lightning bonus awards on chain (idempotent — re-running the same window adds nothing), hides the optional Lightning puzzle challenge, then broadcasts: *"Key derivation function identified. Cross-reference campus dossier names!"*
+
+#### 5:15 PM: Milestone 6 — Scoreboard Blackout (Suspense Mode)
 - **CLI Command:** `uv run ctf blackout`
 - **Sound Cue:** `06_blackout_glitch.mp3` (heavy power down / electrical glitch sound)
 - **System Action:** MariaDB updates config `freeze=true`. Projectors switch to full-screen **'LOCKDOWN ACTIVE — SCOREBOARD FROZEN'** graphic.
@@ -236,7 +260,7 @@ Participants are advised during pre-event communications to have the following t
 ### C. Intrusion Punishments & Siren Alerts (Decoy Traps & Anti-Bruteforce)
 - **Real-Time Monitor Daemon:** Managed via `uv run ctf siren` (`ops/siren_alert/monitor.py`).
 - **Decoy Honeyflag Punishment:**
-  - If any team submits a known decoy honeyflag (e.g., `case{proctor_emergency_override_lockout_token}`, `case{decoy_plaintext_login_honeyflag}`, `case{decoy_student_mac_address}`, etc.):
+  - If any team submits a known decoy honeyflag (e.g., `case{proctor_emergency_override_lockout_token}`, `case{faculty_admin_portal_root_auth_2026}`, `case{decoy_plaintext_login_honeyflag}`, `case{decoy_student_mac_address}`, etc.):
     - **Station Lockout:** Automatic 120-second submission freeze applied to that team's station.
     - **AV Intrusion Strobe:** Lab projector instantly switches to full-screen flashing alert at `http://<LAN_IP>/av-console/siren.html`.
     - **Audio Siren:** 5-second emergency warble siren blares over PA system.
@@ -251,11 +275,19 @@ Participants are advised during pre-event communications to have the following t
 ## 8. Scoring System, Tie-Breakers & Prize Structure
 
 ### A. Dynamic Scoring Engine
-- **Initial Challenge Value:** 500 Points.
-- **Decay Parameter:** 15 Solves (points decrease smoothly with each solve).
-- **Minimum Value Floor:** 100 Points.
-- **Decay Formula:**
-  $$\text{Points} = \max\left(100, \text{Round}\left(\left(\frac{100 - 500}{(15)^2}\right) \times (\text{Solves} - 1)^2 + 500\right)\right)$$
+Points are weighted by the `difficulty:` tier declared in each `challenge.yml`:
+
+| Tier | Initial (1st solve) | Decay Solves | Floor | Challenges |
+| :--- | :---: | :---: | :---: | :---: |
+| **Easy** | 300 | 20 | 100 | 5 |
+| **Medium** | 500 | 16 | 200 | 7 |
+| **Hard** | 700 | 12 | 350 | 3 |
+
+- **Decay Formula (per challenge):**
+  $$\text{Points} = \max\left(\text{Floor}, \text{Round}\left(\left(\frac{\text{Floor} - \text{Initial}}{(\text{Decay})^2}\right) \times (\text{Solves} - 1)^2 + \text{Initial}\right)\right)$$
+- **Maximum possible score:** 7,100 pts (5×300 + 7×500 + 3×700).
+- **Difficulty is always monotonic:** because the floor also scales, `hard > medium > easy` holds at any solve count — a hard challenge solved by 15 teams still pays 350 vs 200 for a medium and 100 for an easy.
+- **Retroactive pricing:** CTFd recomputes a team's total from the *current* value of every solved challenge, so wide solves lower everyone's score for that challenge. Time-boxed bonuses (Lightning Round) are therefore paid as discrete `awards` rows, never by editing challenge values.
 
 ### B. Tie-Breaking Hierarchy
 1. **Primary:** Total Accumulated Points.
@@ -277,7 +309,7 @@ Participants are advised during pre-event communications to have the following t
    - Finalist Vouchers & Swag
    - Certificates of Distinction
 4. **🩸 First Blood Slayer Award:**
-   - Special custom certificate + prize for the team securing the highest count of first-blood solves across all 14 challenges.
+   - Special custom certificate + prize for the team securing the highest count of first-blood solves across all 15 challenges.
 5. **📜 Certificate of Investigation:**
    - Issued to every participating student verifying completion of the IEEE AUSB Forensic Triage challenge.
 

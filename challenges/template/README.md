@@ -2,7 +2,7 @@
 
 - **Author:** [Name]
 - **Category:** [Forensics / Web / Crypto / Rev / Misc]
-- **Estimated Difficulty:** [Easy / Medium / Hard]
+- **Estimated Difficulty:** [Easy / Medium / Hard] — this field sets the scoring band: easy 300 → 100, medium 500 → 200, hard 700 → 350. Keep `value:`, `extra.initial`, `extra.decay`, and `extra.minimum` in lockstep with it (see [challenges/README.md](../README.md#3-difficulty-tiered-dynamic-scoring)).
 - **Tester / Solve-Verified By:** [Tester Name] (Must not be author)
 - **Flag:** `case{...}`
 

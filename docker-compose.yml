@@ -46,7 +46,7 @@ services:
       - anubis
 
   anubis:
-    image: ghcr.io/techarohq/anubis:latest
+    image: ghcr.io/techarohq/anubis@sha256:5fcbce70ee6168be5b226d19bec90111d0acd0daf13028fa06b044cf3ebbbd5f
     container_name: ctfd_anubis
     restart: unless-stopped
     environment:
@@ -56,6 +56,15 @@ services:
       - SERVE_ROBOTS_TXT=true
       - POLICY_FNAME=/data/cfg/botPolicy.yaml
       - OG_PASSTHROUGH=true
+      # LAN runs plain HTTP on port 80. Anubis v1.28+ defaults to
+      # COOKIE_SECURE=true / COOKIE_PARTITIONED=true, and browsers silently
+      # DROP `Secure` (and `Partitioned`, which mandates Secure) cookies that
+      # arrive over http://. That killed the verification cookie and looped
+      # every participant on "user has cookies disabled" (only http://localhost
+      # worked, since localhost is a trusted origin). SameSite None also
+      # auto-downgrades to Lax once COOKIE_SECURE=false.
+      - COOKIE_SECURE=false
+      - COOKIE_PARTITIONED=false
     volumes:
       - ./conf/anubis/botPolicy.yaml:/data/cfg/botPolicy.yaml:ro
     networks:
@@ -100,15 +109,34 @@ services:
       - "5001:5001"
     networks:
       - proxy_net
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request;urllib.request.urlopen('http://127.0.0.1:5001/', timeout=3)"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
 
   challenge_proctor_bot:
     build: ./challenges/ai_prompt_injection
     container_name: challenge_proctor_bot
     restart: unless-stopped
-    network_mode: host
+    ports:
+      - "5002:5002"
+    # Ollama runs on the host, bound to the docker0 bridge (172.17.0.1:11434).
+    # host-gateway resolves host.docker.internal to that bridge IP on Linux too,
+    # so the bot no longer needs host networking (which broke macOS/Windows and
+    # gave the service a 5-deep listen backlog).
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     environment:
-      - OLLAMA_URL=http://127.0.0.1:11434
+      - OLLAMA_URL=http://host.docker.internal:11434
       - OLLAMA_MODEL=smollm2
+    networks:
+      - proxy_net
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request;urllib.request.urlopen('http://127.0.0.1:5002/', timeout=3)"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
 
   challenge_php2shell:
     build: ./challenges/php2shell
@@ -118,6 +146,11 @@ services:
       - "5003:5003"
     networks:
       - proxy_net
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request;urllib.request.urlopen('http://127.0.0.1:5003/', timeout=3)"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
 
 networks:
   internal_net:

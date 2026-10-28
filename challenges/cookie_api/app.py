@@ -7,12 +7,15 @@ IEEE AUSB CTF: Case File: The Mid-Sem Leak
 """
 
 import json
+import html
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from http.cookies import SimpleCookie
 from urllib.parse import urlparse
 
 HOST = "0.0.0.0"
 PORT = 5001
+
+REQUEST_TIMEOUT = 30  # seconds, per connection (slowloris guard)
 
 FLAG_TRUE = "case{cookie_role_tamper_faculty_access}"
 FLAG_HONEYPOT = "case{faculty_admin_portal_root_auth_2026}"
@@ -160,7 +163,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     <header>
       <div class="badge">AU Internal Exam Staging Network</div>
       <h1>Faculty Exam Vault v1.4</h1>
-      <p class="subtitle">Instructor: Prof. Hasmukh Chelaiya &bull; Dept. of Computer Science & Engineering</p>
+      <p class="subtitle">Instructor: Prof. ManMishra Chelaiya &bull; Dept. of Computer Science & Engineering</p>
     </header>
 
     <div class="card">
@@ -189,6 +192,9 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 """
 
 class VaultHandler(BaseHTTPRequestHandler):
+    # Per-connection socket timeout, so idle/slowloris sockets cannot pin threads.
+    timeout = REQUEST_TIMEOUT
+
     def log_message(self, format, *args):
         # Clean logging
         pass
@@ -225,7 +231,7 @@ class VaultHandler(BaseHTTPRequestHandler):
             self.end_headers()
             resp = {
                 "course": "OOP 99 (Object Oriented Programming)",
-                "instructor": "Prof. Hasmukh Chelaiya",
+                "instructor": "Prof. ManMishra Chelaiya",
                 "term": "Mid-Semester 2026",
                 "draft_status": "EXFILTRATED_BY_TA_PIYUSH",
                 "flag": FLAG_TRUE
@@ -266,13 +272,13 @@ class VaultHandler(BaseHTTPRequestHandler):
                 <tr>
                   <td><code>OS 101</code></td>
                   <td>Operating Systems Principles</td>
-                  <td>Prof. Hasmukh Chelaiya</td>
+                  <td>Prof. ManMishra Chelaiya</td>
                   <td><span style="color:#10b981;">Finalized</span></td>
                 </tr>
                 <tr>
                   <td><code>OOP 99</code></td>
                   <td>Object Oriented Programming Systems</td>
-                  <td>Prof. Hasmukh Chelaiya</td>
+                  <td>Prof. ManMishra Chelaiya</td>
                   <td><span style="color:#ef476f;">LEAKED DRAFT ARCHIVE</span></td>
                 </tr>
               </tbody>
@@ -322,9 +328,9 @@ class VaultHandler(BaseHTTPRequestHandler):
             </p>
             """
 
-        html = HTML_TEMPLATE.format(
-            role=role,
-            access_tier=access_tier,
+        page = HTML_TEMPLATE.format(
+            role=html.escape(role),
+            access_tier=html.escape(access_tier),
             status_color=status_color,
             status_text=status_text,
             content_body=content_body
@@ -336,11 +342,16 @@ class VaultHandler(BaseHTTPRequestHandler):
             self.send_header("Set-Cookie", "role=student; Path=/; SameSite=Lax")
             self.send_header("Set-Cookie", "access_tier=1; Path=/; SameSite=Lax")
         self.end_headers()
-        self.wfile.write(html.encode("utf-8"))
+        self.wfile.write(page.encode("utf-8"))
+
+class VaultServer(ThreadingHTTPServer):
+    request_queue_size = 128
+    daemon_threads = True
+
 
 def run():
     server_address = (HOST, PORT)
-    httpd = ThreadingHTTPServer(server_address, VaultHandler)
+    httpd = VaultServer(server_address, VaultHandler)
     print(f"[*] AU Faculty Exam Vault server running on http://{HOST}:{PORT}")
     try:
         httpd.serve_forever()

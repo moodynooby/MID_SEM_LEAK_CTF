@@ -27,7 +27,7 @@ def build_targeted_wordlist():
     labs = ["AU207", "AU208", "GICT207", "GICT208", "207", "208", "Lab207", "Lab208"]
     courses = ["OS101", "OOP99", "OS", "OOP"]
     suspects = [
-        "Piyush", "Pelaiya", "Hasmukh", "Chelaiya",
+        "Piyush", "Pelaiya", "ManMishra", "Chelaiya",
         "Sansh", "Danas", "Prish", "Tryan", "Parsh",
         "Rohan", "Vikram", "Ananya", "Siddharth", "Pooja"
     ]

@@ -28,7 +28,7 @@ AHMEDABAD UNIVERSITY - SCHOOL OF ENGINEERING AND APPLIED SCIENCE
 DEPARTMENT OF COMPUTER SCIENCE & ENGINEERING
 MID-SEMESTER EXAMINATION - OCTOBER 2026
 COURSE: OOP 99 (OBJECT ORIENTED PROGRAMMING SYSTEMS)
-INSTRUCTOR: PROF. HASMUKH CHELAIYA
+INSTRUCTOR: PROF. ManMishra CHELAIYA
 VENUE: AU LAB 207 / 208
 TIME ALLOWED: 2 HOURS                                          MAX MARKS: 50
 ================================================================================
@@ -85,7 +85,7 @@ Verify the master exam release token recorded in faculty_vault_flag.txt.
 """
 
 NOTE_CONTENT = """[!] SECURITY AUDIT ADVISORY - AU LAB 207
-TO: Prof. Hasmukh Chelaiya
+TO: Prof. ManMishra Chelaiya
 FROM: TA Piyush Pelaiya
 DATE: 27-Oct-2026 21:14 IST
 

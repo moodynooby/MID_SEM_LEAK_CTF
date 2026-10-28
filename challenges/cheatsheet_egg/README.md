@@ -4,7 +4,7 @@
 - **Author:** Vatsal Pandya (`@VP1107`)
 - **Track:** Network & Forensics (Issue #5 / Challenge #4)
 - **Category:** Misc
-- **Estimated Difficulty:** Easy (Dynamic initial: 500, decay: 15, minimum: 100)
+- **Estimated Difficulty:** Easy — 300 → 100 pts (decay 20 solves)  
 - **Tester / Solve-Verified By:** Krish Poddar (`@Krish-452`) / Manas Doshi (`@moodynooby`)
 - **True Flag:** `case{always_read_the_cheat_sheet_first}`
 - **Decoy Honeyflags:**

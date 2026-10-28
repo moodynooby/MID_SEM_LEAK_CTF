@@ -12,14 +12,14 @@
 ---
 
 ## 1. Incident Overview
-On the evening of 27 October 2026 at approximately 21:14 IST, an automated alert triggered on the faculty internal file server at Ahmedabad University. The upcoming **OOP 99 (Object Oriented Programming Systems)** Mid-Semester Examination Paper, authored by **Prof. Hasmukh Chelaiya**, was illicitly downloaded and circulated.
+On the evening of 27 October 2026 at approximately 21:14 IST, an automated alert triggered on the faculty internal file server at Ahmedabad University. The upcoming **OOP 99 (Object Oriented Programming Systems)** Mid-Semester Examination Paper, authored by **Prof. ManMishra Chelaiya**, was illicitly downloaded and circulated.
 
 Forensics triage revealed anomalous network scanning traffic (`nmap`), suspicious mail server activity, and tampering with the Safe Exam Browser (SEB) distribution share. Department records also noted tense disputes regarding grading in **OS 101 (Operating Systems)**.
 
 Campus administration has assembled your team of digital forensic investigators to trace the network breadcrumbs, analyze the evidence dockets, and unmask the culprit before the paper spreads further.
 
 ```
-       [Prof. Hasmukh Chelaiya's Share]
+       [Prof. ManMishra Chelaiya's Share]
                    |
        (Nmap Recon & Auth Bypass)
                    |

@@ -94,7 +94,7 @@ def build_decoy_thread_1() -> MIMEMultipart:
     """Decoy 1: Innocent student Sansh Vhah inquiring about OS 101 lab grades."""
     msg = MIMEMultipart()
     msg["From"] = "Sansh Vhah <sansh.v@ahduni.edu.in>"
-    msg["To"] = "Prof. Hasmukh Chelaiya <hasmukh.chelaiya@ahduni.edu.in>"
+    msg["To"] = "Prof. ManMishra Chelaiya <ManMishra.chelaiya@ahduni.edu.in>"
     msg["Subject"] = "Re: OS 101 Assignment 2 - Evaluation Inquiry (Lab 208)"
     msg["Date"] = "Mon, 27 Oct 2026 17:15:22 +0530"
     msg["Message-ID"] = "<20261027171522.sansh.os101@ahduni.edu.in>"
@@ -116,7 +116,7 @@ def build_decoy_thread_1() -> MIMEMultipart:
         "AHMEDABAD UNIVERSITY - AU - OS 101 GRADING RUBRIC",
         [
             "Course: OS 101 Operating Systems Principles",
-            "Instructor: Prof. Hasmukh Chelaiya",
+            "Instructor: Prof. ManMishra Chelaiya",
             "Batch: Autumn 2026 | Assignment 2 Rubric",
             "----------------------------------------------------------------",
             "Criterion 1: Correct Pthread Mutex Locking: 20 Marks",
@@ -228,7 +228,7 @@ def build_authentic_leaked_paper_pdf() -> bytes:
         [
             "COURSE CODE: OOP 99 | OBJECT-ORIENTED PROGRAMMING SYSTEMS",
             "MID-SEMESTER EXAMINATION - AUTUMN 2026",
-            "COURSE INSTRUCTOR: PROF. HASMUKH CHELAIYA",
+            "COURSE INSTRUCTOR: PROF. ManMishra CHELAIYA",
             "TIME ALLOWED: 2 HOURS | MAXIMUM MARKS: 50",
             "================================================================================",
             "STRICTLY CONFIDENTIAL - LEAKED EVIDENCE ARTIFACT - DO NOT REPRODUCE",
@@ -302,7 +302,7 @@ def build_culprit_exfiltration_message() -> MIMEMultipart:
 
     confession_body = (
         "To all CSE students,\n\n"
-        "You thought Prof. Hasmukh Chelaiya was untouchable? You thought his precious\n"
+        "You thought Prof. ManMishra Chelaiya was untouchable? You thought his precious\n"
         "OOP 99 mid-semester exam was securely guarded on his ThinkPad?\n\n"
         "Earlier this semester, Prof. Chelaiya humiliated me in front of the entire department\n"
         "during OS 101 evaluations. He deducted 25 marks on my concurrency lab submission,\n"
@@ -348,7 +348,7 @@ def generate_incident_eml(output_path: Path):
     """
     master_msg = MIMEMultipart("mixed")
     master_msg["From"] = "Campus Security Operations <soc@ahduni.edu.in>"
-    master_msg["To"] = "Prof. Hasmukh Chelaiya <hasmukh.chelaiya@ahduni.edu.in>"
+    master_msg["To"] = "Prof. ManMishra Chelaiya <ManMishra.chelaiya@ahduni.edu.in>"
     master_msg["Cc"] = "Dean of Academic Affairs <dean.academic@ahduni.edu.in>"
     master_msg["Date"] = "Tue, 28 Oct 2026 01:15:30 +0530"
     master_msg["Subject"] = (

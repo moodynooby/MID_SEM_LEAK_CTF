@@ -1,7 +1,7 @@
 # Memory Forensics: Lab 207 Terminal RAM Dump
 
-**Track:** Forensics & Volatile Memory  
-**Difficulty:** Medium (Dynamic 500 $\rightarrow$ 100)  
+**Track:** Forensics & Physical Evidence  
+**Difficulty:** Medium — 500 → 200 pts (decay 16 solves)  
 **Author:** Yesha (Forensics Track Lead)  
 **Flag:** `case{volatility3_lab207_terminal_ram}`
 

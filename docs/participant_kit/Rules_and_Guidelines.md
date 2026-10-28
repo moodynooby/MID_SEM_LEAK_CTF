@@ -14,14 +14,17 @@ Welcome investigators! Please read the rules carefully before the competition be
 ---
 
 ### 2. Scoring System
-1. **Dynamic Scoring:**
-   - Challenges start at **500 points**.
-   - As more teams solve a challenge, its point value dynamically decays down to a minimum floor.
-   - Harder challenges solved by fewer teams maintain higher value!
+1. **Difficulty-Tiered Dynamic Scoring:**
+   - Every challenge is tagged **Easy**, **Medium**, or **Hard** — that tag sets its points.
+   - Starts at **300 pts** (Easy), **500 pts** (Medium), or **700 pts** (Hard).
+   - As more teams solve a challenge, its value decays toward a floor: **100 / 200 / 350** respectively.
+   - Because the floor scales with difficulty too, **a hard challenge is always worth more than a medium one, and a medium more than an easy one** — even when everyone has solved it.
+   - Your score is always the *current* live value of the challenges you have solved, so early solves pay more than late ones.
 2. **First-Blood Bonus:**
    - The first team to solve any challenge receives a special live shout-out and first-blood bonus displayed on the projector!
 3. **Double-Points Lightning Round (5:00 – 5:10 PM):**
-   - A rapid 10-minute speed puzzle worth double points!
+   - For 10 minutes, any challenge you solve earns its points a **second time** as a separate bonus award.
+   - Bonus points are credited to the scoreboard automatically when the round closes at 5:10 PM.
 4. **Tie-Breaker Rule:**
    - If two teams tie on total points, the tie is broken in favor of the team that submitted their last scoring flag earliest.
 

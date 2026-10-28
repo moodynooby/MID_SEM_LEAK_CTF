@@ -91,8 +91,14 @@
   "hot_sauce_roulette": {
     "enabled": true,
     "scoville_rating": "5,000 - 10,000 SHU (Sriracha / Mild Tabasco)",
-    "safe_alternatives": ["Wasabi Peas", "Ultra-Sour Candy"],
-    "active_windows": ["4:45 PM", "5:00 PM"],
+    "safe_alternatives": [
+      "Wasabi Peas",
+      "Ultra-Sour Candy"
+    ],
+    "active_windows": [
+      "4:45 PM",
+      "5:00 PM"
+    ],
     "station_location": "Front table of Lab 207",
     "require_volunteer_verification": true,
     "award_free_hint": true,
@@ -191,6 +197,62 @@
         "lockout_seconds": 120,
         "penalty_points": 0,
         "alert_message": "🚨 HONEYPOT TRAP TRIGGERED: Dean Integrity Protocol Email Decoy entered!"
+      },
+      {
+        "flag": "case{decoy_plaintext_login_honeyflag}",
+        "name": "PCAP Plaintext Login Decoy",
+        "lockout_seconds": 120,
+        "penalty_points": 0,
+        "alert_message": "🚨 HONEYPOT TRAP TRIGGERED: Plaintext PCAP login decoy entered!"
+      },
+      {
+        "flag": "case{decoy_telemetry_post_pcap}",
+        "name": "PCAP Telemetry Decoy",
+        "lockout_seconds": 120,
+        "penalty_points": 0,
+        "alert_message": "🚨 HONEYPOT TRAP TRIGGERED: Telemetry beacon honeyflag entered!"
+      },
+      {
+        "flag": "case{decoy_student_mac_address}",
+        "name": "Wi-Fi DHCP MAC Decoy",
+        "lockout_seconds": 120,
+        "penalty_points": 0,
+        "alert_message": "🚨 HONEYPOT TRAP TRIGGERED: Wi-Fi DHCP spoofed MAC decoy entered!"
+      },
+      {
+        "flag": "case{sansh_vhah_library_ap_decoy}",
+        "name": "Wi-Fi Library AP Decoy",
+        "lockout_seconds": 120,
+        "penalty_points": 0,
+        "alert_message": "🚨 HONEYPOT TRAP TRIGGERED: Sansh Vhah innocent alibi decoy entered!"
+      },
+      {
+        "flag": "case{decoy_superficial_lead_check_source}",
+        "name": "CheatSheet Superficial Lead Decoy",
+        "lockout_seconds": 120,
+        "penalty_points": 0,
+        "alert_message": "🚨 HONEYPOT TRAP TRIGGERED: Superficial lead honeyflag entered!"
+      },
+      {
+        "flag": "case{decoy_git_log_superficial_commit}",
+        "name": "Git Commit Red Herring Decoy",
+        "lockout_seconds": 120,
+        "penalty_points": 0,
+        "alert_message": "🚨 HONEYPOT TRAP TRIGGERED: Superficial Git commit red herring entered!"
+      },
+      {
+        "flag": "case{decoy_superficial_html_comment}",
+        "name": "HTML Comment Red Herring Decoy",
+        "lockout_seconds": 120,
+        "penalty_points": 0,
+        "alert_message": "🚨 HONEYPOT TRAP TRIGGERED: HTML Comment red herring entered!"
+      },
+      {
+        "flag": "case{nice_try_blind_ai_wifi_grep}",
+        "name": "Blind AI Wi-Fi Scraper Trap",
+        "lockout_seconds": 120,
+        "penalty_points": 0,
+        "alert_message": "🚨 HONEYPOT TRAP TRIGGERED: Blind AI scraping pattern trapped!"
       }
     ]
   }

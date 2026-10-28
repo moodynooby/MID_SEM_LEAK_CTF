@@ -1,11 +1,12 @@
 name: "Email Forensics: The Angry TA's Leaked Mails"
 author: "Vatsal Pandya (@VP1107)"
 category: "Forensics"
+difficulty: "medium"
 description: |
   **Case File Briefing:**
   Following the unauthorized leak of the upcoming **OOP 99** Mid-Semester Examination paper, campus network administrators intercepted a raw mail spool export (`leaked_incident_mail.eml`) from the campus gateway server (`mailgw.ahduni.edu.in`).
 
-  The incident export contains multiple forwarded threads, routine student inquiries, and spoofed sender headers. Investigators suspect that **TA Piyush Pelaiya** exfiltrated the exam in retaliation against **Prof. Hasmukh Chelaiya** following a harsh evaluation in **OS 101**.
+  The incident export contains multiple forwarded threads, decoy student complaints, and spoofed sender headers. Investigators suspect that **TA Piyush Pelaiya** exfiltrated the exam in retaliation against **Prof. ManMishra Chelaiya** following a harsh evaluation in **OS 101**.
 
   Analyze the RFC 822 email headers (`X-Originating-IP`, authentication tags, and MIME boundaries), cut through the forwarded clutter, and recover the leaked confidential exam paper and the culprit's confession signature flag.
 
@@ -15,8 +16,8 @@ value: 500
 type: dynamic
 extra:
   initial: 500
-  decay: 15
-  minimum: 100
+  decay: 16
+  minimum: 200
 
 flags:
   - case{ta_piyush_angry_leaked_oop99_mail}

@@ -8,7 +8,7 @@ Generates:
     challenges/pdf_hidden_text/files/OOP99_Exam_Paper_REDACTED.pdf
 
 Storyline Context:
-    Before circulating the official exam schedule, Prof. Hasmukh Chelaiya prepared
+    Before circulating the official exam schedule, Prof. ManMishra Chelaiya prepared
     the master draft of the OOP 99 mid-sem examination. Before sending the draft to
     department colleagues, he visually redacted Section C (containing Question 4 and
     the confidential bonus rubric) using black boxes in a PDF editor.
@@ -61,7 +61,7 @@ def build_pdf_document(output_path: Path):
         "BT",
         "/F1 10 Tf",
         "50 675 Td",
-        "(Course Faculty: Prof. Hasmukh Chelaiya    | Date: 28 Oct 2026 | Time: 2 Hours | Max Marks: 50) Tj",
+        "(Course Faculty: Prof. ManMishra Chelaiya    | Date: 28 Oct 2026 | Time: 2 Hours | Max Marks: 50) Tj",
         "ET",
         # Decorative divider line
         "0.3 0.3 0.3 RG",
