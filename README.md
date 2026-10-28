@@ -103,7 +103,9 @@ Three challenges are **live web services** published directly on the LAN (they b
 │   ├── freeze_scoreboard.py        # 5:15 PM suspense scoreboard blackout
 │   ├── unfreeze_scoreboard.py      # 5:30 PM closing ceremony scoreboard reveal
 │   ├── manage_timed_events.py      # Interactive console for clue drops and timed rounds
-│   └── siren_alert/                # Decoy honeyflag trap & intrusion monitor daemon (Issue #16 & #25)
+│   ├── anubis_pow_check.py         # End-to-end Anubis PoW/cookie health probe (plain-HTTP LAN)
+│   ├── siren_alert/                # Decoy honeyflag trap & intrusion monitor daemon (Issue #16 & #25)
+│   └── requirements.txt            # Python dependencies (requests, python-dotenv, rich)
 │
 └── docs/                           # Documentation, Runbook & Participant Materials
     ├── TECH_LEAD_RUNBOOK.md        # Playbook for setup, dry-run, and event execution
@@ -130,12 +132,25 @@ uv run ctf events
 ```
 
 Or trigger specific moments directly:
+- **4:35 PM:** Release 15-Min Vanishing Bonus Challenge:
+  ```bash
+  uv run ctf events --event vanishing_start
+  ```
 - **4:45 PM:** Broadcast Clue Drop #1:
   ```bash
   uv run ctf events --event clue_drop_1
   ```
-- **5:10 PM:** Broadcast Clue Drop #2:
+- **4:50 PM:** Hide Vanishing Challenge:
   ```bash
+  uv run ctf events --event vanishing_end
+  ```
+- **5:00 PM:** Activate 10-Min Lightning Round (Double Points):
+  ```bash
+  uv run ctf events --event lightning_start
+  ```
+- **5:10 PM:** Close Lightning Round & Broadcast Clue Drop #2:
+  ```bash
+  uv run ctf events --event lightning_end
   uv run ctf events --event clue_drop_2
   ```
 - **5:15 PM:** Trigger Scoreboard Blackout (Suspense Mode):
