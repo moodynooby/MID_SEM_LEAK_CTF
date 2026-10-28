@@ -1,11 +1,12 @@
 name: "Password Cracking: Faculty Vault & Campus Wordlist"
 author: "Vidit (@viditd1-eng)"
 category: "Crypto"
+difficulty: "hard"
 description: |
   **Case File Briefing:**
   A secure zip archive named `confidential_vault.zip` was discovered staged on the faculty shared network drive. According to system access timestamps, the archive was encrypted and transferred just minutes before the network alert triggered.
 
-  Investigators believe this archive contains Prof. Hasmukh Chelaiya's master examination draft and grading key for **OOP 99**. However, the archive is protected by a strong passphrase.
+  Investigators believe this archive contains Prof. ManMishra Chelaiya's master examination draft and grading key for **OOP 99**. However, the archive is protected by a strong passphrase.
 
   Standard wordlists like `rockyou.txt` will fail completely. Department security interviews reveal the password was synthesized using campus lore entities: the lab number, course code, suspect name, and year.
 
@@ -13,12 +14,12 @@ description: |
 
   **Flag Format:** `case{...}`
 
-value: 500
+value: 700
 type: dynamic
 extra:
-  initial: 500
-  decay: 15
-  minimum: 100
+  initial: 700
+  decay: 12
+  minimum: 350
 
 flags:
   - case{custom_hashcat_wordlist_cracked_vault}

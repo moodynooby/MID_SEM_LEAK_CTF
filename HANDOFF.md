@@ -66,10 +66,44 @@ This repository contains the complete offline-first containerized infrastructure
 2. **Theme Mounts:**
    - Custom Jinja2 themes and stylesheets are mounted declaratively via [docker-compose.yml](docker-compose.yml) (`./themes/m0xblood:/opt/CTFd/CTFd/themes/m0xblood:ro`).
    - Running `uv run ctf theme` automatically activates `m0xblood` as the primary CTFd theme via the REST API and injects big-screen scoreboard styling into `theme_header`/`theme_footer`. Never manually alter files inside the running container.
+3. **Anubis Cookies Must Not Be `Secure` (Plain HTTP on Port 80):**
+   - Anubis `v1.28+` defaults to `cookie-secure=true` and `cookie-partitioned=true`. Over `http://` browsers silently drop those cookies, so the verification cookie never returns and every participant loops on `user has cookies disabled` (`docker logs ctfd_anubis` confirms) — only `http://localhost` works, which wrongly suggests a per-machine issue.
+   - [docker-compose.yml](docker-compose.yml) pins `COOKIE_SECURE=false` and `COOKIE_PARTITIONED=false` on the `anubis` service. `SameSite=None` auto-downgrades to `Lax` once `COOKIE_SECURE=false`.
+   - Verify with `curl -sD- -o /dev/null http://<LAN-IP>/ | grep -i set-cookie` (must have **no** `Secure`/`Partitioned`) and `python3 ops/anubis_pow_check.py http://<LAN-IP>` (`RESULT: PASS`).
+4. **Seeded Challenges Must Set `max_attempts` (else every challenge click 500s):**
+   - CTFd defaults `challenges.max_attempts` only in the ORM (`default=0`), so a raw-SQL seed that omits the column stores `NULL`. `core-beta/challenge.html` evaluates `{% if max_attempts > 0 %}` and throws `TypeError` → `/api/v1/challenges/<id>` returns **500**, and the browser shows `can't access property "type_data", r is undefined` in `loadChallenge(c.id)`. The board renders, but no challenge opens.
+   - [ops/seed_challenges.py](ops/seed_challenges.py) now writes `max_attempts` explicitly on insert/update, repairs pre-existing `NULL` rows, and exits non-zero if any remain. Re-run `uv run ctf seed` after pulling; it is idempotent.
+   - Post-seed smoke test: logged-in `GET /api/v1/challenges/<id>` must return `200 application/json` containing a `view` key. `[SUCCESS]` in the seeder banner alone is not sufficient evidence.
+5. **Seeded Attachments Must Be `files.type='challenge'`:**
+   - `Files` uses SQLAlchemy single-table inheritance: only `type='challenge'` rows instantiate `ChallengeFiles`, and `Challenges.files` joins nothing else. Files seeded as `type='standard'` are downloadable at `/files/<sha1>/<name>` but produce **no download links** in the challenge modal.
+   - [ops/seed_challenges.py](ops/seed_challenges.py) writes `type='challenge'`, back-fills existing rows, and fails the run if any challenge attachment is mistyped. Smoke test: the challenge's API `data.files` array must be non-empty and the modal `view` HTML must contain `/files/` hrefs.
+6. **Regenerated Artifacts Must Replace, Not Append (stale PDF trap):**
+   - CTFd stores uploads at `/var/uploads/<sha1>/<filename>`, so **any** content change produces a new location. The original seeder only ever INSERTed (`SELECT … WHERE location = …` → miss → INSERT), so a regenerated PDF/EML added a *second* identically-named attachment and left the old row live: the modal advertised the stale file first, and `/files/<old_sha1>/<name>` kept serving the old bytes forever.
+   - [ops/seed_challenges.py](ops/seed_challenges.py) now runs `sync_challenge_files()`: it computes the expected `sha1/filename` set from the YAML `files:` block, `DELETE`s every row for that challenge outside the set, removes the orphaned `/var/uploads/<sha1>/` blob **only if no other row references it**, then uploads. Re-seeding is therefore declarative — edit an artifact, run `uv run ctf seed`, and the live download matches disk.
+   - Smoke test: `SELECT challenge_id, location FROM files` must return exactly one row per YAML `files:` entry, and `sha1sum` of the DB location's basename inside `ctfd_app` must equal `sha1sum` on disk.
 
 ---
 
-## 3. Challenge Track Matrix & Status (14 Challenges + Live Ops)
+## 3. Hosted Challenge Services (Web & AI Track)
+
+Three challenges are live web services built from source and healthchecked by Compose:
+
+| Container | Port | Directory | Notes |
+| :--- | :---: | :--- | :--- |
+| `challenge_cookie_api` | `5001` | `challenges/cookie_api/` | Cookie elevation + unlisted REST endpoint; decoy at `/api/v1/admin/secret` |
+| `challenge_proctor_bot` | `5002` | `challenges/ai_prompt_injection/` | Bridge container → host Ollama via `host.docker.internal` |
+| `challenge_php2shell` | `5003` | `challenges/php2shell/` | Polyglot upload → simulated PHP execution |
+
+**Invariants:**
+- **php2shell isolation:** every upload is stored as `<uuid6>_<name>` and **only** that exact link resolves. There is no un-prefixed `/uploads/<name>` fallback — it let concurrent teams overwrite or resolve each other's shells. `solve.py` asserts both the 404 fallback and two same-name uploads staying distinct.
+- **Resource guards:** php2shell rejects bodies over 2 MiB (`413`) before buffering and prunes its upload directory to the 500 newest files; the proctor bot caps prompts at 16 KiB. All three raise the listen backlog to 128 and set a socket timeout so slowloris cannot pin threads.
+- **Cookie rendering:** `role` / `access_tier` cookie values are `html.escape`d before interpolation (reflected-XSS guard). The vault decoy is registered in [conf/gamification.json](conf/gamification.json) so submitting it fires the siren.
+- **Ollama bind (required for the real LLM path):** the proctor bot is a normal `proxy_net` container, so it reaches the host through the docker0 gateway. Ollama must listen on the bridge, not loopback — install [conf/ollama/override.conf](conf/ollama/override.conf) as a systemd drop-in (`OLLAMA_HOST=172.17.0.1:11434`) and restart Ollama. Before that change the bot serves its deterministic regex fallback (still solvable, but not model-backed).
+- **Verification:** `uv run ctf status` prints the service health table, probes 5001/5002/5003, and warns when Ollama is loopback-only. `uv run python challenges/<svc>/solve.py http://127.0.0.1:<port>` must exit 0.
+
+---
+
+## 4. Challenge Track Matrix & Status (15 Challenges + Live Ops)
 
 | Issue # | Challenge Name | Category | Difficulty | Assignee | Target Directory | Status |
 | :---: | :--- | :--- | :---: | :--- | :--- | :---: |
@@ -78,7 +112,7 @@ This repository contains the complete offline-first containerized infrastructure
 | **#11** | Audio Spectrogram: Lab Microphone Wiretap | Stego | Medium | Yesha | `challenges/audio_spectrogram/` | Completed (Verified) |
 | **#12** | Physical Forensics: Lab 207 Terminal RAM Dump | Forensics | Medium | Yesha | `challenges/physical_terminal_ram/` | Completed (Verified) |
 | **#13** | Cookie / API: Faculty Exam Vault | Web | Easy | @tanishshahh | `challenges/cookie_api/` | Completed (Verified) |
-| **#14** | AI Model Prompt: Proctor Bot Jailbreak | AI | Easy/Med | @tanishshahh | `challenges/ai_prompt_injection/` | Completed (Verified - SmolLM2 Local LLM) |
+| **#14** | AI Model Prompt: Proctor Bot Jailbreak | AI | Medium | @tanishshahh | `challenges/ai_prompt_injection/` | Completed (Verified - SmolLM2 Local LLM) |
 | **#15** | PHP2SHELL: Faculty Upload Bypass | Web | Hard | @tanishshahh | `challenges/php2shell/` | Completed (Verified - Multi-Team Isolated) |
 | **#16** | Intrusion Punishments & Siren Alerts | Live Ops | — | @tanishshahh | `ops/siren_alert/` | Completed (Verified - Decoy Monitor & AV Siren) |
 | **#17** | APK Reverse Engineer: Suspect's App | Reversing | Medium | @viditd1-eng | `challenges/apk_companion_reversing/` | Completed (Verified) |
@@ -94,12 +128,14 @@ This repository contains the complete offline-first containerized infrastructure
 | **#2** | Big-Screen Projector & Sound Cue Board | AV/Ops | — | @tanishshahh | `ops/soundboard/` | In Flight |
 | **#4** | Case Dossier Print Kit & Slide Deck | Design | — | Open | `docs/participant_kit/` | In Flight |
 
+**Scoring weight (live, verified via `uv run ctf seed`):** the `Difficulty` column above is not cosmetic — it is declared as `difficulty:` in each `challenge.yml` and drives a dynamic-scoring band: **Easy 300 → 100**, **Medium 500 → 200**, **Hard 700 → 350**. Max board total is **7,100 pts** (5 easy, 7 medium, 3 hard). Full matrix in [challenges/README.md](challenges/README.md#3-difficulty-tiered-dynamic-scoring) and [EVENT.md](EVENT.md#8-scoring-system-tie-breakers--prize-structure).
+
 ---
 
-## 4. Canon Storyline & Lore Blueprint
+## 5. Canon Storyline & Lore Blueprint
 
 ### The Core Incident
-- **The Victim:** **Prof. Hasmukh Chelaiya** (Faculty teaching **OS 101** and author of the leaked **OOP 99** Mid-Sem Exam).
+- **The Victim:** **Prof. ManMishra Chelaiya** (Faculty teaching **OS 101** and author of the leaked **OOP 99** Mid-Sem Exam).
 - **The Culprit:** **TA Piyush Pelaiya** (Graduate teaching assistant who received failing/unfair grades from Prof. Chelaiya in OS 101, prompting a revenge-driven exfiltration of the OOP 99 exam paper).
 - **The Decoys & Framed Students:**
   - *Sansh Vhah* (`@binary_breeze`): Lab 208 check-in decoy.
@@ -112,7 +148,7 @@ This repository contains the complete offline-first containerized infrastructure
 
 ---
 
-## 5. Operations & Unified CLI Cheat Sheet (`uv run ctf`)
+## 6. Operations & Unified CLI Cheat Sheet (`uv run ctf`)
 
 All tasks must be invoked via `ctf.py`:
 
@@ -145,7 +181,7 @@ uv run ctf setup                            # One-shot stack bootstrap, challeng
 
 ---
 
-## 6. Hot-Standby Failover Protocol (Recovery in `< 2 Minutes`)
+## 7. Hot-Standby Failover Protocol (Recovery in `< 2 Minutes`)
 
 In the event of total hardware, power, or kernel failure on the Primary Server:
 
@@ -159,14 +195,20 @@ flowchart TD
     F -->|Result| G[Live Event Resumed with Zero Data Loss]
 ```
 
+**What the snapshot does and does not carry:**
+- `uv run ctf sync` / `backup` bundle **only** `database.sql` + `/var/uploads`.
+- The standby needs the git clone and built challenge images (Compose rebuilds them from `challenges/*/Dockerfile`), which are not in the archive.
+- **The SmolLM2 model is not in the archive.** `uv run ctf restore` now calls `ensure_ollama()` and falls back to the regex heuristics if the model or daemon is missing — the AI challenge stays solvable, but not model-backed. Pre-pull the model on the standby during setup.
+- **php2shell uploaded shells are not in the archive.** Teams must re-upload after failover; their isolated links will 404 until they do.
+
 ---
 
-## 7. Immediate Priority Punchlist (Before 27 Oct Dry Run)
+## 8. Immediate Priority Punchlist (Before 27 Oct Dry Run)
 
 1. **Challenge Scaffolding Completion:**
    - Ensure every challenge directory contains `challenge.yml`, `README.md` (solution), `generate.py` / `Dockerfile`, and `solve.py`.
 2. **Anti-AI Quality Assurance:**
-   - Execute the 5-step verification protocol for all 14 challenges.
+   - Execute the 5-step verification protocol for all 15 challenges.
    - Run prompt-injection solver against Issue #14 (`proctor_bot.py`) to confirm honeyflag triggering.
    - Check audio spectrogram visualization in Audacity/Sonic Visualiser for Issue #11.
 3. **Live Gamification Staging:**
@@ -179,7 +221,7 @@ flowchart TD
 
 ---
 
-## 8. Governance & Contribution Rules
+## 9. Governance & Contribution Rules
 - **Mandatory Context Reading & Updates:** Every contributor and agent MUST read all operational context docs ([AGENTS.md](AGENTS.md), [EVENT.md](EVENT.md), [HANDOFF.md](HANDOFF.md), [NOTES.md](NOTES.md), [README.md](README.md), [challenges/README.md](challenges/README.md), and [docs/TECH_LEAD_RUNBOOK.md](docs/TECH_LEAD_RUNBOOK.md)) before taking action, and synchronously update all corresponding context docs whenever modifications are made.
 - Always refer to [AGENTS.md](AGENTS.md) for strict rules regarding AI contributions (`Assisted-by` attribution), secret hygiene, dynamic scoring formulas, and DCO restrictions (no `Signed-off-by`).
 - Keep `.env.example` strictly synchronized with `.env`.

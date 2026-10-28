@@ -9,7 +9,7 @@ Generates:
     challenges/wifi_dns_logs/files/dhcp_leases.log
 
 Storyline Canon Context:
-    At 02:13:42 IST on 28 October 2026, Prof. Hasmukh Chelaiya's department laptop
+    At 02:13:42 IST on 28 October 2026, Prof. ManMishra Chelaiya's department laptop
     (prof_chelaiya_thinkpad_x1, MAC a4:c4:94:02:13:42) associated with the faculty
     access point AP-AU-FACULTY-L2 and initiated an automated background cloud sync of
     the confidential OOP 99 examination draft.

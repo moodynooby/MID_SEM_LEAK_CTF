@@ -54,6 +54,16 @@ When started, CTFd will be accessible at:
 - **Local Host:** `http://localhost`
 - **Participant LAN URL:** `http://<YOUR_LAN_IP>` (Port 80)
 
+Three challenges are **live web services** published directly on the LAN (they bypass the port-80 proxy):
+
+| Port | Challenge | Verify |
+| :---: | :--- | :--- |
+| `5001` | Cookie / API: Faculty Exam Vault | `uv run python challenges/cookie_api/solve.py http://127.0.0.1:5001` |
+| `5002` | AI Model Prompt: Proctor Bot Jailbreak | `uv run python challenges/ai_prompt_injection/solve.py http://127.0.0.1:5002` |
+| `5003` | PHP2SHELL: Faculty Upload Portal Bypass | `uv run python challenges/php2shell/solve.py http://127.0.0.1:5003` |
+
+`uv run ctf status` prints a health table for all three and warns if Ollama is not bound to the docker bridge. The AI challenge needs the host-side drop-in in [conf/ollama/override.conf](conf/ollama/override.conf) for the model-backed path; without it the bot serves a deterministic fallback and the challenge remains solvable.
+
 ---
 
 ## 📂 Repository Structure
@@ -74,6 +84,7 @@ When started, CTFd will be accessible at:
 │   ├── nginx/default.conf          # Nginx proxy (Port 80, SSE websocket streaming, 100MB body)
 │   ├── anubis/botPolicy.yaml       # Anubis anti-bot & Proof-of-Work rules (blocks AI scrapers)
 │   ├── mysql/my.cnf                # MariaDB tuning (250 connections, UTF-8 MB4, buffer pools)
+│   ├── ollama/override.conf        # Host Ollama bind (OLLAMA_HOST=<docker0>:11434) for the AI challenge
 │   └── gamification.json           # Live gamification rules, wheel segments, weights & decoy trap policies
 │
 ├── tools/
@@ -93,6 +104,7 @@ When started, CTFd will be accessible at:
 │   ├── freeze_scoreboard.py        # 5:15 PM suspense scoreboard blackout
 │   ├── unfreeze_scoreboard.py      # 5:30 PM closing ceremony scoreboard reveal
 │   ├── manage_timed_events.py      # Interactive console for clue drops and timed rounds
+│   ├── anubis_pow_check.py         # End-to-end Anubis PoW/cookie health probe (plain-HTTP LAN)
 │   ├── siren_alert/                # Decoy honeyflag trap & intrusion monitor daemon (Issue #16 & #25)
 │   └── requirements.txt            # Python dependencies (requests, python-dotenv, rich)
 │

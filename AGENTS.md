@@ -48,12 +48,12 @@
 - Add `Fixes: #<issue_id>` or `Fixes: <commit_id>` tag when resolving defects or closing deliverables.
 - Explicitly report operational limitations if a fix could not be built, executed, or tested against live local containers.
 - Format challenge flags strictly as `case{...}` (all lowercase prefix, ASCII characters, underscores or leetspeak).
-- Follow the canon storyline: TA Piyush Pelaiya leaked Prof. Hasmukh Chelaiya's OOP 99 mid-sem exam paper in revenge for harsh grading in OS 101.
+- Follow the canon storyline: TA Piyush Pelaiya leaked Prof. ManMishra Chelaiya's OOP 99 mid-sem exam paper in revenge for harsh grading in OS 101.
 
 ### Ask first:
 - Before running destructive operations (`down -v`, volume pruning, database table truncations).
 - Before modifying live production environment variables in `.env`.
-- Before altering challenge dynamic scoring formulas (Default: 500 initial, 15 decay, 100 min).
+- Before altering the difficulty-tier dynamic scoring bands (`easy` 300/20/100, `medium` 500/16/200, `hard` 700/12/350) or any per-challenge `extra:` override.
 - Before disclosing security flaws: classify as bug vs. vulnerability and present to Tech Leads privately.
 
 ### Never do:
@@ -68,9 +68,9 @@
 
 ## 4. Challenge Authoring & Anti-AI Standards
 
-All 14 challenges must adhere to the 5-step authoring standard defined in [challenges/README.md](challenges/README.md):
+All 15 challenges must adhere to the 5-step authoring standard defined in [challenges/README.md](challenges/README.md):
 1. **Directory Structure:** Placed in `challenges/<challenge_name>/` containing:
-   - `challenge.yml` (ctfcli-compliant specification).
+   - `challenge.yml` (ctfcli-compliant specification) — must declare `difficulty:` (`easy` | `medium` | `hard`). That field *is* the point weight: it selects the dynamic band (easy 300/20/100, medium 500/16/200, hard 700/12/350), and `value:` / `extra:` must match it so the YAML stays self-consistent.
    - `README.md` (Step-by-step authoring rationale and full walkthrough solution).
    - `generate.py` / generator assets (scripts used to compile the evidence artifact).
    - `solve.py` / solver script (automated reproducer and flag extractor).
@@ -104,7 +104,7 @@ All 14 challenges must adhere to the 5-step authoring standard defined in [chall
 | `uv run ctf blackout`| 5:15 PM freeze | Freezes live scoreboard into suspense mode |
 | `uv run ctf reveal` | 5:30 PM unfreeze| Reveals final scoreboard for closing ceremony |
 | `uv run ctf theme` | Apply theme & projector | Activates primary theme (`m0xblood`) and pushes `ctfd-theme/` projector styling |
-| `uv run ctf seed` | Seed challenges | Idempotently populates challenges, flags, files, and dynamic scoring |
+| `uv run ctf seed` | Seed challenges | Idempotently synchronises challenges, flags, hints, tags, dynamic scoring **and attachments (stale rows/blobs pruned)** |
 | `uv run ctf import [csv]` | Import teams & users | Parses registration Google Forms CSV, seeds CTFd teams & exports credentials dossier |
 | `uv run ctf setup` | Full auto-setup | One-shot stack bootstrap, challenge seeder, theme & API bindings |
 | `uv run ctf wheel` | Launch spin wheel | Displays HTML5/Canvas projector spin wheel URL and controls (`/spin-wheel/`) |
@@ -118,6 +118,7 @@ All 14 challenges must adhere to the 5-step authoring standard defined in [chall
 - **Big-Screen AV Experience & Gamification:** See [ctfd-theme/](ctfd-theme/), [av-console/](av-console/) (countdown clock, soundboard, siren overlay), [tools/spin_wheel/](tools/spin_wheel/) (interactive wheel), and [docs/HOT_SAUCE_ROULETTE.md](docs/HOT_SAUCE_ROULETTE.md).
 - **Challenge Authoring & Scaffolding:** See [challenges/README.md](challenges/README.md) and template in [challenges/template/](challenges/template/).
 - **Proxy & MariaDB Engine Tuning:** See [conf/nginx/default.conf](conf/nginx/default.conf) and [conf/mysql/my.cnf](conf/mysql/my.cnf).
+- **Hosted Challenge Services (5001/5002/5003):** See [HANDOFF.md](HANDOFF.md) §3 and [challenges/README.md](challenges/README.md) §5. The proctor bot's host LLM bind lives in [conf/ollama/override.conf](conf/ollama/override.conf) (systemd drop-in, `OLLAMA_HOST=<docker0>:11434`).
 - **Handoff Documentation:** See [HANDOFF.md](HANDOFF.md).
 - **Technical & Lore Notebook:** See [NOTES.md](NOTES.md).
 

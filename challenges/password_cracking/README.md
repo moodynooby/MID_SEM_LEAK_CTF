@@ -2,7 +2,7 @@
 ## Case File: The Mid-Sem Leak — IEEE AUSB CTF 2026
 
 **Track:** Binary & Crypto / Custom Cryptography  
-**Difficulty:** Hard (500 pts dynamic: 500 initial / 15 decay / 100 min)  
+**Difficulty:** Hard — 700 → 350 pts (decay 12 solves)  
 **Author:** Vidit (@viditd1-eng)  
 **Target File:** `files/confidential_vault.zip`  
 **Flag:** `case{custom_hashcat_wordlist_cracked_vault}`  
@@ -44,7 +44,7 @@ import itertools
 
 labs = ["AU207", "AU208", "207", "208"]
 courses = ["OS101", "OOP99"]
-suspects = ["Piyush", "Pelaiya", "Hasmukh", "Chelaiya", "Sansh", "Danas", "Prish", "Tryan", "Parsh"]
+suspects = ["Piyush", "Pelaiya", "ManMishra", "Chelaiya", "Sansh", "Danas", "Prish", "Tryan", "Parsh"]
 years = ["2026", "2025"]
 symbols = ["!", "@", "#", "$"]
 

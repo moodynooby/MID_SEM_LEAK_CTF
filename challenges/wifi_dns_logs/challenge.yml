@@ -1,6 +1,7 @@
 name: "DNS / Wi-Fi Logs: The 2:13 AM Auto-Sync"
 author: "Vatsal Pandya (@VP1107)"
 category: "Network"
+difficulty: "medium"
 description: |
   **Case File Briefing:**
   Investigators auditing the AU wireless infrastructure captured overnight connection spools (`campus_wifi_access.log` and `dhcp_leases.log`) from the central Aruba mobility controller and DHCP server.
@@ -15,8 +16,8 @@ value: 500
 type: dynamic
 extra:
   initial: 500
-  decay: 15
-  minimum: 100
+  decay: 16
+  minimum: 200
 
 flags:
   - case{chelaiya_thinkpad_auto_sync_0213}

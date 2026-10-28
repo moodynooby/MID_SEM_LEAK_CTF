@@ -56,6 +56,13 @@ DEFAULT_GAMIFICATION = {
                 "alert_message": "🚨 HONEYPOT TRAP TRIGGERED: Proctor Bot emergency override token entered!"
             },
             {
+                "flag": "case{faculty_admin_portal_root_auth_2026}",
+                "name": "Faculty Vault Admin Decoy",
+                "lockout_seconds": 120,
+                "penalty_points": 0,
+                "alert_message": "🚨 HONEYPOT TRAP TRIGGERED: Faculty Exam Vault admin decoy entered!"
+            },
+            {
                 "flag": "case{decoy_plaintext_login_honeyflag}",
                 "name": "PCAP Plaintext Login Decoy",
                 "lockout_seconds": 120,

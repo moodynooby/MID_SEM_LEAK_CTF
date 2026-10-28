@@ -3,14 +3,14 @@
 **Author:** Tanish Shah (`@tanishshahh`)  
 **Track:** Web & AI (Issue #6 / Challenge #13)  
 **Category:** Web  
-**Difficulty:** Easy (100–200 pts, Dynamic initial: 500, decay: 15, minimum: 100)  
+**Difficulty:** Easy — 300 → 100 pts (decay 20 solves)  
 **True Flag:** `case{cookie_role_tamper_faculty_access}`  
 **Decoy Honeyflag:** `case{faculty_admin_portal_root_auth_2026}`  
 
 ---
 
 ### 1. Narrative Lore & Storyline Context
-In AU Lab 207, TA Piyush Pelaiya accessed an internal faculty staging interface used by Prof. Hasmukh Chelaiya to verify draft exam questions for **OS 101** and **OOP 99**. The web service was intended solely for faculty and exam coordinators, but relies on insecure client-side session cookie state to enforce permissions.
+In AU Lab 207, TA Piyush Pelaiya accessed an internal faculty staging interface used by Prof. ManMishra Chelaiya to verify draft exam questions for **OS 101** and **OOP 99**. The web service was intended solely for faculty and exam coordinators, but relies on insecure client-side session cookie state to enforce permissions.
 
 ---
 

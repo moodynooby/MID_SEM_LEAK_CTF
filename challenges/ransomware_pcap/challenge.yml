@@ -1,6 +1,7 @@
 name: "Ransomware Infected: Backdoor Web Shell in PCAP"
 author: "Vatsal Pandya (@VP1107)"
 category: "Network"
+difficulty: "medium"
 description: |
   **Case File Briefing:**
   During network incident response, campus security isolated packet capture `infected.pcap` from the switch port connected to the faculty internal share (`10.20.0.12`).
@@ -15,8 +16,8 @@ value: 500
 type: dynamic
 extra:
   initial: 500
-  decay: 15
-  minimum: 100
+  decay: 16
+  minimum: 200
 
 flags:
   - case{pcap_webshell_exfil_key_found}

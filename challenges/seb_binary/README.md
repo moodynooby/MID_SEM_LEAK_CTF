@@ -1,7 +1,7 @@
 # Safe Exam Browser (SEB): Windows Kiosk Lockdown Reversing
 
 **Category:** Reverse Engineering  
-**Difficulty:** Hard (500 pts, dynamic: 500/15/100)  
+**Difficulty:** Hard — 700 → 350 pts (decay 12 solves)  
 **Author:** Vansh Shah (@C00LVansh)  
 **Flag:** `case{seb_win_pe_lockdown_integrity_bypassed}`
 
@@ -88,7 +88,7 @@ python solve.py
 
 ```
 challenges/seb_binary/
-├── challenge.yml          # CTFd specification (dynamic: 500/15/100)
+├── challenge.yml          # CTFd spec (dynamic: hard 700/12/350)
 ├── README.md              # This file
 ├── generate.py            # Build pipeline (compile + binary-patch)
 ├── solve.py               # Automated solver (PE parse + decrypt)

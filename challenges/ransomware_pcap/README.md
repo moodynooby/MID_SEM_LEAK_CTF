@@ -4,7 +4,7 @@
 - **Author:** Vatsal Pandya (`@VP1107`)
 - **Track:** Network & Forensics (Issue #5 / Challenge #2)
 - **Category:** Network
-- **Estimated Difficulty:** Medium (Dynamic initial: 500, decay: 15, minimum: 100)
+- **Estimated Difficulty:** Medium — 500 → 200 pts (decay 16 solves)  
 - **Tester / Solve-Verified By:** Krish Poddar (`@Krish-452`) / Manas Doshi (`@moodynooby`)
 - **True Flag:** `case{pcap_webshell_exfil_key_found}`
 - **Decoy Honeyflags:**

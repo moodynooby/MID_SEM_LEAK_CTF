@@ -1,14 +1,14 @@
 # PDF Hidden Text: The Redacted Exam Paper
 
 **Track:** Forensics & Stego  
-**Difficulty:** Easy (Dynamic 500 $\rightarrow$ 100)  
+**Difficulty:** Easy — 300 → 100 pts (decay 20 solves)  
 **Author:** Yesha (Forensics Track Lead)  
 **Flag:** `case{redacted_pdf_layer_text_exposed}`
 
 ---
 
 ## 1. Challenge Overview & Canon Storyline
-Before circulating the official exam schedule, Prof. Hasmukh Chelaiya prepared the master draft of the OOP 99 mid-sem examination. Before sending the draft to department colleagues, he attempted to redact Section C (containing Question 4 and the confidential bonus rubric) using black boxes in a PDF editor.
+Before circulating the official exam schedule, Prof. ManMishra Chelaiya prepared the master draft of the OOP 99 mid-sem examination. Before sending the draft to department colleagues, he attempted to redact Section C (containing Question 4 and the confidential bonus rubric) using black boxes in a PDF editor.
 
 However, the redaction was purely cosmetic: a vector rectangle (`48 330 515 90 re f`) and white text (`1 1 1 rg`) were placed into the PDF stream without rasterizing or sanitizing the content stream. When TA Piyush Pelaiya intercepted the file, he discovered that the original text remained fully intact in the underlying document object.
 

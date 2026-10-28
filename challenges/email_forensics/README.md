@@ -4,7 +4,7 @@
 - **Author:** Vatsal Pandya (`@VP1107`)
 - **Track:** Network & Forensics (Issue #5 / Challenge #24)
 - **Category:** Forensics
-- **Estimated Difficulty:** Medium (Dynamic initial: 500, decay: 15, minimum: 100)
+- **Estimated Difficulty:** Medium — 500 → 200 pts (decay 16 solves)  
 - **Tester / Solve-Verified By:** Krish Poddar (`@Krish-452`) / Manas Doshi (`@moodynooby`)
 - **True Flag:** `case{ta_piyush_angry_leaked_oop99_mail}`
 - **Alternative Accepted Flag:** `case{piyush_angry_ta_os101_revenge}`
@@ -19,7 +19,7 @@
 
 In *Case File: The Mid-Sem Leak*, midterm examination week at Ahmedabad University is thrown into crisis when the upcoming **OOP 99 (Object Oriented Programming Systems)** examination paper is leaked across campus.
 
-The investigation leads back to **TA Piyush Pelaiya**, an M.Tech / Senior Teaching Assistant in AU Lab 207. Earlier in the semester, Piyush took (and assisted in) **OS 101 (Operating Systems Principles)** under the strict evaluation of **Prof. Hasmukh Chelaiya**. Prof. Chelaiya deducted 25 marks on Piyush's multithreading lab evaluation due to a mutex lock ordering flaw, bluntly declaring in front of the lab: *"Deadlock avoidance is non-negotiable in OS 101, Mr. Pelaiya."*
+The investigation leads back to **TA Piyush Pelaiya**, an M.Tech / Senior Teaching Assistant in AU Lab 207. Earlier in the semester, Piyush took (and assisted in) **OS 101 (Operating Systems Principles)** under the strict evaluation of **Prof. ManMishra Chelaiya**. Prof. Chelaiya deducted 25 marks on Piyush's multithreading lab evaluation due to a mutex lock ordering flaw, bluntly declaring in front of the lab: *"Deadlock avoidance is non-negotiable in OS 101, Mr. Pelaiya."*
 
 Furious and seeking revenge, Piyush discovered Prof. Chelaiya's draft of the upcoming OOP 99 mid-sem examination during a late-night workstation share synchronization. In retaliation, Piyush sent an angry exfiltration email to the student body containing the complete leaked question paper and an explicit confession.
 

@@ -2,7 +2,7 @@
 ## Case File: The Mid-Sem Leak — IEEE AUSB CTF 2026
 
 **Track:** Binary & Crypto / Mobile Reverse Engineering  
-**Difficulty:** Medium (500 pts dynamic: 500 initial / 15 decay / 100 min)  
+**Difficulty:** Medium — 500 → 200 pts (decay 16 solves)  
 **Author:** Vidit (@viditd1-eng)  
 **Target File:** `files/AU_Companion.apk`  
 **Flag:** `case{apk_decompiled_jadx_secret_extracted}`  

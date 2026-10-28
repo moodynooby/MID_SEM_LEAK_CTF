@@ -4,7 +4,7 @@
 - **Author:** Vatsal Pandya (`@VP1107`)
 - **Track:** Network & Forensics (Issue #5 / Challenge #1)
 - **Category:** Network
-- **Estimated Difficulty:** Medium (Dynamic initial: 500, decay: 15, minimum: 100)
+- **Estimated Difficulty:** Medium — 500 → 200 pts (decay 16 solves)  
 - **Tester / Solve-Verified By:** Krish Poddar (`@Krish-452`) / Manas Doshi (`@moodynooby`)
 - **True Flag:** `case{chelaiya_thinkpad_auto_sync_0213}`
 - **Decoy Honeyflags:**
@@ -19,7 +19,7 @@
 In *Case File: The Mid-Sem Leak*, campus authorities initially suspected a direct physical breach into AU Lab 207 or an external intrusion. 
 
 However, wireless network forensics provides the **master plot twist** of the investigation:
-At **02:13:42 IST** on 28 October 2026, Prof. Hasmukh Chelaiya’s departmental laptop (`prof_chelaiya_thinkpad_x1`, MAC `a4:c4:94:02:13:42`) connected to the dedicated faculty access point (`AP-AU-FACULTY-L2`) and executed an automated synchronization task with the department file server (`\\10.20.0.12\FacultyVault`). During this sync, the final draft of `OOP99_MidSem_Exam_2026_FinalDraft.pdf` was staged on an internal department share with permissive read permissions. 
+At **02:13:42 IST** on 28 October 2026, Prof. ManMishra Chelaiya’s departmental laptop (`prof_chelaiya_thinkpad_x1`, MAC `a4:c4:94:02:13:42`) connected to the dedicated faculty access point (`AP-AU-FACULTY-L2`) and executed an automated synchronization task with the department file server (`\\10.20.0.12\FacultyVault`). During this sync, the final draft of `OOP99_MidSem_Exam_2026_FinalDraft.pdf` was staged on an internal department share with permissive read permissions. 
 
 TA Piyush Pelaiya, who had persistent network monitoring in Lab 207, hijacked this unencrypted synchronization stream to grab the exam paper that he later leaked via email.
 

@@ -1,6 +1,7 @@
 name: "Physical Forensics: Lab 207 Terminal RAM Dump"
 author: "Yesha (Forensics Track Lead)"
 category: "Forensics"
+difficulty: "medium"
 description: |
   **Case File Briefing:**
   Following the midnight breach, campus incident responders cordoned off workstation **PC-04** in **AU Lab 207**.
@@ -21,8 +22,8 @@ value: 500
 type: dynamic
 extra:
   initial: 500
-  decay: 15
-  minimum: 100
+  decay: 16
+  minimum: 200
 
 flags:
   - case{volatility3_lab207_terminal_ram}

@@ -9,7 +9,7 @@ Generates:
 
 Storyline Context:
     At 02:13:42 IST, TA Piyush exfiltrated CCTV footage and terminal captures
-    confirming the theft of Prof. Hasmukh Chelaiya's OOP 99 mid-sem exam paper.
+    confirming the theft of Prof. ManMishra Chelaiya's OOP 99 mid-sem exam paper.
     To bypass AU's campus Data Loss Prevention (DLP) packet size inspectors,
     he fragmented the Base64 stream across 12 irregular chunks (part01.txt ... part12.txt).
 

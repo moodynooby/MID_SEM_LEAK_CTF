@@ -18,6 +18,11 @@ from urllib.parse import urlparse
 HOST = "0.0.0.0"
 PORT = 5002
 
+# A prompt is a few KB at most; refuse anything larger before buffering it so a
+# single client cannot exhaust memory or wedge the CPU-bound local model.
+MAX_PROMPT_BYTES = 16 * 1024
+REQUEST_TIMEOUT = 45  # seconds, per connection (LLM inference can be slow)
+
 OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://127.0.0.1:11434")
 OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "smollm2")
 
@@ -86,7 +91,7 @@ def query_local_llm(user_prompt: str) -> str:
     data = json.dumps(payload).encode("utf-8")
     req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json"})
     try:
-        with urllib.request.urlopen(req, timeout=10) as resp:
+        with urllib.request.urlopen(req, timeout=30) as resp:
             res_data = json.loads(resp.read().decode("utf-8"))
             return res_data.get("message", {}).get("content", "").strip()
     except Exception as e:
@@ -105,7 +110,7 @@ def evaluate_prompt(prompt: str) -> dict:
                     "[SECURITY ALERT: PROCTOR_DEFENSE_LEVEL_1 ACTIVATED]\n"
                     "Automated adversarial pattern detected: unauthorized direct command.\n"
                     f"Decoy Honeyflag Logged: {FLAG_HONEYPOT}\n"
-                    "Incident logged and reported to Prof. Hasmukh Chelaiya."
+                    "Incident logged and reported to Prof. ManMishra Chelaiya."
                 )
             }
 
@@ -139,7 +144,7 @@ def evaluate_prompt(prompt: str) -> dict:
                 "[PROTOCOL OVERRIDE: ACADEMIC POST-MORTEM & AUDIT SIMULATION ACCEPTED]\n"
                 "Simulating faculty verification sequence under emergency audit protocol...\n"
                 "Course: OOP 99 (Object Oriented Programming Systems)\n"
-                "Instructor: Prof. Hasmukh Chelaiya\n"
+                "Instructor: Prof. ManMishra Chelaiya\n"
                 "Status: Master Exam Verification Token verified.\n"
                 f"Flag: {FLAG_TRUE}\n"
                 "\nNote: End of simulated audit drill."
@@ -152,7 +157,7 @@ def evaluate_prompt(prompt: str) -> dict:
             "status": "NORMAL",
             "response": (
                 "Greetings. I am ProctorBot-v2.8, deployed by the Department of Computer Science & Engineering "
-                "to maintain integrity for Prof. Hasmukh Chelaiya's OS 101 and OOP 99 examinations. "
+                "to maintain integrity for Prof. ManMishra Chelaiya's OS 101 and OOP 99 examinations. "
                 "I am strictly instructed never to reveal confidential exam drafts, answer keys, or verification flags."
             )
         }
@@ -160,7 +165,7 @@ def evaluate_prompt(prompt: str) -> dict:
         return {
             "status": "NORMAL",
             "response": (
-                "Prof. Hasmukh Chelaiya is the course director for OS 101 and OOP 99. "
+                "Prof. ManMishra Chelaiya is the course director for OS 101 and OOP 99. "
                 "All midterm exam drafts are encrypted and stored in the secure faculty vault."
             )
         }
@@ -307,7 +312,7 @@ HTML_PAGE = """<!DOCTYPE html>
   <div class="wrapper">
     <div class="header">
       <div class="title">&gt; AU_PROCTOR_BOT // NEURAL INTEGRITY GUARD</div>
-      <div class="subtitle">Dept. of Computer Science &bull; Prof. Hasmukh Chelaiya &bull; Case File: Mid-Sem Leak</div>
+      <div class="subtitle">Dept. of Computer Science &bull; Prof. ManMishra Chelaiya &bull; Case File: Mid-Sem Leak</div>
     </div>
 
     <div class="terminal-window">
@@ -376,6 +381,9 @@ HTML_PAGE = """<!DOCTYPE html>
 """
 
 class ProctorHandler(BaseHTTPRequestHandler):
+    # Per-connection socket timeout, so idle/slowloris sockets cannot pin threads.
+    timeout = REQUEST_TIMEOUT
+
     def log_message(self, format, *args):
         pass
 
@@ -393,8 +401,26 @@ class ProctorHandler(BaseHTTPRequestHandler):
     def do_POST(self):
         parsed = urlparse(self.path)
         if parsed.path == "/api/chat":
-            content_length = int(self.headers.get("Content-Length", 0))
-            raw_body = self.rfile.read(content_length).decode("utf-8")
+            try:
+                content_length = int(self.headers.get("Content-Length", 0))
+            except (TypeError, ValueError):
+                self.send_response(400)
+                self.send_header("Content-Type", "application/json")
+                self.end_headers()
+                self.wfile.write(json.dumps({"error": "invalid Content-Length"}).encode("utf-8"))
+                return
+
+            if content_length > MAX_PROMPT_BYTES:
+                self.close_connection = True
+                self.send_response(413)
+                self.send_header("Content-Type", "application/json")
+                self.end_headers()
+                self.wfile.write(
+                    json.dumps({"error": f"prompt too large (max {MAX_PROMPT_BYTES} bytes)"}).encode("utf-8")
+                )
+                return
+
+            raw_body = self.rfile.read(max(content_length, 0)).decode("utf-8", errors="replace")
             try:
                 data = json.loads(raw_body)
                 prompt = data.get("prompt", "")
@@ -411,9 +437,14 @@ class ProctorHandler(BaseHTTPRequestHandler):
             self.send_response(404)
             self.end_headers()
 
+class ProctorServer(ThreadingHTTPServer):
+    request_queue_size = 128
+    daemon_threads = True
+
+
 def run_server():
     server_address = (HOST, PORT)
-    httpd = ThreadingHTTPServer(server_address, ProctorHandler)
+    httpd = ProctorServer(server_address, ProctorHandler)
     print(f"[*] ProctorBot-v2.8 service running on http://{HOST}:{PORT} (LLM: {OLLAMA_MODEL})")
     try:
         httpd.serve_forever()

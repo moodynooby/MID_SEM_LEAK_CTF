@@ -32,6 +32,12 @@ bots:
     path_regex: "^/av-console/.*"
     action: ALLOW
 
-  # Challenge regular browsers with lightweight proof-of-work (difficulty 3)
+  # Challenge regular browsers with lightweight proof-of-work (difficulty 3).
+  # Must be LAST: this is the catch-all fallback for anything the ALLOW rules
+  # above did not already pass through. Anubis requires every bot entry to
+  # carry at least one matcher (user_agent_regex, path_regex, headers_regex,
+  # remote_addresses, remote_addresses_url, expression, asns, geoip) -- a bare
+  # `action:` makes the policy file invalid and crash-loops the container.
   - name: browser-challenge
+    path_regex: "^/"
     action: CHALLENGE

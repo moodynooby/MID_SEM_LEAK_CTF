@@ -1,6 +1,7 @@
 name: "Challenge Title Here"
 author: "Author Name"
 category: "Forensics | Web | Cryptography | Reverse Engineering | Misc"
+difficulty: "easy"
 description: |
   **Case File Briefing:**
   Provide the fictional investigation briefing here. Connect the puzzle to the campus mid-sem leak story.
@@ -10,11 +11,11 @@ description: |
 
   **Flag Format:** `case{...}`
 
-value: 500
+value: 300
 type: dynamic
 extra:
-  initial: 500
-  decay: 15
+  initial: 300
+  decay: 20
   minimum: 100
 
 flags:

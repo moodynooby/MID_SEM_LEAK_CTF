@@ -21,6 +21,7 @@ Usage:
 """
 
 import os
+import re
 import sys
 import time
 import shutil
@@ -93,65 +94,118 @@ def load_env():
                     env_vars[k.strip()] = v.strip().strip('"').strip("'")
     return env_vars
 
+def detect_bridge_ip():
+    """Return the docker bridge gateway IP (where Ollama must listen).
+
+    Containers reach the host through this address; loopback is not routable
+    from inside a bridge network. The bridge can renumber, so never hardcode
+    172.17.0.1.
+    """
+    try:
+        res = subprocess.run(["ip", "-4", "-o", "addr", "show", "docker0"], capture_output=True, text=True)
+        match = re.search(r"inet\s+(\d+\.\d+\.\d+\.\d+)", res.stdout)
+        if match:
+            return match.group(1)
+    except Exception:
+        pass
+    try:
+        cli = detect_container_cli()
+        if cli:
+            res = subprocess.run(
+                [cli, "network", "inspect", "bridge", "-f", "{{range .IPAM.Config}}{{.Gateway}}{{end}}"],
+                capture_output=True, text=True,
+            )
+            gateway = res.stdout.strip()
+            if gateway:
+                return gateway
+    except Exception:
+        pass
+    return "172.17.0.1"
+
+
+def ollama_probe_urls():
+    return [f"http://{detect_bridge_ip()}:11434", "http://127.0.0.1:11434"]
+
+
+def _ollama_tags(url, timeout=3):
+    req = urllib.request.Request(f"{url}/api/tags")
+    with urllib.request.urlopen(req, timeout=timeout) as resp:
+        return json.loads(resp.read().decode())
+
+
 def ensure_ollama(model="smollm2"):
-    """Ensure Ollama daemon is running and required local model is pulled."""
+    """Ensure Ollama is running (bridge-bound) and the local model is pulled."""
     console.print(f"[bold cyan][*] Checking Ollama AI service and model '{model}'...[/bold cyan]")
     ollama_bin = shutil.which("ollama")
     if not ollama_bin:
-        console.print("[yellow][!] Ollama binary not found on PATH. Attempting install...[/yellow]")
+        console.print(
+            "[bold red][!] Ollama binary not found on PATH.[/bold red] "
+            "Install it manually from https://ollama.com (no cloud auto-install at event time)."
+        )
+        return False
+
+    data = None
+    active_url = None
+    for url in ollama_probe_urls():
         try:
-            res = subprocess.run("curl -fsSL https://ollama.com/install.sh | sh", shell=True)
-            if res.returncode != 0:
-                console.print("[bold red][!] Ollama installation failed. Please install from https://ollama.com[/bold red]")
-                return False
-            ollama_bin = shutil.which("ollama")
-        except Exception as e:
-            console.print(f"[bold red][!] Ollama auto-install failed: {e}[/bold red]")
-            return False
+            data = _ollama_tags(url)
+            active_url = url
+            break
+        except Exception:
+            continue
 
-    daemon_running = False
-    data = {}
-    try:
-        req = urllib.request.Request("http://127.0.0.1:11434/api/tags")
-        with urllib.request.urlopen(req, timeout=3) as resp:
-            data = json.loads(resp.read().decode())
-            daemon_running = True
-    except Exception:
-        daemon_running = False
-
-    if not daemon_running:
+    if active_url is None:
         console.print("[yellow][*] Ollama daemon not reachable. Attempting to start daemon...[/yellow]")
         if shutil.which("systemctl"):
             subprocess.run(["sudo", "systemctl", "start", "ollama"], capture_output=True)
-        time.sleep(2)
-        try:
-            req = urllib.request.Request("http://127.0.0.1:11434/api/tags")
-            with urllib.request.urlopen(req, timeout=3) as resp:
-                data = json.loads(resp.read().decode())
-                daemon_running = True
-        except Exception:
+            time.sleep(2)
+            for url in ollama_probe_urls():
+                try:
+                    data = _ollama_tags(url)
+                    active_url = url
+                    break
+                except Exception:
+                    continue
+        if active_url is None:
+            bridge = detect_bridge_ip()
             try:
-                subprocess.Popen(["ollama", "serve"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                env = dict(os.environ, OLLAMA_HOST=f"{bridge}:11434")
+                subprocess.Popen(
+                    ["ollama", "serve"],
+                    env=env,
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL,
+                )
                 time.sleep(3)
-                req = urllib.request.Request("http://127.0.0.1:11434/api/tags")
-                with urllib.request.urlopen(req, timeout=3) as resp:
-                    data = json.loads(resp.read().decode())
-                    daemon_running = True
-            except Exception as e:
-                console.print(f"[bold red][!] Could not start Ollama daemon: {e}[/bold red]")
+                data = _ollama_tags(f"http://{bridge}:11434")
+                active_url = f"http://{bridge}:11434"
+            except Exception as exc:
+                console.print(f"[bold red][!] Could not start Ollama daemon: {exc}[/bold red]")
                 return False
+
+    # `ollama pull` honours OLLAMA_HOST; point the CLI at the daemon we found,
+    # otherwise it defaults to 127.0.0.1 and fails once we bind the bridge.
+    cli_host = active_url.replace("http://", "")
+    cli_env = dict(os.environ, OLLAMA_HOST=cli_host)
 
     existing_models = [m.get("name", "") for m in data.get("models", [])]
     has_model = any(m == model or m.startswith(f"{model}:") for m in existing_models)
     if not has_model:
         console.print(f"[yellow][*] Model '{model}' not found in Ollama. Pulling model...[/yellow]")
-        res = subprocess.run(["ollama", "pull", model])
+        res = subprocess.run(["ollama", "pull", model], env=cli_env)
         if res.returncode != 0:
             console.print(f"[bold red][!] Failed to pull '{model}'.[/bold red]")
             return False
         console.print(f"[bold green][+] Model '{model}' successfully pulled![/bold green]")
     else:
-        console.print(f"[bold green][+] Ollama daemon active and model '{model}' is verified.[/bold green]")
+        console.print(f"[bold green][+] Ollama daemon active on {cli_host} and model '{model}' is verified.[/bold green]")
+
+    if not active_url.startswith(f"http://{detect_bridge_ip()}"):
+        console.print(
+            "[bold yellow][!] Ollama is not bound to the docker bridge. Containers cannot reach "
+            f"{active_url}. Set OLLAMA_HOST={detect_bridge_ip()}:11434 and restart ollama, "
+            "or challenge 5002 will fall back to regex heuristics.[/bold yellow]"
+        )
     return True
 
 def cmd_start():
@@ -199,6 +253,79 @@ def cmd_status():
         return
     console.print(Panel.fit("[bold cyan]Container Stack Status[/bold cyan]"))
     subprocess.run(compose + ["ps"], cwd=str(ROOT_DIR))
+    _anubis_cookie_check()
+    _ollama_bind_check()
+    _challenge_endpoint_check()
+
+
+def _ollama_bind_check():
+    """The AI challenge only works when Ollama listens on the docker bridge."""
+    bridge = detect_bridge_ip()
+    try:
+        _ollama_tags(f"http://{bridge}:11434", timeout=2)
+        console.print(f"[green][+] Ollama reachable from containers at {bridge}:11434.[/green]")
+        return
+    except Exception:
+        pass
+    try:
+        _ollama_tags("http://127.0.0.1:11434", timeout=2)
+        console.print(
+            f"[bold red][!] Ollama is loopback-only. Containers cannot reach it — challenge 5002 "
+            f"will use the heuristic fallback. Set OLLAMA_HOST={bridge}:11434 and restart ollama.[/bold red]"
+        )
+    except Exception:
+        console.print("[yellow][!] Ollama daemon not reachable on loopback or bridge (challenge 5002 degraded).[/yellow]")
+
+
+def _challenge_endpoint_check():
+    """Probe the three hosted challenge services (5001/5002/5003)."""
+    table = Table(title="Hosted Challenge Services", style="bold green")
+    table.add_column("Port", style="cyan")
+    table.add_column("Challenge", style="white")
+    table.add_column("HTTP", style="bold white")
+    services = [(5001, "cookie_api"), (5002, "ai_prompt_injection"), (5003, "php2shell")]
+    for port, name in services:
+        try:
+            req = urllib.request.Request(f"http://127.0.0.1:{port}/", headers={"User-Agent": "ctf-status-check"})
+            with urllib.request.urlopen(req, timeout=4) as resp:
+                status = f"{resp.status} OK"
+        except Exception as exc:
+            status = f"[red]DOWN ({exc.__class__.__name__})[/red]"
+        table.add_row(str(port), name, status)
+    console.print(table)
+
+
+def _anubis_cookie_check():
+    """Guard against the plain-HTTP Anubis cookie loop (Secure/Partitioned flags).
+
+    Anubis v1.28+ defaults to cookie-secure/partitioned = true. Over http:// the
+    browser silently drops those cookies and every participant loops on
+    "user has cookies disabled", so the flags are pinned in docker-compose.yml.
+    """
+    port = load_env().get("HOST_PORT", "80")
+    url = f"http://127.0.0.1:{port}/"
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "ctf-status-check"})
+        with urllib.request.urlopen(req, timeout=5) as resp:
+            cookies = resp.headers.get_all("Set-Cookie") or []
+    except Exception as exc:  # stack down / port busy / Anubis not answering
+        console.print(f"[yellow][!] Anubis cookie probe skipped: {exc}[/yellow]")
+        return
+
+    if not cookies:
+        console.print("[yellow][!] Anubis cookie probe: no Set-Cookie seen (already authenticated?)[/yellow]")
+        return
+
+    insecure_ok = not any("secure" in c.lower() or "partitioned" in c.lower() for c in cookies)
+    if insecure_ok:
+        console.print("[green][+] Anubis cookies are plain-HTTP safe (no Secure/Partitioned flags).[/green]")
+    else:
+        console.print(
+            "[bold red][!] Anubis is setting Secure/Partitioned cookies over http:// — "
+            "participants will loop on 'user has cookies disabled'. "
+            "Set COOKIE_SECURE=false and COOKIE_PARTITIONED=false, then "
+            "'docker compose up -d --force-recreate --no-deps anubis'.[/bold red]"
+        )
 
 def cmd_backup():
     """Cross-platform backup of MariaDB and CTFd uploads into a compressed tarball."""
@@ -306,6 +433,15 @@ def cmd_restore(archive_file=None):
         # Launch entire stack
         subprocess.run(compose + ["up", "-d"], cwd=str(ROOT_DIR))
 
+        # The AI challenge depends on a host-side model that is NOT part of the
+        # backup archive. Without this the bot silently degrades to regex
+        # heuristics on the standby laptop.
+        if not ensure_ollama("smollm2"):
+            console.print(
+                "[bold yellow][!] Ollama/model unavailable: challenge 5002 will serve the "
+                "deterministic heuristic fallback until the model is restored.[/bold yellow]"
+            )
+
         # Restore uploads
         uploads_dir = tmp_path / "uploads"
         if uploads_dir.exists():
@@ -322,13 +458,19 @@ def cmd_restore(archive_file=None):
         title="Standby Restore Successful"
     ))
 
-def cmd_sync(target_ip, user="manas", remote_path=None):
-    """Sync latest snapshot to the standby laptop over LAN."""
+def cmd_sync(target_ip, user=None, remote_path=None):
+    """Sync latest snapshot to the standby laptop over LAN.
+
+    No hardcoded username or absolute home path: on the standby, the repo lives
+    wherever the operator cloned it. Override with --user / --remote-path.
+    """
+    import getpass
+
+    user = user or os.getenv("CTF_SYNC_USER") or getpass.getuser()
+    remote_path = remote_path or os.getenv("CTF_SYNC_PATH") or f"~/Desktop/MID_SEM_LEAK_CTF"
     archive = cmd_backup()
     if not archive:
         return
-    if not remote_path:
-        remote_path = f"/home/{user}/Desktop/MID_SEM_LEAK_CTF"
 
     console.print(f"[bold cyan][*] Transferring {archive.name} to {user}@{target_ip}:{remote_path}/backups/...[/bold cyan]")
     # Ensure remote directory exists
@@ -336,6 +478,10 @@ def cmd_sync(target_ip, user="manas", remote_path=None):
     res = subprocess.run(["scp", str(archive), f"{user}@{target_ip}:{remote_path}/backups/"])
     if res.returncode == 0:
         console.print("[bold green][+] Sync complete! Standby laptop is ready for instant recovery.[/bold green]")
+        console.print(
+            "[yellow][!] Snapshot contains DB + uploads only. The standby still needs the repo, "
+            "the Ollama model, and php2shell uploads (teams re-upload after failover).[/yellow]"
+        )
     else:
         console.print("[bold red][!] Sync failed. Check IP and SSH connectivity.[/bold red]")
 
@@ -430,8 +576,8 @@ def main():
 
     sync_p = subparsers.add_parser("sync", help="Sync snapshot to standby laptop over LAN")
     sync_p.add_argument("ip", help="Standby laptop LAN IP")
-    sync_p.add_argument("user", nargs="?", default="manas", help="SSH username (default: manas)")
-    sync_p.add_argument("path", nargs="?", default=None, help="Remote project path")
+    sync_p.add_argument("user", nargs="?", default=None, help="SSH username (default: current user / $CTF_SYNC_USER)")
+    sync_p.add_argument("path", nargs="?", default=None, help="Remote project path (default: ~/Desktop/MID_SEM_LEAK_CTF)")
 
     events_p = subparsers.add_parser("events", help="Manage timed events")
     events_p.add_argument("--event", choices=[

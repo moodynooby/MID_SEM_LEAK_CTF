@@ -22,6 +22,14 @@ FLAG_TRUE = "case{php_webshell_rce_faculty_portal}"
 UPLOAD_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "uploads")
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
+# Resource guards: a CTF webshell challenge must survive 80 participants.
+# Without these a single oversized multipart body is buffered whole into RAM
+# and every accepted file is kept forever, which can OOM the container or fill
+# the host disk mid-event.
+MAX_UPLOAD_BYTES = 2 * 1024 * 1024   # 2 MiB per file
+MAX_UPLOAD_FILES = 500               # oldest files pruned beyond this
+REQUEST_TIMEOUT = 30                 # seconds, per connection (slowloris guard)
+
 # Flawed blacklist: blocks standard .php extensions but misses .phtml, .php5, .phar
 DISALLOWED_EXTENSIONS = [".php", ".php3", ".php4", ".php7", ".exe", ".sh", ".bat", ".py", ".pl"]
 EXECUTABLE_EXTENSIONS = [".phtml", ".php5", ".phar"]
@@ -32,6 +40,27 @@ MAGIC_SIGNATURES = [
     (b"\x89PNG\r\n\x1a\n", "image/png"),
     (b"%PDF-", "application/pdf")
 ]
+
+
+def prune_uploads():
+    """Keep UPLOAD_DIR bounded by dropping the oldest files (DoS guard)."""
+    try:
+        entries = [
+            os.path.join(UPLOAD_DIR, name)
+            for name in os.listdir(UPLOAD_DIR)
+            if os.path.isfile(os.path.join(UPLOAD_DIR, name)) and not name.startswith(".")
+        ]
+    except OSError:
+        return
+    if len(entries) <= MAX_UPLOAD_FILES:
+        return
+    entries.sort(key=lambda p: os.path.getmtime(p))
+    for stale in entries[: len(entries) - MAX_UPLOAD_FILES]:
+        try:
+            os.remove(stale)
+        except OSError:
+            pass
+
 
 INDEX_HTML = """<!DOCTYPE html>
 <html lang="en">
@@ -191,6 +220,9 @@ INDEX_HTML = """<!DOCTYPE html>
 """
 
 class UploadPortalHandler(BaseHTTPRequestHandler):
+    # Per-connection socket timeout, so idle/slowloris sockets cannot pin threads.
+    timeout = REQUEST_TIMEOUT
+
     def log_message(self, format, *args):
         pass
 
@@ -210,23 +242,19 @@ class UploadPortalHandler(BaseHTTPRequestHandler):
             return
 
         # Check for uploaded file requests (/uploads/<filename>)
+        # Only the exact stored name (uuid-prefixed) resolves. There is no
+        # "latest match" fallback: that would let a stale or guessed URL serve
+        # another team's uploaded shell, breaking multi-team isolation.
         if path.startswith("/uploads/"):
             filename = os.path.basename(path)
             filepath = os.path.join(UPLOAD_DIR, filename)
 
-            # If not direct match, check for latest file ending with _filename or base filename
-            if not os.path.exists(filepath):
-                candidates = [f for f in os.listdir(UPLOAD_DIR) if f.endswith(f"_{filename}") or f == filename]
-                if candidates:
-                    candidates.sort(key=lambda x: os.path.getmtime(os.path.join(UPLOAD_DIR, x)), reverse=True)
-                    filepath = os.path.join(UPLOAD_DIR, candidates[0])
-                    filename = candidates[0]
-                else:
-                    self.send_response(404)
-                    self.send_header("Content-Type", "text/plain")
-                    self.end_headers()
-                    self.wfile.write(b"404 Not Found: Uploaded file does not exist.")
-                    return
+            if not os.path.isfile(filepath):
+                self.send_response(404)
+                self.send_header("Content-Type", "text/plain")
+                self.end_headers()
+                self.wfile.write(b"404 Not Found: Uploaded file does not exist.")
+                return
 
             ext = os.path.splitext(filename)[1].lower()
             query_params = parse_qs(parsed.query)
@@ -286,7 +314,27 @@ class UploadPortalHandler(BaseHTTPRequestHandler):
                 self.render_index('<div class="result-box error">ERROR: Expected multipart/form-data.</div>')
                 return
 
-            content_length = int(self.headers.get("Content-Length", 0))
+            try:
+                content_length = int(self.headers.get("Content-Length", 0))
+            except (TypeError, ValueError):
+                self.render_index('<div class="result-box error">ERROR: Invalid Content-Length header.</div>')
+                return
+
+            if content_length <= 0:
+                self.render_index('<div class="result-box error">ERROR: Empty submission body.</div>')
+                return
+
+            if content_length > MAX_UPLOAD_BYTES + 4096:
+                # Reject before reading: never buffer an unbounded body into RAM.
+                self.close_connection = True
+                self.send_response(413)
+                self.send_header("Content-Type", "text/plain; charset=utf-8")
+                self.end_headers()
+                self.wfile.write(
+                    f"413 Payload Too Large: submissions are capped at {MAX_UPLOAD_BYTES // (1024 * 1024)} MiB.\n".encode("utf-8")
+                )
+                return
+
             raw_body = self.rfile.read(content_length)
 
             # Parse multipart data
@@ -340,21 +388,16 @@ class UploadPortalHandler(BaseHTTPRequestHandler):
                 self.render_index(f'<div class="result-box error">{err_msg}</div>')
                 return
 
-            # Save the file with unique prefix to prevent concurrent team overwrite collisions
+            # Save the file under a unique prefix. This is the ONLY copy kept:
+            # no un-prefixed fallback, so two teams uploading the same filename
+            # can never overwrite or resolve to each other's shell.
             clean_name = re.sub(r'[^a-zA-Z0-9_.-]', '_', filename)
             prefix = uuid.uuid4().hex[:6]
             safe_filename = f"{prefix}_{clean_name}"
             save_path = os.path.join(UPLOAD_DIR, safe_filename)
             with open(save_path, "wb") as f:
                 f.write(uploaded_file)
-
-            # Also maintain a fallback copy of clean_name for automated tools/scripts
-            latest_path = os.path.join(UPLOAD_DIR, clean_name)
-            try:
-                with open(latest_path, "wb") as lf:
-                    lf.write(uploaded_file)
-            except Exception:
-                pass
+            prune_uploads()
 
             file_url = f"/uploads/{safe_filename}"
             success_msg = (
@@ -368,9 +411,16 @@ class UploadPortalHandler(BaseHTTPRequestHandler):
         self.send_response(404)
         self.end_headers()
 
+class UploadServer(ThreadingHTTPServer):
+    # Default listen backlog is 5, which drops connections under a lab full of
+    # concurrent browsers. Raise it and make workers daemonic.
+    request_queue_size = 128
+    daemon_threads = True
+
+
 def run():
     server_address = (HOST, PORT)
-    httpd = ThreadingHTTPServer(server_address, UploadPortalHandler)
+    httpd = UploadServer(server_address, UploadPortalHandler)
     print(f"[*] PHP2SHELL Faculty Upload Portal running on http://{HOST}:{PORT}")
     try:
         httpd.serve_forever()
