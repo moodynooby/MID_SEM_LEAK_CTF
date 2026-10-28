@@ -3,10 +3,12 @@
 Theme Activator & Scoreboard Configurator
 IEEE AUSB: Case File: The Mid-Sem Leak
 
-Activates `hacker-theme` as the primary CTFd theme via the REST API.
-Scoreboard styling, big-screen typography, medals, and live solve ticker
-are built directly into `themes/hacker-theme/templates/scoreboard.html`,
-eliminating the need for database injection into `theme_header` / `theme_footer`.
+Activates the stock CTFd `core-beta` theme as the primary theme via the REST API.
+The optional `themes/hacker-theme` (green terminal aesthetic with projector
+scoreboard styling) stays mounted and can be re-activated by setting
+`THEME_NAME = "hacker-theme"` below, or from CTFd Admin -> Config -> Theme.
+Legacy injections into `theme_header` / `theme_footer` are cleared so all
+styling comes from the selected theme's own templates.
 """
 
 import sys
@@ -14,6 +16,8 @@ import requests
 from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
+
+THEME_NAME = "core-beta"
 
 
 def load_env():
@@ -44,7 +48,7 @@ def set_config(api_url, token, key, value):
 
 def main():
     print("==========================================================")
-    print(" [IEEE AUSB CTF] Activating Hacker Theme & Resetting Injections")
+    print(f" [IEEE AUSB CTF] Activating '{THEME_NAME}' Theme & Resetting Injections")
     print("==========================================================")
 
     env = load_env()
@@ -57,8 +61,8 @@ def main():
         print("    add it to .env, then re-run: uv run ctf theme")
         sys.exit(1)
 
-    print("[*] Activating primary theme 'hacker-theme' via CTFd API...")
-    theme_ok = set_config(api_url, token, "ctf_theme", "hacker-theme")
+    print(f"[*] Activating primary theme '{THEME_NAME}' via CTFd API...")
+    theme_ok = set_config(api_url, token, "ctf_theme", THEME_NAME)
 
     # Clear legacy raw HTML/JS injections from DB since styles are native in templates
     print("[*] Cleaning up legacy database theme_header & theme_footer injections...")
@@ -66,8 +70,8 @@ def main():
     footer_ok = set_config(api_url, token, "theme_footer", "")
 
     if theme_ok and header_ok and footer_ok:
-        print("[+] Primary theme ('hacker-theme') activated successfully!")
-        print("    All scoreboard projector styling is now natively rendered from templates.")
+        print(f"[+] Primary theme ('{THEME_NAME}') activated successfully!")
+        print("    All styling is now natively rendered from the theme's templates.")
     else:
         print("[!] Failed to apply one or more configs. Check CTFD_ADMIN_TOKEN and CTFD_API_URL.")
         sys.exit(1)

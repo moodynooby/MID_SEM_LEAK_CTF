@@ -107,7 +107,7 @@ def configure_ctfd_site():
     configs = {
         "ctf_name": "Case File: The Mid-Sem Leak",
         "ctf_description": "IEEE AUSB Annual Cybersecurity Incident Triage CTF — AU Labs 207 & 208",
-        "ctf_theme": "hacker-theme",
+        "ctf_theme": "core-beta",
         "setup": "1",
         "user_mode": "teams",
         "theme_header": "",
@@ -121,7 +121,7 @@ def configure_ctfd_site():
         INSERT INTO config (`key`, `value`) VALUES ({escape_sql(k)}, {escape_sql(v)});
         """
     run_sql(sql)
-    print("  [+] Core site settings and 'hacker-theme' bindings applied successfully.")
+    print("  [+] Core site settings and 'core-beta' theme bindings applied successfully.")
 
 
 def upload_file_to_ctfd(file_path: Path, challenge_id: int):
